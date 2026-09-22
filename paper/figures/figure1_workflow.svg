@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1330" viewBox="0 0 1240 1330" role="img" aria-labelledby="title desc">
+<title id="title">Specimen photography, separate classifier workflows and Wings Atlas data layers</title>
+<desc id="desc">Six panels distinguish photography and CAMID review, Gallery indexing, single-photo inference, paired collection classification, observed and inferred Atlas layers, and separate module releases. The paired collection benchmark does not measure upload accuracy.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#334550"/></marker></defs>
+<rect x="0" y="0" width="1240" height="1330" rx="3" fill="white" stroke="none" stroke-width="1.4"/>
+<rect x="30" y="25" width="1180" height="170" rx="3" fill="white" stroke="#66727b" stroke-width="1.4"/>
+<rect x="30" y="25" width="1180" height="44" rx="3" fill="#edf0f2" stroke="#66727b" stroke-width="1.4"/>
+<text x="46" y="54" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="bold" fill="#192127">
+<tspan x="46" dy="0">A  Photography and specimen identifiers</tspan>
+</text>
+<rect x="48" y="89" width="255" height="82" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="61" y="119" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="61" dy="0">Dorsal and ventral views</tspan>
+<tspan x="61" dy="26">CAMID + colour reference</tspan>
+</text>
+<rect x="340" y="89" width="247" height="82" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="353" y="119" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="353" dy="0">AI Photo Processor</tspan>
+<tspan x="353" dy="26">Read visible identifiers</tspan>
+</text>
+<rect x="624" y="89" width="245" height="82" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="637" y="119" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="637" dy="0">Human review</tspan>
+<tspan x="637" dy="26">Correct or withhold IDs</tspan>
+</text>
+<rect x="906" y="89" width="285" height="82" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="919" y="119" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="919" dy="0">Rename + retain logs</tspan>
+<tspan x="919" dy="26">CAMID + d / v suffix</tspan>
+</text>
+<path d="M307,130 L335,130" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M591,130 L619,130" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M873,130 L901,130" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M620,195 L620,234" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="235" width="1180" height="162" rx="3" fill="white" stroke="#66727b" stroke-width="1.4"/>
+<rect x="30" y="235" width="1180" height="44" rx="3" fill="#edf0f2" stroke="#66727b" stroke-width="1.4"/>
+<text x="46" y="264" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="bold" fill="#192127">
+<tspan x="46" dy="0">B  Collection indexing and Wings Gallery</tspan>
+</text>
+<rect x="48" y="302" width="255" height="71" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="61" y="332" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="61" dy="0">Shared image storage</tspan>
+<tspan x="61" dy="26">Reviewed collection files</tspan>
+</text>
+<rect x="340" y="302" width="247" height="71" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="353" y="332" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="353" dy="0">Apps Script → Sheets</tspan>
+<tspan x="353" dy="26">Photo index</tspan>
+</text>
+<rect x="624" y="302" width="245" height="71" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="637" y="332" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="637" dy="0">Python processing</tspan>
+<tspan x="637" dy="26">Static display records</tspan>
+</text>
+<rect x="906" y="302" width="285" height="71" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="919" y="332" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="919" dy="0">Wings Gallery</tspan>
+<tspan x="919" dy="26">Browse and review by CAMID</tspan>
+</text>
+<path d="M307,337 L335,337" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M591,337 L619,337" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M873,337 L901,337" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1046,397 L1046,439" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="859" y="423" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="normal" fill="#192127">
+<tspan x="859" dy="0">collection photographs</tspan>
+</text>
+<rect x="30" y="440" width="574" height="327" rx="3" fill="white" stroke="#66727b" stroke-width="1.4"/>
+<rect x="30" y="440" width="574" height="44" rx="3" fill="#edf0f2" stroke="#66727b" stroke-width="1.4"/>
+<text x="46" y="469" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="bold" fill="#192127">
+<tspan x="46" dy="0">C  Single uploaded-photo inference</tspan>
+</text>
+<text x="48" y="511" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="normal" fill="#192127">
+<tspan x="48" dy="0">Uploaded photograph → padded RGB crop</tspan>
+<tspan x="48" dy="26">or full-image fallback</tspan>
+</text>
+<path d="M307,549 L307,572" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="48" y="602" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="normal" fill="#192127">
+<tspan x="48" dy="0">Frozen BioCLIP 2.5-H → 1,024 features</tspan>
+<tspan x="48" dy="29">LayerNorm + normalised cosine classifier</tspan>
+<tspan x="48" dy="29">Finest-rank scores → taxonomic aggregation</tspan>
+</text>
+<text x="48" y="709" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="normal" fill="#192127">
+<tspan x="48" dy="0">Optional geography reweights candidates afterwards.</tspan>
+<tspan x="48" dy="25">No release-matched upload accuracy is reported.</tspan>
+</text>
+<rect x="636" y="440" width="574" height="327" rx="3" fill="white" stroke="#66727b" stroke-width="1.4"/>
+<rect x="636" y="440" width="574" height="44" rx="3" fill="#edf0f2" stroke="#66727b" stroke-width="1.4"/>
+<text x="652" y="469" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="bold" fill="#192127">
+<tspan x="652" dy="0">D  Separate paired-collection classification</tspan>
+</text>
+<text x="654" y="511" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="normal" fill="#192127">
+<tspan x="654" dy="0">Verified dorsal + ventral views of one specimen</tspan>
+<tspan x="654" dy="26">Frozen image features concatenated: 2,048</tspan>
+</text>
+<path d="M923,549 L923,572" fill="none" stroke="#334550" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="654" y="602" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="normal" fill="#192127">
+<tspan x="654" dy="0">Distinct fitted collection classifier</tspan>
+<tspan x="654" dy="29">Precomputed prediction release for the Gallery</tspan>
+<tspan x="654" dy="29">Paired Sanger benchmark only (Table 2)</tspan>
+</text>
+<text x="654" y="709" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="normal" fill="#192127">
+<tspan x="654" dy="0">Single-view fallbacks are not verified pairs.</tspan>
+<tspan x="654" dy="25">This benchmark does not evaluate arbitrary uploads.</tspan>
+</text>
+<rect x="30" y="811" width="1180" height="280" rx="3" fill="white" stroke="#66727b" stroke-width="1.4"/>
+<rect x="30" y="811" width="1180" height="44" rx="3" fill="#edf0f2" stroke="#66727b" stroke-width="1.4"/>
+<text x="46" y="840" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="bold" fill="#192127">
+<tspan x="46" dy="0">E  Wings Atlas: observed records, context and predictions</tspan>
+</text>
+<rect x="48" y="879" width="355" height="162" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="61" y="909" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="61" dy="0">Butterfly occurrence records</tspan>
+<tspan x="61" dy="26">Published, GBIF and collection sources</tspan>
+<tspan x="61" dy="26">Taxonomic and mimicry annotations</tspan>
+<tspan x="61" dy="26">Recorded genomic-sampling status</tspan>
+</text>
+<rect x="442" y="879" width="355" height="162" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="455" y="909" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="455" dy="0">Host-plant context</tspan>
+<tspan x="455" dy="26">Literature association evidence</tspan>
+<tspan x="455" dy="26">Independent plant occurrences</tspan>
+<tspan x="455" dy="26">Overlap does not establish host use</tspan>
+</text>
+<rect x="836" y="879" width="355" height="162" rx="3" fill="#f9fafb" stroke="#a0a8ae" stroke-width="1.4"/>
+<text x="849" y="909" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="849" dy="0">Relative habitat suitability</tspan>
+<tspan x="849" dy="26">Environmental predictors + records</tspan>
+<tspan x="849" dy="26">Accessible-area core / extension</tspan>
+<tspan x="849" dy="26">Modelled values are not observations</tspan>
+</text>
+<text x="49" y="1067" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="normal" fill="#192127">
+<tspan x="49" dy="0">CAMID links specimens and collection images. Reference-image substitutions must be identified.</tspan>
+</text>
+<rect x="30" y="1135" width="1180" height="170" rx="3" fill="white" stroke="#66727b" stroke-width="1.4"/>
+<rect x="30" y="1135" width="1180" height="44" rx="3" fill="#edf0f2" stroke="#66727b" stroke-width="1.4"/>
+<text x="46" y="1164" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="bold" fill="#192127">
+<tspan x="46" dy="0">F  Separate version identifiers, not a single combined snapshot</tspan>
+</text>
+<text x="50" y="1214" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="bold" fill="#192127">
+<tspan x="50" dy="0">Occurrence snapshot</tspan>
+<tspan x="50" dy="31">9 May 2026</tspan>
+</text>
+<text x="442" y="1214" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="bold" fill="#192127">
+<tspan x="442" dy="0">Complete SDM products</tspan>
+<tspan x="442" dy="31">28 April 2026</tspan>
+</text>
+<text x="836" y="1214" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="bold" fill="#192127">
+<tspan x="836" dy="0">Classifier source and releases</tspan>
+<tspan x="836" dy="31">September 2026</tspan>
+</text>
+<text x="50" y="1281" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="normal" fill="#192127">
+<tspan x="50" dy="0">Code commits, source-download identifiers and model or output receipts identify different resources.</tspan>
+</text>
+</svg>

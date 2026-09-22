@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "viewport": 1440,
+      "document_width": 1440,
+      "images": [],
+      "overflow": [],
+      "tables": 2,
+      "inline_svg": 1,
+      "missing_svg_markers": [],
+      "references": 38,
+      "replacement_characters": false,
+      "document": "manuscript",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "viewport": 390,
+      "document_width": 390,
+      "images": [],
+      "overflow": [],
+      "tables": 2,
+      "inline_svg": 1,
+      "missing_svg_markers": [],
+      "references": 38,
+      "replacement_characters": false,
+      "document": "manuscript",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "viewport": 1440,
+      "document_width": 1440,
+      "images": [],
+      "overflow": [],
+      "tables": 0,
+      "inline_svg": 0,
+      "missing_svg_markers": [],
+      "references": 0,
+      "replacement_characters": false,
+      "document": "supplementary_protocol_S1",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "viewport": 390,
+      "document_width": 390,
+      "images": [],
+      "overflow": [],
+      "tables": 0,
+      "inline_svg": 0,
+      "missing_svg_markers": [],
+      "references": 0,
+      "replacement_characters": false,
+      "document": "supplementary_protocol_S1",
+      "width": 390,
+      "pass": true
+    }
+  ],
+  "passed": true,
+  "note": "Checks cover manuscript reading copies, not live interfaces or model experiments."
+}

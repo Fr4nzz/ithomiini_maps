@@ -1,0 +1,344 @@
+{
+  "checked_on": "2026-09-22",
+  "note": "Latest saved status for each request. Full metadata were inspected, and final bibliographic fields are recorded in phase3_reference_records_20260922.json. A job success does not imply every HTTP request succeeded. These are source checks, not runtime-weight or environmental-input attestations.",
+  "receipts": [
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fj.1096-0031.2006.00108.x",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fj.1096-0031.2006.00108.x",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fj.0906-7590.2008.5203.x",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fj.0906-7590.2008.5203.x",
+      "status": 200
+    },
+    {
+      "requested_url": "https://rapidspeciation.github.io/ithomiini_maps/",
+      "resolved_url": "https://rapidspeciation.github.io/ithomiini_maps/",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.12688%2Fwellcomeopenres.18658.1",
+      "resolved_url": "https://api.crossref.org/works/10.12688%2Fwellcomeopenres.18658.1",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fj.1472-4642.2008.00482.x",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fj.1472-4642.2008.00482.x",
+      "status": 200
+    },
+    {
+      "requested_url": "https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/ai_identifier",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1023%2FA%3A1010933404324",
+      "resolved_url": "https://api.crossref.org/works/10.1023%2FA%3A1010933404324",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/Fr4nzz/rename_photos_AI/commits/main",
+      "resolved_url": "https://api.github.com/repos/Fr4nzz/rename_photos_AI/commits/main",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.datacite.org/dois/10.15468/dl.6zagkz",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "requested_url": "https://api.crossref.org/works?query.title=Genomes+on+a+Tree+GoaT+versatile+scalable+search+engine&rows=3",
+      "resolved_url": "https://api.crossref.org/works?query.title=Genomes+on+a+Tree+GoaT+versatile+scalable+search+engine&rows=3",
+      "status": 200
+    },
+    {
+      "requested_url": "https://huggingface.co/api/spaces/fr4nzzch/butterfly-id",
+      "resolved_url": "https://huggingface.co/api/spaces/fr4nzzch/butterfly-id",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1029%2F96JB00104",
+      "resolved_url": "https://api.crossref.org/works/10.1029%2F96JB00104",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fj.1365-2699.2006.01594.x",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fj.1365-2699.2006.01594.x",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/Fr4nzz/rename_photos_AI",
+      "resolved_url": "https://api.github.com/repos/Fr4nzz/rename_photos_AI",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/rapidspeciation/ithomiini_maps",
+      "resolved_url": "https://api.github.com/repos/rapidspeciation/ithomiini_maps",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.datacite.org/dois/10.16904/envidat.228",
+      "resolved_url": "https://api.datacite.org/dois/10.16904/envidat.228",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/rapidspeciation/Shiny_Ikiam_Wings_Gallery/git/trees/f5cb03f17f3ba639090b32fbedde6d6645ff847b?recursive=1",
+      "resolved_url": "https://api.github.com/repos/rapidspeciation/Shiny_Ikiam_Wings_Gallery/git/trees/f5cb03f17f3ba639090b32fbedde6d6645ff847b?recursive=1",
+      "status": 200
+    },
+    {
+      "requested_url": "https://www.worldclim.org/data/worldclim21.html",
+      "resolved_url": "https://www.worldclim.org/data/worldclim21.html",
+      "status": 200
+    },
+    {
+      "requested_url": "https://huggingface.co/imageomics/bioclip-2.5-vith14/raw/main/README.md",
+      "resolved_url": "https://huggingface.co/imageomics/bioclip-2.5-vith14/raw/main/README.md",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works?query.title=Catalogue+of+the+Hostplants+of+the+Neotropical+Butterflies&rows=3",
+      "resolved_url": "https://api.crossref.org/works?query.title=Catalogue+of+the+Hostplants+of+the+Neotropical+Butterflies&rows=3",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/rapidspeciation/Shiny_Ikiam_Wings_Gallery",
+      "resolved_url": "https://api.github.com/repos/rapidspeciation/Shiny_Ikiam_Wings_Gallery",
+      "status": 200
+    },
+    {
+      "requested_url": "https://www.butterfliesofamerica.com/intro.htm",
+      "resolved_url": "http://www.butterfliesofamerica.com/L/404notfound.htm",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1145%2F2939672.2939785",
+      "resolved_url": "https://api.crossref.org/works/10.1145%2F2939672.2939785",
+      "status": 200
+    },
+    {
+      "requested_url": "https://export.arxiv.org/api/query?id_list=2505.23883",
+      "error": "HTTP Error 406: Not Acceptable"
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/README.md",
+      "status": 200
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/ultralytics/ultralytics/main/CITATION.cff",
+      "resolved_url": "https://raw.githubusercontent.com/ultralytics/ultralytics/main/CITATION.cff",
+      "status": 200
+    },
+    {
+      "requested_url": "https://earth-chris.github.io/elapid/",
+      "resolved_url": "https://earth-chris.github.io/elapid/",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2F2041-210X.13628",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2F2041-210X.13628",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.25080%2FMajora-92bf1922-00a",
+      "resolved_url": "https://api.crossref.org/works/10.25080%2FMajora-92bf1922-00a",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1186%2Fs12862-016-0701-5",
+      "resolved_url": "https://api.crossref.org/works/10.1186%2Fs12862-016-0701-5",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1371%2Fjournal.pbio.1002415",
+      "resolved_url": "https://api.crossref.org/works/10.1371%2Fjournal.pbio.1002415",
+      "status": 200
+    },
+    {
+      "requested_url": "https://huggingface.co/api/models/fr4nzzch/butterfly-id-classifier",
+      "resolved_url": "https://huggingface.co/api/models/fr4nzzch/butterfly-id-classifier",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1890%2F07-2153.1",
+      "resolved_url": "https://api.crossref.org/works/10.1890%2F07-2153.1",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/Fr4nzz/ithomiini_maps",
+      "resolved_url": "https://api.github.com/repos/Fr4nzz/ithomiini_maps",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.21105%2Fjoss.04930",
+      "resolved_url": "https://api.crossref.org/works/10.21105%2Fjoss.04930",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1371%2Fjournal.pbio.0060300",
+      "resolved_url": "https://api.crossref.org/works/10.1371%2Fjournal.pbio.0060300",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1002%2Fjoc.5086",
+      "resolved_url": "https://api.crossref.org/works/10.1002%2Fjoc.5086",
+      "status": 200
+    },
+    {
+      "requested_url": "https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/",
+      "resolved_url": "https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1016%2Fj.ecolmodel.2011.02.011",
+      "resolved_url": "https://api.crossref.org/works/10.1016%2Fj.ecolmodel.2011.02.011",
+      "status": 200
+    },
+    {
+      "requested_url": "https://huggingface.co/api/models/imageomics/bioclip-2.5-vith14",
+      "resolved_url": "https://huggingface.co/api/models/imageomics/bioclip-2.5-vith14",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1016%2Fj.ecolmodel.2006.05.017",
+      "resolved_url": "https://api.crossref.org/works/10.1016%2Fj.ecolmodel.2006.05.017",
+      "status": 200
+    },
+    {
+      "requested_url": "https://www.earthenv.org/cloud",
+      "resolved_url": "https://www.earthenv.org/cloud",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works?query.title=Into+the+Andes+multiple+independent+colonizations+drive+montane+diversity+Godyridina&rows=3",
+      "resolved_url": "https://api.crossref.org/works?query.title=Into+the+Andes+multiple+independent+colonizations+drive+montane+diversity+Godyridina&rows=3",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fecog.02881",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fecog.02881",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.datacite.org/dois/10.5281/zenodo.13920055",
+      "resolved_url": "https://api.datacite.org/dois/10.5281/zenodo.13920055",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fele.14198",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fele.14198",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1590%2FS0034-71081999000300010",
+      "resolved_url": "https://api.crossref.org/works/10.1590%2FS0034-71081999000300010",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1002%2Fecm.1486",
+      "resolved_url": "https://api.crossref.org/works/10.1002%2Fecm.1486",
+      "status": 200
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/Fr4nzz/rename_photos_AI/main/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/Fr4nzz/rename_photos_AI/main/README.md",
+      "status": 200
+    },
+    {
+      "requested_url": "https://huggingface.co/spaces/fr4nzzch/butterfly-id/raw/3aa72a33946f2da661d1ed96f0929e92cd9413e6/inference.py",
+      "resolved_url": "https://huggingface.co/spaces/fr4nzzch/butterfly-id/raw/3aa72a33946f2da661d1ed96f0929e92cd9413e6/inference.py",
+      "status": 200
+    },
+    {
+      "requested_url": "https://www.nymphalidae.net/Classification.html",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "requested_url": "https://api.datacite.org/dois/10.57967/hf/10131",
+      "resolved_url": "https://api.datacite.org/dois/10.57967/hf/10131",
+      "status": 200
+    },
+    {
+      "requested_url": "https://maplibre.org/maplibre-gl-js/docs/",
+      "resolved_url": "https://maplibre.org/maplibre-gl-js/docs/",
+      "status": 200
+    },
+    {
+      "requested_url": "https://hdl.handle.net/api/handles/10.15468/dl.6zagkz",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/src/App.vue",
+      "resolved_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/src/App.vue",
+      "status": 200
+    },
+    {
+      "requested_url": "https://docs.github.com/en/actions",
+      "resolved_url": "https://docs.github.com/en/actions",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.1111%2Fmec.13773",
+      "resolved_url": "https://api.crossref.org/works/10.1111%2Fmec.13773",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.github.com/repos/Fr4nzz/rename_photos_AI/git/trees/49fe6ed226ed4914ed793e4252b74e18cf6ad8a4?recursive=1",
+      "resolved_url": "https://api.github.com/repos/Fr4nzz/rename_photos_AI/git/trees/49fe6ed226ed4914ed793e4252b74e18cf6ad8a4?recursive=1",
+      "status": 200
+    },
+    {
+      "requested_url": "https://huggingface.co/spaces/fr4nzzch/butterfly-id/raw/3aa72a36c37ce8b383f8f5a5f9ec5763f52e5e42/inference.py",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/list_google_drive_files.gs",
+      "resolved_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/list_google_drive_files.gs",
+      "status": 200
+    },
+    {
+      "requested_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/94da80cbfe870c1db958c88a8a27018c-Abstract-Conference.html",
+      "resolved_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/94da80cbfe870c1db958c88a8a27018c-Abstract-Conference.html",
+      "status": 200
+    },
+    {
+      "requested_url": "https://api.crossref.org/works/10.52202%2F085713-3436",
+      "resolved_url": "https://api.crossref.org/works/10.52202%2F085713-3436",
+      "status": 200
+    },
+    {
+      "requested_url": "https://vuejs.org/guide/introduction.html",
+      "resolved_url": "https://vuejs.org/guide/introduction.html",
+      "status": 200
+    },
+    {
+      "requested_url": "https://docs.github.com/en/pages",
+      "resolved_url": "https://docs.github.com/en/pages",
+      "status": 200
+    },
+    {
+      "requested_url": "https://aaai.org/papers/kdd96-037-a-density-based-algorithm-for-discovering-clusters-in-large-spatial-databases-with-noise/",
+      "resolved_url": "https://aaai.org/papers/kdd96-037-a-density-based-algorithm-for-discovering-clusters-in-large-spatial-databases-with-noise/",
+      "status": 200
+    },
+    {
+      "requested_url": "https://doi.org/10.15468/dl.6zagkz",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/scripts/process_data.py",
+      "resolved_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/scripts/process_data.py",
+      "status": 200
+    },
+    {
+      "requested_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/.github/workflows/update_data.yml",
+      "resolved_url": "https://raw.githubusercontent.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/f5cb03f17f3ba639090b32fbedde6d6645ff847b/.github/workflows/update_data.yml",
+      "status": 200
+    },
+    {
+      "requested_url": "https://docs.python.org/3/reference/index.html",
+      "resolved_url": "https://docs.python.org/3/reference/index.html",
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "validation_type": "text, references and assets only; not scientific experiment validation",
+  "manuscript_sha256": "d6435bc526a950454e05bc0de97ce66b14ca7e3fd4e9b5814731aa258472e724",
+  "evidence_ledger_sha256": "5bb2a81578be968a67d3d9f7dfd9acf7916111b93280c0693ed3ac745d603043",
+  "phase2_handoff_sha256": "b7491f85315a61a31735112eae5e4dce2da58c485a0db46ef1ed3cb640aaff4d",
+  "references": 38,
+  "in_text_citation_units_detected": 45,
+  "figure1": "SVG parsed and manuscript link exists",
+  "figure2": "caption final; four authorised screenshots still required",
+  "supplementary_protocol": "text complete",
+  "internal_phase3_markers": 0,
+  "errors": []
+}

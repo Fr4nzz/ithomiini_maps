@@ -1,0 +1,238 @@
+{
+  "checked_on": "2026-09-22",
+  "records": [
+    {
+      "key": "Anderson, 2023",
+      "entry": "Anderson, C.B. (2023). elapid: Species distribution modeling tools for Python. *Journal of Open Source Software*, 8(84), 4930. <https://doi.org/10.21105/joss.04930>",
+      "verification_url": "https://joss.theoj.org/papers/10.21105/joss.04930",
+      "status": "verified"
+    },
+    {
+      "key": "Ba et al., 2016",
+      "entry": "Ba, J.L., Kiros, J.R. & Hinton, G.E. (2016). Layer normalization. *arXiv*, 1607.06450. <https://doi.org/10.48550/arXiv.1607.06450>",
+      "verification_url": "https://arxiv.org/abs/1607.06450",
+      "status": "verified"
+    },
+    {
+      "key": "Barve et al., 2011",
+      "entry": "Barve, N., Barve, V., Jiménez-Valverde, A., Lira-Noriega, A., Maher, S.P., Peterson, A.T., Soberón, J. & Villalobos, F. (2011). The crucial role of the accessible area in ecological niche modeling and species distribution modeling. *Ecological Modelling*, 222(11), 1810–1819. <https://doi.org/10.1016/j.ecolmodel.2011.02.011>",
+      "verification_url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2011.02.011",
+      "status": "verified"
+    },
+    {
+      "key": "Beccaloni et al., 2008",
+      "entry": "Beccaloni, G.W., Viloria, Á.L., Hall, S.K. & Robinson, G.S. (2008). *Catalogue of the hostplants of the Neotropical butterflies / Catálogo de las plantas huésped de las mariposas neotropicales*. Monografías Tercer Milenio, 8. Sociedad Entomológica Aragonesa, Zaragoza. 536 pp. <https://ci.nii.ac.jp/ncid/BB00704591>",
+      "verification_url": "https://ci.nii.ac.jp/ncid/BB00704591",
+      "status": "verified"
+    },
+    {
+      "key": "Breiman, 2001",
+      "entry": "Breiman, L. (2001). Random forests. *Machine Learning*, 45(1), 5–32. <https://doi.org/10.1023/A:1010933404324>",
+      "verification_url": "https://api.crossref.org/works/10.1023/A:1010933404324",
+      "status": "verified"
+    },
+    {
+      "key": "Challis et al., 2023",
+      "entry": "Challis, R., Kumar, S., Sotero-Caio, C., Brown, M. & Blaxter, M. (2023). Genomes on a Tree (GoaT): A versatile, scalable search engine for genomic and sequencing project metadata across the eukaryotic tree of life. *Wellcome Open Research*, 8, 24. <https://doi.org/10.12688/wellcomeopenres.18658.1>",
+      "verification_url": "https://api.crossref.org/works/10.12688/wellcomeopenres.18658.1",
+      "status": "verified"
+    },
+    {
+      "key": "Chazot et al., 2016",
+      "entry": "Chazot, N., Willmott, K.R., Condamine, F.L., De-Silva, D.L., Freitas, A.V.L., Lamas, G., Morlon, H., Giraldo, C.E., Jiggins, C.D., Joron, M., Mallet, J., Uribe, S. & Elias, M. (2016). Into the Andes: multiple independent colonizations drive montane diversity in the Neotropical clearwing butterflies Godyridina. *Molecular Ecology*, 25(22), 5765–5784. <https://doi.org/10.1111/mec.13773>",
+      "verification_url": "https://api.crossref.org/works/10.1111/mec.13773",
+      "status": "verified"
+    },
+    {
+      "key": "Chen & Guestrin, 2016",
+      "entry": "Chen, T. & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining*, pp. 785–794. <https://doi.org/10.1145/2939672.2939785>",
+      "verification_url": "https://api.crossref.org/works/10.1145/2939672.2939785",
+      "status": "verified"
+    },
+    {
+      "key": "Costa, 1999",
+      "entry": "Costa, F.A.P.L. (1999). New records of larval hostplants for Ithomiinae butterflies (Nymphalidae). *Revista Brasileira de Biologia*, 59(3), 455–459. <https://doi.org/10.1590/S0034-71081999000300010>",
+      "verification_url": "https://api.crossref.org/works/10.1590/S0034-71081999000300010",
+      "status": "verified"
+    },
+    {
+      "key": "Doré et al., 2023",
+      "entry": "Doré, M., Willmott, K., Lavergne, S., Chazot, N., Freitas, A.V.L., Fontaine, C. & Elias, M. (2023). Mutualistic interactions shape global spatial congruence and climatic niche evolution in Neotropical mimetic butterflies. *Ecology Letters*, 26(6), 843–857. <https://doi.org/10.1111/ele.14198>",
+      "verification_url": "https://api.crossref.org/works/10.1111/ele.14198",
+      "status": "verified"
+    },
+    {
+      "key": "Elias et al., 2008",
+      "entry": "Elias, M., Gompert, Z., Jiggins, C. & Willmott, K. (2008). Mutualistic interactions drive ecological niche convergence in a diverse butterfly community. *PLoS Biology*, 6(12), e300. <https://doi.org/10.1371/journal.pbio.0060300>",
+      "verification_url": "https://api.crossref.org/works/10.1371/journal.pbio.0060300",
+      "status": "verified"
+    },
+    {
+      "key": "Ester et al., 1996",
+      "entry": "Ester, M., Kriegel, H.-P., Sander, J. & Xu, X. (1996). A density-based algorithm for discovering clusters in large spatial databases with noise. In *Proceedings of the Second International Conference on Knowledge Discovery and Data Mining*, pp. 226–231. AAAI Press. <https://aaai.org/papers/kdd96-037-a-density-based-algorithm-for-discovering-clusters-in-large-spatial-databases-with-noise/>",
+      "verification_url": "https://aaai.org/papers/kdd96-037-a-density-based-algorithm-for-discovering-clusters-in-large-spatial-databases-with-noise/",
+      "status": "verified"
+    },
+    {
+      "key": "Fick & Hijmans, 2017",
+      "entry": "Fick, S.E. & Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. *International Journal of Climatology*, 37(12), 4302–4315. <https://doi.org/10.1002/joc.5086>",
+      "verification_url": "https://www.worldclim.org/data/worldclim21.html",
+      "status": "verified"
+    },
+    {
+      "key": "GitHub, n.d.-a",
+      "entry": "GitHub (n.d.-a). *GitHub Actions documentation*. <https://docs.github.com/en/actions>. Accessed 22 September 2026.",
+      "verification_url": "https://docs.github.com/en/actions",
+      "status": "verified"
+    },
+    {
+      "key": "GitHub, n.d.-b",
+      "entry": "GitHub (n.d.-b). *GitHub Pages documentation*. <https://docs.github.com/en/pages>. Accessed 22 September 2026.",
+      "verification_url": "https://docs.github.com/en/pages",
+      "status": "verified"
+    },
+    {
+      "key": "Gu et al., 2025",
+      "entry": "Gu, J., Stevens, S., Campolongo, E.G., Thompson, M.J., Zhang, N., Wu, J., Kopanev, A., Mai, Z., White, A.E., Balhoff, J., Dahdul, W., Rubenstein, D., Lapp, H., Berger-Wolf, T., Chao, W.-L. & Su, Y. (2025). BioCLIP 2: Emergent properties from scaling hierarchical contrastive learning. *Advances in Neural Information Processing Systems*, 38, 102778–102811. <https://doi.org/10.52202/085713-3436>",
+      "verification_url": "https://imageomics.github.io/bioclip-2/",
+      "status": "verified; electronic pagination follows author-provided NeurIPS citation; commercial proceedings pagination differs"
+    },
+    {
+      "key": "Gu et al., 2026",
+      "entry": "Gu, J., Stevens, S., Campolongo, E.G., Thompson, M.J., Zhang, N., Wu, J., Kopanev, A., Mai, Z., White, A.E., Balhoff, J., Dahdul, W.M., Rubenstein, D., Lapp, H., Berger-Wolf, T., Chao, W.-L. & Su, Y. (2026). *BioCLIP 2.5 Huge* (version 1.0.0) [Model]. Hugging Face. <https://doi.org/10.57967/hf/10131>",
+      "verification_url": "https://huggingface.co/imageomics/bioclip-2.5-vith14",
+      "status": "verified"
+    },
+    {
+      "key": "Hirzel et al., 2006",
+      "entry": "Hirzel, A.H., Le Lay, G., Helfer, V., Randin, C. & Guisan, A. (2006). Evaluating the ability of habitat suitability models to predict species presences. *Ecological Modelling*, 199(2), 142–152. <https://doi.org/10.1016/j.ecolmodel.2006.05.017>",
+      "verification_url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2006.05.017",
+      "status": "verified"
+    },
+    {
+      "key": "Jocher et al., 2023",
+      "entry": "Jocher, G., Qiu, J. & Chaurasia, A. (2023). *Ultralytics YOLO* [Software]. <https://github.com/ultralytics/ultralytics>. Accessed 22 September 2026.",
+      "verification_url": "https://raw.githubusercontent.com/ultralytics/ultralytics/main/CITATION.cff",
+      "status": "verified"
+    },
+    {
+      "key": "Karger et al., 2021",
+      "entry": "Karger, D.N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R.W., Zimmermann, N.E., Linder, H.P. & Kessler, M. (2021). *Climatologies at high resolution for the earth’s land surface areas* (version 2.1) [Dataset]. EnviDat. <https://doi.org/10.16904/envidat.228>",
+      "verification_url": "https://api.datacite.org/dois/10.16904/envidat.228",
+      "status": "verified"
+    },
+    {
+      "key": "Kass et al., 2021",
+      "entry": "Kass, J.M., Muscarella, R., Galante, P.J., Bohl, C.L., Pinilla-Buitrago, G.E., Boria, R.A., Soley-Guardia, M. & Anderson, R.P. (2021). ENMeval 2.0: Redesigned for customizable and reproducible modeling of species’ niches and distributions. *Methods in Ecology and Evolution*, 12(9), 1602–1608. <https://doi.org/10.1111/2041-210X.13628>",
+      "verification_url": "https://api.crossref.org/works/10.1111/2041-210X.13628",
+      "status": "verified"
+    },
+    {
+      "key": "MapLibre Contributors, n.d.",
+      "entry": "MapLibre Contributors (n.d.). *MapLibre GL JS documentation*. <https://maplibre.org/maplibre-gl-js/docs/>. Accessed 22 September 2026.",
+      "verification_url": "https://maplibre.org/maplibre-gl-js/docs/",
+      "status": "verified"
+    },
+    {
+      "key": "McClure & Elias, 2016",
+      "entry": "McClure, M. & Elias, M. (2016). Unravelling the role of host plant expansion in the diversification of a Neotropical butterfly genus. *BMC Evolutionary Biology*, 16, 128. <https://doi.org/10.1186/s12862-016-0701-5>",
+      "verification_url": "https://api.crossref.org/works/10.1186/s12862-016-0701-5",
+      "status": "verified"
+    },
+    {
+      "key": "McKinney, 2010",
+      "entry": "McKinney, W. (2010). Data structures for statistical computing in Python. In *Proceedings of the 9th Python in Science Conference*, pp. 56–61. <https://doi.org/10.25080/Majora-92bf1922-00a>",
+      "verification_url": "https://proceedings.scipy.org/articles/Majora-92bf1922-00a",
+      "status": "verified"
+    },
+    {
+      "key": "Pearson et al., 2007",
+      "entry": "Pearson, R.G., Raxworthy, C.J., Nakamura, M. & Peterson, A.T. (2007). Predicting species distributions from small numbers of occurrence records: a test case using cryptic geckos in Madagascar. *Journal of Biogeography*, 34(1), 102–117. <https://doi.org/10.1111/j.1365-2699.2006.01594.x>",
+      "verification_url": "https://api.crossref.org/works/10.1111/j.1365-2699.2006.01594.x",
+      "status": "verified"
+    },
+    {
+      "key": "Phillips & Dudík, 2008",
+      "entry": "Phillips, S.J. & Dudík, M. (2008). Modeling of species distributions with Maxent: new extensions and a comprehensive evaluation. *Ecography*, 31(2), 161–175. <https://doi.org/10.1111/j.0906-7590.2008.5203.x>",
+      "verification_url": "https://api.crossref.org/works/10.1111/j.0906-7590.2008.5203.x",
+      "status": "verified"
+    },
+    {
+      "key": "Phillips et al., 2009",
+      "entry": "Phillips, S.J., Dudík, M., Elith, J., Graham, C.H., Lehmann, A., Leathwick, J. & Ferrier, S. (2009). Sample selection bias and presence-only distribution models: implications for background and pseudo-absence data. *Ecological Applications*, 19(1), 181–197. <https://doi.org/10.1890/07-2153.1>",
+      "verification_url": "https://api.crossref.org/works/10.1890/07-2153.1",
+      "status": "verified"
+    },
+    {
+      "key": "Python Software Foundation, n.d.",
+      "entry": "Python Software Foundation (n.d.). *The Python language reference*. <https://docs.python.org/3/reference/index.html>. Accessed 22 September 2026.",
+      "verification_url": "https://docs.python.org/3/reference/index.html",
+      "status": "verified"
+    },
+    {
+      "key": "Roberts et al., 2017",
+      "entry": "Roberts, D.R., Bahn, V., Ciuti, S., Boyce, M.S., Elith, J., Guillera-Arroita, G., Hauenstein, S., Lahoz-Monfort, J.J., Schröder, B., Thuiller, W., Warton, D.I., Wintle, B.A., Hartig, F. & Dormann, C.F. (2017). Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. *Ecography*, 40(8), 913–929. <https://doi.org/10.1111/ecog.02881>",
+      "verification_url": "https://api.crossref.org/works/10.1111/ecog.02881",
+      "status": "verified"
+    },
+    {
+      "key": "Rosser & Mallet, 2024",
+      "entry": "Rosser, N. & Mallet, J. (2024). Interactive maps for visualizing geographic distributions and phenotypes. *Tropical Lepidoptera Research*, 34(2), 104–107. <https://doi.org/10.5281/zenodo.13920055>",
+      "verification_url": "https://api.datacite.org/dois/10.5281/zenodo.13920055",
+      "status": "verified"
+    },
+    {
+      "key": "Valavi et al., 2022",
+      "entry": "Valavi, R., Guillera-Arroita, G., Lahoz-Monfort, J.J. & Elith, J. (2022). Predictive performance of presence-only species distribution models: a benchmark study with reproducible code. *Ecological Monographs*, 92(1), e01486. <https://doi.org/10.1002/ecm.1486>",
+      "verification_url": "https://api.crossref.org/works/10.1002/ecm.1486",
+      "status": "verified"
+    },
+    {
+      "key": "Vue.js Contributors, n.d.",
+      "entry": "Vue.js Contributors (n.d.). *Vue.js 3 documentation*. <https://vuejs.org/guide/introduction.html>. Accessed 22 September 2026.",
+      "verification_url": "https://vuejs.org/guide/introduction.html",
+      "status": "verified"
+    },
+    {
+      "key": "Wahlberg, n.d.",
+      "entry": "Wahlberg, N. (n.d.). *Nymphalidae.net*. <https://www.nymphalidae.net/>. Accessed 22 September 2026.",
+      "verification_url": "https://www.nymphalidae.net/Nymphalidae/home.htm",
+      "status": "verified"
+    },
+    {
+      "key": "Warren et al., 2024",
+      "entry": "Warren, A.D., Davis, K.J., Stangeland, E.M., Willmott, K.R. & Grishin, N.V. (2024). *Illustrated lists of American butterflies* (version 9 March 2024). Butterflies of America Foundation. <https://www.butterfliesofamerica.com/>. Accessed 22 September 2026.",
+      "verification_url": "https://www.butterfliesofamerica.com/L/citation.htm",
+      "status": "verified"
+    },
+    {
+      "key": "Wessel & Smith, 1996",
+      "entry": "Wessel, P. & Smith, W.H.F. (1996). A global, self-consistent, hierarchical, high-resolution shoreline database. *Journal of Geophysical Research: Solid Earth*, 101(B4), 8741–8743. <https://doi.org/10.1029/96JB00104>",
+      "verification_url": "https://api.crossref.org/works/10.1029/96JB00104",
+      "status": "verified"
+    },
+    {
+      "key": "Willmott & Freitas, 2006",
+      "entry": "Willmott, K.R. & Freitas, A.V.L. (2006). Higher-level phylogeny of the Ithomiinae (Lepidoptera: Nymphalidae): classification, patterns of larval hostplant colonization and diversification. *Cladistics*, 22(4), 297–368. <https://doi.org/10.1111/j.1096-0031.2006.00108.x>",
+      "verification_url": "https://api.crossref.org/works/10.1111/j.1096-0031.2006.00108.x",
+      "status": "verified"
+    },
+    {
+      "key": "Wilson & Jetz, 2016",
+      "entry": "Wilson, A.M. & Jetz, W. (2016). Remotely sensed high-resolution global cloud dynamics for predicting ecosystem and biodiversity distributions. *PLoS Biology*, 14(3), e1002415. <https://doi.org/10.1371/journal.pbio.1002415>",
+      "verification_url": "https://www.earthenv.org/cloud",
+      "status": "verified"
+    },
+    {
+      "key": "Wisz et al., 2008",
+      "entry": "Wisz, M.S., Hijmans, R.J., Li, J., Peterson, A.T., Graham, C.H., Guisan, A. & NCEAS Predicting Species Distributions Working Group (2008). Effects of sample size on the performance of species distribution models. *Diversity and Distributions*, 14(5), 763–773. <https://doi.org/10.1111/j.1472-4642.2008.00482.x>",
+      "verification_url": "https://api.crossref.org/works/10.1111/j.1472-4642.2008.00482.x",
+      "status": "verified"
+    }
+  ],
+  "unresolved_source_identifier": {
+    "identifier": "10.15468/dl.6zagkz",
+    "status": "project-recorded only; DOI resolver, DataCite and Handle API returned HTTP 404",
+    "action": "Obtain the original butterfly GBIF download receipt. Do not substitute a later download."
+  }
+}
