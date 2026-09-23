@@ -1,31 +1,106 @@
-name: Manuscript Phase 3B validation
+name: Manuscript Phase 3B final package
 on:
   push:
     branches: [manuscript/submission-ready-phase3b-20260922]
-    paths:
-      - '.github/workflows/manuscript-phase3b.yml'
-      - 'paper/tools/finalise_phase3b.py'
+    paths: ['.github/workflows/manuscript-phase3b.yml']
 permissions:
-  contents: read
+  contents: write
 jobs:
   manuscript:
+    if: github.ref == 'refs/heads/manuscript/submission-ready-phase3b-20260922'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Export exact manuscript sources for isolated validation
-        run: |
-          mkdir -p /tmp/manuscript-source/paper /tmp/manuscript-source/baselines
-          cp paper/manuscript.md paper/supplementary_protocol_S1.md paper/validate_submission_text.py paper/phase3a_author_actions_20260922.md paper/phase3a_text_handoff_20260922.md /tmp/manuscript-source/paper/
-          git show 3b2fee94d15c891952494f4a9074576febc12a00:paper/manuscript.md > /tmp/manuscript-source/baselines/phase2_manuscript.md
-          git show 0cbf510b5de3afd99cd39729a297671afcfbd241:paper/manuscript.md > /tmp/manuscript-source/baselines/phase3a_manuscript.md
-          git rev-parse HEAD > /tmp/manuscript-source/source_commit.txt
-          cd /tmp/manuscript-source
-          sha256sum paper/* baselines/* > SHA256SUMS
-      - uses: actions/upload-artifact@v4
+          ref: manuscript/submission-ready-phase3b-20260922
+      - uses: actions/setup-python@v5
         with:
-          name: phase3b-exact-manuscript-source
-          path: /tmp/manuscript-source/
-          retention-days: 7
+          python-version: '3.11'
+      - name: Verify locally reviewed production sources
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          expected = {
+            'paper/figures/make_figure1.py': 'a2914d4b15bcaec3430f37af40dc6a32771c5203a78749db2befc637e01396d9',
+            'paper/tools/check_submission_package.py': '1dd89fcc452384aac99ae88ef814fff8f1a94cebbb1c82f9b089851427ae1d15',
+            'paper/tools/finalise_phase3b.py': '33456f9d3dc5afd0ce48ecabd7d51d7792d05e2d580b90332eef06432821c8a8',
+            'paper/tools/reading.css': '15cf85629968bfbcd449f501dbd7f0a7260b15056423321ec45c47bec4661bfb',
+            'paper/tools/render_submission.py': 'e3e9c3edef4851d3502934a67a2282980cf7f9c25cdfde5a38067bc1eb7e3f1f',
+            'paper/tools/requirements-reading.txt': '67bd1b55cbd852d322eab8ffe8f5b77a7daf218f5270725412aa8eacbea9eba5',
+            'paper/validation/phase3b_interface_access.json': '3616f19f0896fa35b10ea5e17761d588d1a468b804a5efc86eab25ae194857dd',
+          }
+          for name, wanted in expected.items():
+              actual = hashlib.sha256(Path(name).read_bytes()).hexdigest()
+              assert actual == wanted, (name, actual, wanted)
+              print('PASS reviewed source', name)
+          PY
+      - uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: '3.1.11.1'
+      - name: Install reading-copy dependencies
+        run: |
+          python -m pip install -r paper/tools/requirements-reading.txt
+          sudo apt-get update -qq
+          sudo apt-get install -y libcairo2 fonts-liberation
+          python -m playwright install --with-deps chromium
+      - name: Generate reviewed figure and integrate exact manuscript edits
+        run: |
+          python paper/tools/finalise_phase3b.py
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          for path, expected in {
+              'paper/manuscript.md': 'ced4f7b764bca86cd396dff001d78eedebb622b06e6f2cf77aec30a4dc31b069',
+              'paper/validate_submission_text.py': '26069fbd6501c0d6e597e67f233e4a2005721e0c2fe5a5600ebed1ac9996b2b9',
+          }.items():
+              assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == expected, path
+          PY
+      - name: Run preserved scientific text and rendering checks
+        run: |
+          set -o pipefail
+          python paper/validate_submission_text.py | tee paper/validation/phase3b_text_validation.log
+          python paper/tools/render_submission.py --pdf --screenshots
+          python paper/tools/check_submission_package.py
+          git diff --check
+          git diff -- paper/manuscript.md paper/phase3a_author_actions_20260922.md paper/validate_submission_text.py
+      - name: Commit and push only manuscript package changes
+        run: |
+          test "${GITHUB_REF}" = refs/heads/manuscript/submission-ready-phase3b-20260922
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/manuscript-phase3b.yml
+          git add paper/manuscript.md paper/phase3a_author_actions_20260922.md paper/validate_submission_text.py
+          git add -f paper/figures/README.md paper/figures/figure1_workflow.svg paper/figures/figure1_workflow.png paper/figures/figure2_capture_spec.md paper/figures/figure_provenance.json
+          git add -f paper/reading_copies/manuscript.html paper/reading_copies/manuscript.pdf paper/reading_copies/supplementary_protocol_S1.html paper/reading_copies/supplementary_protocol_S1.pdf
+          git add -f paper/validation/phase3b_text_validation.log paper/validation/phase3b_layout_validation.json paper/validation/phase3b_package_validation.json paper/validation/manuscript_link_remapping.json paper/validation/supplementary_protocol_S1_link_remapping.json
+          python - <<'PY'
+          import subprocess
+          changed = subprocess.check_output(['git', 'diff', '--cached', '--name-only'], text=True).splitlines()
+          assert changed and all(p.startswith('paper/') or p == '.github/workflows/manuscript-phase3b.yml' for p in changed), changed
+          PY
+          git diff --cached --check
+          git diff --cached --stat
+          git commit -m 'Finalize manuscript figures and submission package'
+          git push origin HEAD:manuscript/submission-ready-phase3b-20260922
+          git rev-parse HEAD > paper/validation/implementation_commit.txt
+      - name: Collect validation artifact
+        if: always()
+        run: |
+          mkdir -p /tmp/phase3b-package/paper
+          cp paper/manuscript.md paper/supplementary_protocol_S1.md paper/validate_submission_text.py paper/phase3a_author_actions_20260922.md /tmp/phase3b-package/paper/
+          for directory in figures tools reading_copies validation; do
+            if [ -d "paper/$directory" ]; then cp -r "paper/$directory" /tmp/phase3b-package/paper/; fi
+          done
+          find /tmp/phase3b-package -type d -name __pycache__ -prune -exec rm -rf '{}' +
+          git diff 0cbf510b5de3afd99cd39729a297671afcfbd241 HEAD --stat > /tmp/phase3b-package/changes.txt
+          git rev-parse HEAD > /tmp/phase3b-package/branch_head.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-manuscript-phase3b
+          path: /tmp/phase3b-package/
+          retention-days: 14
           if-no-files-found: error
