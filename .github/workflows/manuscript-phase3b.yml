@@ -1,0 +1,31 @@
+name: Manuscript Phase 3B validation
+on:
+  push:
+    branches: [manuscript/submission-ready-phase3b-20260922]
+    paths:
+      - '.github/workflows/manuscript-phase3b.yml'
+      - 'paper/tools/finalise_phase3b.py'
+permissions:
+  contents: read
+jobs:
+  manuscript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Export exact manuscript sources for isolated validation
+        run: |
+          mkdir -p /tmp/manuscript-source/paper /tmp/manuscript-source/baselines
+          cp paper/manuscript.md paper/supplementary_protocol_S1.md paper/validate_submission_text.py paper/phase3a_author_actions_20260922.md paper/phase3a_text_handoff_20260922.md /tmp/manuscript-source/paper/
+          git show 3b2fee94d15c891952494f4a9074576febc12a00:paper/manuscript.md > /tmp/manuscript-source/baselines/phase2_manuscript.md
+          git show 0cbf510b5de3afd99cd39729a297671afcfbd241:paper/manuscript.md > /tmp/manuscript-source/baselines/phase3a_manuscript.md
+          git rev-parse HEAD > /tmp/manuscript-source/source_commit.txt
+          cd /tmp/manuscript-source
+          sha256sum paper/* baselines/* > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase3b-exact-manuscript-source
+          path: /tmp/manuscript-source/
+          retention-days: 7
+          if-no-files-found: error
