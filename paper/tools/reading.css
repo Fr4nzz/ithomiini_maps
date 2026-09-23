@@ -1,0 +1,47 @@
+html { background: #ffffff; color: #20262b; }
+body { box-sizing: border-box; max-width: 1080px; margin: 0 auto; padding: 42px 40px 64px; font-family: Georgia, 'Liberation Serif', serif; font-size: 18px; line-height: 1.55; }
+p { margin: 0 0 1em; orphans: 3; widows: 3; }
+h1, h2, h3, .manuscript-title { font-family: Arial, 'Liberation Sans', sans-serif; color: #202e37; line-height: 1.25; }
+h1 { margin: 1.9em 0 0.8em; font-size: 1.65em; }
+h2 { margin: 1.65em 0 0.65em; font-size: 1.3em; }
+h3 { margin: 1.45em 0 0.6em; font-size: 1.08em; }
+.manuscript-title { font-size: 30px; line-height: 1.23; margin-bottom: 22px; }
+a { color: #285e78; text-decoration-thickness: 1px; text-underline-offset: 2px; overflow-wrap: anywhere; }
+code { font-family: 'Liberation Mono', monospace; font-size: 0.86em; overflow-wrap: anywhere; }
+pre { padding: 14px; border: 1px solid #c7cfd3; background: #f6f8f9; white-space: pre-wrap; overflow-wrap: anywhere; }
+img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.figure-block { margin: 30px 0 32px; }
+.figure-caption { margin-top: 14px; font-size: 0.94em; line-height: 1.45; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0 26px; font-size: 0.92em; line-height: 1.4; }
+th, td { border-bottom: 1px solid #c7cfd3; padding: 10px 12px; vertical-align: top; }
+th { border-top: 1.5px solid #50616b; border-bottom: 1.5px solid #50616b; font-weight: bold; text-align: left; }
+.table-group > p { font-size: 0.94em; line-height: 1.45; }
+#references ~ p { padding-left: 1.5em; text-indent: -1.5em; margin-bottom: 0.85em; font-size: 0.95em; }
+li { margin-bottom: 0.45em; }
+@media (max-width: 700px) {
+  body { padding: 24px 18px 40px; font-size: 16px; }
+  .manuscript-title { font-size: 25px; }
+  h1 { font-size: 1.5em; }
+  th, td { padding: 8px 7px; }
+  table { font-size: 0.86em; }
+  .figure-caption { font-size: 0.92em; }
+}
+@page { size: A4; margin: 18mm 16mm 19mm; }
+@media print {
+  body { max-width: none; margin: 0; padding: 0; font-size: 10.5pt; line-height: 1.38; }
+  .manuscript-title { font-size: 19pt; margin-bottom: 13pt; }
+  h1 { font-size: 15pt; margin-top: 18pt; }
+  h2 { font-size: 12pt; margin-top: 14pt; }
+  h3 { font-size: 10.7pt; margin-top: 12pt; }
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+  .figure-block, .table-group { break-inside: avoid; page-break-inside: avoid; }
+  .figure-block { margin: 8pt 0 12pt; }
+  .figure-caption { font-size: 9pt; line-height: 1.3; margin-top: 7pt; }
+  table { font-size: 9pt; line-height: 1.3; margin-bottom: 10pt; }
+  th, td { padding: 6pt; }
+  tr { break-inside: avoid; }
+  thead { display: table-header-group; }
+  a { color: inherit; text-decoration: none; }
+  #references ~ p { font-size: 9.5pt; }
+}
