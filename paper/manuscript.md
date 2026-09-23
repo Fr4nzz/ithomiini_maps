@@ -34,7 +34,7 @@ The web interfaces use Vue.js 3 (You, n.d.), and Wings Atlas uses MapLibre GL JS
 
 The components are versioned separately. Occurrence summaries refer to the frozen 9 May 2026 Wings Atlas snapshot. Released distribution-model products refer to 28 April 2026, and the taxonomic classifier description and collection evaluation refer to the September 2026 Gallery release. These dates do not imply that the occurrence snapshot was used to train the classifiers or that all modules were generated together. Source revisions and available model identifiers are recorded in Section 6.
 
-[PHASE 3: FIG1. Supply the final workflow figure, using the caption below and distinguishing uploaded-image inference from precomputed paired-collection predictions.]
+![Workflow showing reviewed specimen identifiers, separate upload and paired-collection classifiers, distinct Wings Atlas data types and separately versioned releases.](figures/figure1_workflow.svg)
 
 **Figure 1.** Connections between specimen digitisation and biological data. Photographs with visible specimen identifiers are reviewed and renamed with the AI Photo Processor, indexed in shared storage and displayed in Wings Gallery. Uploaded photographs are processed by a separate inference service that returns taxonomic candidates. Paired dorsal and ventral collection photographs use a distinct fitted classifier and release. Wings Atlas combines occurrence sources with taxonomic curation, mimicry assignments, recorded genomic-sampling status, host-plant information and relative habitat-suitability layers. Occurrence records, independent plant occurrences and model predictions are shown as distinct data types. The occurrence snapshot, SDM products and classifier releases have separate version identifiers.
 
@@ -153,8 +153,6 @@ The map can be exported as PNG or JPG. The R export supplies filtered butterfly-
 ### Deployment
 
 GitHub Actions builds and publishes the web application. A separate manually triggered workflow updates selected occurrence sources. Static hosting removes the need for a continuously running application server for the Atlas and Gallery interfaces, but access to source databases, image storage, update credentials and inference services remains dependent on those external resources.
-
-[PHASE 3: FIG2. Supply dated interface panels from the documented Gallery and Atlas releases. Use authorised specimen images, identify reference-image substitution and omit unreconciled quantitative charts.]
 
 **Figure 2.** Specimen review and geographic context in Wings Gallery and Wings Atlas. (a) Dorsal and ventral photographs linked by specimen identifier in the collection view. (b) Candidate predictions for an uploaded photograph, displayed separately from the paired-collection evaluation in Table 2. (c) Atlas occurrence records with source identity and a linked specimen or explicitly identified reference image. (d) An accessible-area suitability layer and its extrapolated extension, distinguished from butterfly records and optional independent plant occurrences. Each panel identifies its application revision and capture date. The panels illustrate data access and interpretation, not additional model evaluations.
 

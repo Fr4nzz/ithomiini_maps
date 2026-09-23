@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="194.25mm" viewBox="0 0 1440 1554" role="img" aria-labelledby="figure-title figure-desc">
+<title id="figure-title">Specimen digitisation, separate taxonomic classifiers and Wings Atlas</title>
+<desc id="figure-desc">A: visible specimen identifiers are read, reviewed by a person, renamed by wing surface and indexed in shared storage. B: reviewed collection photographs support specimen-linked browsing and taxonomic review in Wings Gallery. C: one uploaded photograph is localised and cropped, encoded with frozen BioCLIP 2.5-H and classified by a supervised taxonomic classifier. Optional geography follows classification. D: verified dorsal and ventral views form a 2,048-dimensional representation for a distinct fitted collection classifier and precomputed predictions. E: butterfly occurrence records and annotations, independent plant occurrences and modelled relative habitat suitability are distinct Wings Atlas inputs. F: occurrence, SDM and classifier releases are versioned separately. No collection accuracy is attributed to uploaded photographs.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#50616b"/></marker></defs>
+<rect x="0" y="0" width="1440" height="1554" rx="3" fill="#ffffff" stroke="none" stroke-width="1.5"/>
+<g id="panel-A" aria-label="Specimen photography and reviewed identifiers">
+<rect x="24" y="24" width="1392" height="204" rx="3" fill="#ffffff" stroke="#85939b" stroke-width="1.5"/>
+<text x="44" y="60" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">A  Specimen photography and reviewed identifiers</tspan>
+</text>
+</g>
+<g class="node" id="A1">
+<rect x="44" y="85" width="244" height="108" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="166.0" y="119.81" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21.5" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="166.0" dy="0">Specimen / wing photos</tspan>
+<tspan x="166.0" dy="26.5">Visible identifier</tspan>
+<tspan x="166.0" dy="26.5">(CAMID)</tspan>
+</text>
+</g>
+<path d="M 292 139 L 314 139" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="A2">
+<rect x="320" y="85" width="244" height="108" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="442.0" y="133.06" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21.5" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="442.0" dy="0">AI Photo Processor</tspan>
+<tspan x="442.0" dy="26.5">Read visible identifier</tspan>
+</text>
+</g>
+<path d="M 568 139 L 590 139" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="A3">
+<rect x="596" y="85" width="244" height="108" rx="3" fill="#fff3da" stroke="#986119" stroke-width="2.5"/>
+<text x="718.0" y="119.81" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21.5" font-weight="700" text-anchor="middle" fill="#202e37">
+<tspan x="718.0" dy="0">HUMAN REVIEW</tspan>
+<tspan x="718.0" dy="26.5">Confirm CAMID + side</tspan>
+<tspan x="718.0" dy="26.5">Check flagged records</tspan>
+</text>
+</g>
+<path d="M 844 139 L 866 139" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="A4">
+<rect x="872" y="85" width="244" height="108" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="994.0" y="133.06" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21.5" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="994.0" dy="0">Renamed photographs</tspan>
+<tspan x="994.0" dy="26.5">Dorsal d / ventral v</tspan>
+</text>
+</g>
+<path d="M 1120 139 L 1142 139" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="A5">
+<rect x="1148" y="85" width="244" height="108" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="1270.0" y="133.06" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21.5" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1270.0" dy="0">Shared image storage</tspan>
+<tspan x="1270.0" dy="26.5">Reviewed, indexed files</tspan>
+</text>
+</g>
+<text x="720" y="214" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="720" dy="0">Identifier readings are checked before final renaming.</tspan>
+</text>
+<g id="panel-B" aria-label="Wings Gallery collection workflow">
+<rect x="24" y="248" width="1392" height="160" rx="3" fill="#ffffff" stroke="#85939b" stroke-width="1.5"/>
+<text x="44" y="284" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">B  Wings Gallery collection workflow</tspan>
+</text>
+</g>
+<g class="node" id="B1">
+<rect x="44" y="310" width="375" height="70" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="231.5" y="338.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="231.5" dy="0">Reviewed collection</tspan>
+<tspan x="231.5" dy="29">photographs (A)</tspan>
+</text>
+</g>
+<g class="node" id="B2">
+<rect x="533" y="310" width="376" height="70" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="721.0" y="353.16" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="721.0" dy="0">Indexed Wings Gallery</tspan>
+</text>
+</g>
+<g class="node" id="B3">
+<rect x="1021" y="310" width="375" height="70" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="1208.5" y="338.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1208.5" dy="0">Specimen-linked browsing</tspan>
+<tspan x="1208.5" dy="29">and taxonomic review</tspan>
+</text>
+</g>
+<path d="M 425 345 L 526 345" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 915 345 L 1014 345" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g id="panel-C" aria-label="Single-photo AI Identifier">
+<rect x="24" y="428" width="684" height="520" rx="3" fill="#ffffff" stroke="#85939b" stroke-width="1.5"/>
+<text x="44" y="464" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">C  Single-photo AI Identifier</tspan>
+</text>
+</g>
+<g class="node" id="C1">
+<rect x="48" y="488" width="636" height="54" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="366.0" y="523.16" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366.0" dy="0">One uploaded photograph</tspan>
+</text>
+</g>
+<g class="node" id="C2">
+<rect x="48" y="565" width="636" height="64" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="366.0" y="590.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366.0" dy="0">Wing / butterfly localisation</tspan>
+<tspan x="366.0" dy="29">Padded RGB crop or full-image fallback</tspan>
+</text>
+</g>
+<g class="node" id="C3">
+<rect x="48" y="652" width="636" height="64" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="366.0" y="677.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366.0" dy="0">Frozen BioCLIP 2.5-H</tspan>
+<tspan x="366.0" dy="29">1,024-dimensional image representation</tspan>
+</text>
+</g>
+<g class="node" id="C4">
+<rect x="48" y="739" width="636" height="64" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="366.0" y="764.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366.0" dy="0">Supervised taxonomic classifier</tspan>
+<tspan x="366.0" dy="29">LayerNorm + L2-normalised cosine, scale 30</tspan>
+</text>
+</g>
+<g class="node" id="C5">
+<rect x="48" y="826" width="636" height="64" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="366.0" y="851.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366.0" dy="0">Ranked taxonomic candidates</tspan>
+<tspan x="366.0" dy="29">Finest-rank scores → rank aggregation</tspan>
+</text>
+</g>
+<path d="M 366 545 L 366 559" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 366 632 L 366 646" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 366 719 L 366 733" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 366 806 L 366 820" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="366" y="915" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366" dy="0">Optional geography re-ranks candidates after classification.</tspan>
+</text>
+<text x="366" y="939" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="366" dy="0">Paired-collection accuracy does not apply to this path.</tspan>
+</text>
+<g id="panel-D" aria-label="Separate paired-collection classifier">
+<rect x="732" y="428" width="684" height="520" rx="3" fill="#ffffff" stroke="#85939b" stroke-width="1.5"/>
+<text x="752" y="464" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="752" dy="0">D  Separate paired-collection classifier</tspan>
+</text>
+</g>
+<g class="node" id="D1">
+<rect x="756" y="488" width="298" height="74" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="905.0" y="518.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="905.0" dy="0">Verified dorsal</tspan>
+<tspan x="905.0" dy="29">photograph</tspan>
+</text>
+</g>
+<g class="node" id="D2">
+<rect x="1094" y="488" width="298" height="74" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="1243.0" y="518.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1243.0" dy="0">Verified ventral</tspan>
+<tspan x="1243.0" dy="29">photograph</tspan>
+</text>
+</g>
+<text x="1074" y="535" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="32" font-weight="700" text-anchor="middle" fill="#202e37">
+<tspan x="1074" dy="0">+</tspan>
+</text>
+<path d="M 905 565 L 905 580 L 1243 580 L 1243 565" fill="none" stroke="#50616b" stroke-width="2"/>
+<path d="M 1074 580 L 1074 594" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="D3">
+<rect x="756" y="600" width="636" height="92" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="1074.0" y="625.82" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1074.0" dy="0">Combined dorsal/ventral representation</tspan>
+<tspan x="1074.0" dy="28">Two frozen 1,024-feature image representations</tspan>
+<tspan x="1074.0" dy="28">Concatenated to 2,048 features</tspan>
+</text>
+</g>
+<path d="M 1074 696 L 1074 716" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="D4">
+<rect x="756" y="722" width="636" height="64" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="1074.0" y="762.16" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1074.0" dy="0">Distinct fitted collection classifier</tspan>
+</text>
+</g>
+<path d="M 1074 790 L 1074 820" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="D5">
+<rect x="756" y="826" width="636" height="64" rx="3" fill="#f5f8fa" stroke="#285e78" stroke-width="1.7"/>
+<text x="1074.0" y="851.66" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1074.0" dy="0">Precomputed collection predictions</tspan>
+<tspan x="1074.0" dy="29">Separate release for Wings Gallery</tspan>
+</text>
+</g>
+<text x="1074" y="915" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1074" dy="0">The paired benchmark uses verified specimens (Table 2).</tspan>
+</text>
+<text x="1074" y="939" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" font-weight="400" text-anchor="middle" fill="#202e37">
+<tspan x="1074" dy="0">Single-view fallbacks are not observed pairs.</tspan>
+</text>
+<g id="panel-E" aria-label="Wings Atlas: observations, annotations and predictions">
+<rect x="24" y="968" width="1392" height="386" rx="3" fill="#ffffff" stroke="#85939b" stroke-width="1.5"/>
+<text x="44" y="1004" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">E  Wings Atlas: observations, annotations and predictions</tspan>
+</text>
+</g>
+<g class="card" id="E1">
+<rect x="44" y="1028" width="429" height="224" rx="3" fill="#ffffff" stroke="#285e78" stroke-width="2"/>
+</g>
+<g class="card" id="E2">
+<rect x="506" y="1028" width="429" height="224" rx="3" fill="#ffffff" stroke="#386356" stroke-width="2" stroke-dasharray="7 4"/>
+</g>
+<g class="card" id="E3">
+<rect x="968" y="1028" width="428" height="224" rx="3" fill="#ffffff" stroke="#50616b" stroke-width="2" stroke-dasharray="2 4"/>
+</g>
+<text x="64" y="1065" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="64" dy="0">Butterfly records + annotations</tspan>
+</text>
+<text x="64" y="1104" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="64" dy="0">Observed occurrence data</tspan>
+<tspan x="64" dy="34">Taxonomic curation</tspan>
+<tspan x="64" dy="34">Mimicry-ring information</tspan>
+<tspan x="64" dy="34">Recorded genomic-sampling status</tspan>
+</text>
+<text x="526" y="1065" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="526" dy="0">Host-plant information</tspan>
+</text>
+<text x="526" y="1104" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="526" dy="0">Literature associations</tspan>
+<tspan x="526" dy="34">Independent plant occurrences</tspan>
+</text>
+<text x="526" y="1192" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="526" dy="0">Plant records do not establish</tspan>
+<tspan x="526" dy="28">local butterfly-host use.</tspan>
+</text>
+<text x="988" y="1065" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="988" dy="0">Species distribution models</tspan>
+</text>
+<text x="988" y="1104" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="988" dy="0">Relative habitat suitability</tspan>
+<tspan x="988" dy="34">Accessible-area core</tspan>
+<tspan x="988" dy="34">Extrapolated extension</tspan>
+</text>
+<text x="988" y="1220" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="988" dy="0">Predictions, not observations</tspan>
+</text>
+<path d="M 258 1256 L 258 1278" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 720 1256 L 720 1278" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 1182 1256 L 1182 1278" fill="none" stroke="#50616b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="node" id="E4">
+<rect x="44" y="1284" width="1352" height="46" rx="3" fill="#eef3f5" stroke="#50616b" stroke-width="1.7"/>
+<text x="720.0" y="1315.16" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#202e37">
+<tspan x="720.0" dy="0">Wings Atlas: specimen, taxonomic and geographic context</tspan>
+</text>
+</g>
+<g id="panel-F" aria-label="Separately versioned data and model releases">
+<rect x="24" y="1376" width="1392" height="154" rx="3" fill="#ffffff" stroke="#85939b" stroke-width="1.5"/>
+<text x="44" y="1412" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">F  Separately versioned data and model releases</tspan>
+</text>
+</g>
+<text x="44" y="1455" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">Occurrence snapshot</tspan>
+</text>
+<text x="44" y="1497" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="44" dy="0">9 May 2026</tspan>
+</text>
+<text x="506" y="1455" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="506" dy="0">SDM product release</tspan>
+</text>
+<text x="506" y="1497" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="506" dy="0">28 April 2026</tspan>
+</text>
+<text x="968" y="1455" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" font-weight="400" text-anchor="start" fill="#202e37">
+<tspan x="968" dy="0">Classifier / Gallery release</tspan>
+</text>
+<text x="968" y="1497" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="start" fill="#202e37">
+<tspan x="968" dy="0">September 2026</tspan>
+</text>
+</svg>

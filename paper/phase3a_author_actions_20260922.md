@@ -22,7 +22,7 @@ The textual S1 protocol is complete and usable without illustrations. The archiv
 - [ ] Current AI Photo Processor crop/grid and Review Results screenshots, with credentials hidden.
 - [ ] A current `Photo Database Tools` / `Photo_links` example and Gallery `Update DB` screenshot if these are useful to the journal. Hide internal folder IDs, access tokens and unrelated specimen information.
 
-Figure 1 and Figure 2 remain Phase 3B work. Their manuscript captions are retained. Capture dates and source revisions must accompany the actual interface panels, and any reference-image substitution must be identified.
+Figure 1 was completed in Phase 3B. Figure 2 still requires authentic, authorised interface captures. Follow the exact [Figure 2 capture specification](figures/figure2_capture_spec.md), including view states, image rights, capture dates, source revisions and explicit identification of reference-image substitutions. Both manuscript captions are retained.
 
 ## Optional decisions, not blockers for the text phase
 

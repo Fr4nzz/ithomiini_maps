@@ -1,0 +1,22 @@
+{
+  "source_manuscript_commit": "0cbf510b5de3afd99cd39729a297671afcfbd241",
+  "figure1": {
+    "status": "complete",
+    "kind": "editable scientific workflow",
+    "svg": "paper/figures/figure1_workflow.svg",
+    "png": "paper/figures/figure1_workflow.png",
+    "generator": "paper/figures/make_figure1.py",
+    "external_images": [],
+    "module_dates": {
+      "occurrences": "2026-05-09",
+      "sdm_products": "2026-04-28",
+      "classifier_gallery": "2026-09"
+    }
+  },
+  "figure2": {
+    "status": "pending-author-captures",
+    "assets": [],
+    "capture_specification": "paper/figures/figure2_capture_spec.md",
+    "reason": "Browser access blocked in this environment and no publication-authorised four-panel asset set established. No live inference output or image permission invented."
+  }
+}

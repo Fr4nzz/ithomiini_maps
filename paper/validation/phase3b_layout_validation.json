@@ -1,0 +1,69 @@
+{
+  "validation_utc": "2026-09-23T02:09:30.873744+00:00",
+  "pandoc": "pandoc 3.1.11.1",
+  "python": "3.11.16",
+  "load_method": "Direct set_content of standalone, embedded-resource HTML. Not a network navigation test.",
+  "documents": [
+    {
+      "file": "paper/reading_copies/manuscript.html",
+      "viewports": [
+        {
+          "viewport": 1280,
+          "scrollWidth": 1280,
+          "headings": 35,
+          "tables": 2,
+          "images": [
+            {
+              "alt": "Workflow showing reviewed specimen identifiers, separate upload and paired-collection classifiers, distinct Wings Atlas data types and separately versioned releases.",
+              "loaded": true,
+              "displayedWidth": 1000
+            }
+          ],
+          "overflowingElements": []
+        },
+        {
+          "viewport": 650,
+          "scrollWidth": 650,
+          "headings": 35,
+          "tables": 2,
+          "images": [
+            {
+              "alt": "Workflow showing reviewed specimen identifiers, separate upload and paired-collection classifiers, distinct Wings Atlas data types and separately versioned releases.",
+              "loaded": true,
+              "displayedWidth": 614
+            }
+          ],
+          "overflowingElements": []
+        }
+      ],
+      "pdf": "paper/reading_copies/manuscript.pdf",
+      "html_sha256": "b3f1f205dd1aa97c56a88775ba80231c60a3db6e30e65906ea79e6c7c3b61ecf"
+    },
+    {
+      "file": "paper/reading_copies/supplementary_protocol_S1.html",
+      "viewports": [
+        {
+          "viewport": 1280,
+          "scrollWidth": 1280,
+          "headings": 13,
+          "tables": 2,
+          "images": [],
+          "overflowingElements": []
+        },
+        {
+          "viewport": 650,
+          "scrollWidth": 650,
+          "headings": 13,
+          "tables": 2,
+          "images": [],
+          "overflowingElements": []
+        }
+      ],
+      "pdf": "paper/reading_copies/supplementary_protocol_S1.pdf",
+      "html_sha256": "f89b428a4899af1e95e94c8b96d8a310d4b8b9b7ab527275de8318e2026ad1e2"
+    }
+  ],
+  "scope": "Layout, links, image loading and text structure only. No experiments, inference or public services tested.",
+  "chromium": "153.0.8010.0",
+  "figure1_text_overflow": []
+}

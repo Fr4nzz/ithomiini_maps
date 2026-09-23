@@ -1,0 +1,249 @@
+PASS: exact Phase 2 baseline SHA-256
+PASS: 39 bibliography entries
+PASS: one alphabetical bibliography
+PASS: reference format: Anderson, C.B.
+PASS: cited reference: Anderson 2023
+PASS: DOI/authority URL present: Anderson
+PASS: URL syntax: https://doi.org/10.21105/joss.04930
+PASS: DOI syntax
+PASS: reference format: Barve, N., Barve, V., Jiménez-Valverde, A., Lira-Noriega, A., Maher, S.P., Peterson, A.T., et al.
+PASS: cited reference: Barve et al. 2011
+PASS: DOI/authority URL present: Barve et al.
+PASS: URL syntax: https://doi.org/10.1016/j.ecolmodel.2011.02.011
+PASS: DOI syntax
+PASS: reference format: Beccaloni, G.W., Viloria, Á.L., Hall, S.K. & Robinson, G.S.
+PASS: cited reference: Beccaloni et al. 2008
+PASS: DOI/authority URL present: Beccaloni et al.
+PASS: URL syntax: https://www.researchgate.net/publication/262099000_Catalogue_of_the_Hostplants_of_the_Neotropical_Butterflies_Catalogo_de_las_Plantas_Huesped_de_las_Mariposas_Neotropicales
+PASS: reference format: Ben Chehida, Y., van der Heijden, E.S.M., Page, E., Salazar C, P.A., Rosser, N., Córdova, K.G.G., et al.
+PASS: cited reference: Ben Chehida et al. 2026
+PASS: DOI/authority URL present: Ben Chehida et al.
+PASS: URL syntax: https://doi.org/10.1371/journal.pbio.3003742
+PASS: DOI syntax
+PASS: reference format: Challis, R., Kumar, S., Sotero-Caio, C., Brown, M. & Blaxter, M.
+PASS: cited reference: Challis et al. 2023
+PASS: DOI/authority URL present: Challis et al.
+PASS: URL syntax: https://doi.org/10.12688/wellcomeopenres.18658.1
+PASS: DOI syntax
+PASS: reference format: Chazot, N., Willmott, K.R., Condamine, F.L., De-Silva, D.L., Freitas, A.V.L., Lamas, G., et al.
+PASS: cited reference: Chazot et al. 2016
+PASS: DOI/authority URL present: Chazot et al.
+PASS: URL syntax: https://doi.org/10.1111/mec.13773
+PASS: DOI syntax
+PASS: reference format: Costa, F.A.P.L.
+PASS: cited reference: Costa 1999
+PASS: DOI/authority URL present: Costa
+PASS: URL syntax: https://doi.org/10.1590/S0034-71081999000300010
+PASS: DOI syntax
+PASS: reference format: Doré, M., Willmott, K., Lavergne, S., Chazot, N., Freitas, A.V.L., Fontaine, C., et al.
+PASS: cited reference: Doré et al. 2023
+PASS: DOI/authority URL present: Doré et al.
+PASS: URL syntax: https://doi.org/10.1111/ele.14198
+PASS: DOI syntax
+PASS: reference format: Elias, M., Gompert, Z., Jiggins, C. & Willmott, K.
+PASS: cited reference: Elias et al. 2008
+PASS: DOI/authority URL present: Elias et al.
+PASS: URL syntax: https://doi.org/10.1371/journal.pbio.0060300
+PASS: DOI syntax
+PASS: reference format: Ester, M., Kriegel, H.-P., Sander, J. & Xu, X.
+PASS: cited reference: Ester et al. 1996
+PASS: DOI/authority URL present: Ester et al.
+PASS: URL syntax: https://cdn.aaai.org/KDD/1996/KDD96-037.pdf
+PASS: reference format: Fick, S.E. & Hijmans, R.J.
+PASS: cited reference: Fick & Hijmans 2017
+PASS: DOI/authority URL present: Fick & Hijmans
+PASS: URL syntax: https://doi.org/10.1002/joc.5086
+PASS: DOI syntax
+PASS: reference format: Gauthier, J., Meier, J., Legeai, F., McClure, M., Whibley, A., Bretaudeau, A., et al.
+PASS: cited reference: Gauthier et al. 2023
+PASS: DOI/authority URL present: Gauthier et al.
+PASS: URL syntax: https://doi.org/10.1111/1755-0998.13749
+PASS: DOI syntax
+PASS: reference format: GBIF.org
+PASS: cited reference: GBIF.org n.d.
+PASS: DOI/authority URL present: GBIF.org
+PASS: URL syntax: https://doi.org/10.15468/dl.6zagkz
+PASS: DOI syntax
+PASS: reference format: GitHub
+PASS: cited reference: GitHub n.d.-a
+PASS: DOI/authority URL present: GitHub
+PASS: URL syntax: https://docs.github.com/en/actions
+PASS: reference format: GitHub
+PASS: cited reference: GitHub n.d.-b
+PASS: DOI/authority URL present: GitHub
+PASS: URL syntax: https://docs.github.com/en/pages
+PASS: reference format: Gu, J., Stevens, S., Campolongo, E.G., Thompson, M.J., Zhang, N., Wu, J., et al.
+PASS: cited reference: Gu et al. 2025
+PASS: DOI/authority URL present: Gu et al.
+PASS: URL syntax: https://doi.org/10.48550/arXiv.2505.23883
+PASS: DOI syntax
+PASS: reference format: Hirzel, A.H., Le Lay, G., Helfer, V., Randin, C. & Guisan, A.
+PASS: cited reference: Hirzel et al. 2006
+PASS: DOI/authority URL present: Hirzel et al.
+PASS: URL syntax: https://doi.org/10.1016/j.ecolmodel.2006.05.017
+PASS: DOI syntax
+PASS: reference format: Imageomics
+PASS: cited reference: Imageomics n.d.
+PASS: DOI/authority URL present: Imageomics
+PASS: URL syntax: https://huggingface.co/imageomics/bioclip-2.5-vith14
+PASS: reference format: Karger, D.N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R.W., et al.
+PASS: cited reference: Karger et al. 2021
+PASS: DOI/authority URL present: Karger et al.
+PASS: URL syntax: https://doi.org/10.16904/envidat.228
+PASS: DOI syntax
+PASS: reference format: Kass, J.M., Muscarella, R., Galante, P.J., Bohl, C.L., Pinilla-Buitrago, G.E., Boria, R.A., et al.
+PASS: cited reference: Kass et al. 2021
+PASS: DOI/authority URL present: Kass et al.
+PASS: URL syntax: https://doi.org/10.1111/2041-210X.13628
+PASS: DOI syntax
+PASS: reference format: MapLibre Contributors
+PASS: cited reference: MapLibre Contributors n.d.
+PASS: DOI/authority URL present: MapLibre Contributors
+PASS: URL syntax: https://maplibre.org/maplibre-gl-js/docs/
+PASS: reference format: McClure, M., Clerc, C., Desbois, C., Meichanetzoglou, A., Cau, M., Bastin-Héline, L., et al.
+PASS: cited reference: McClure et al. 2019
+PASS: DOI/authority URL present: McClure et al.
+PASS: URL syntax: https://doi.org/10.1098/rspb.2018.2769
+PASS: DOI syntax
+PASS: reference format: McKinney, W.
+PASS: cited reference: McKinney 2010
+PASS: DOI/authority URL present: McKinney
+PASS: URL syntax: https://doi.org/10.25080/Majora-92bf1922-00a
+PASS: DOI syntax
+PASS: reference format: Pearson, R.G., Raxworthy, C.J., Nakamura, M. & Peterson, A.T.
+PASS: cited reference: Pearson et al. 2007
+PASS: DOI/authority URL present: Pearson et al.
+PASS: URL syntax: https://doi.org/10.1111/j.1365-2699.2006.01594.x
+PASS: DOI syntax
+PASS: reference format: Phillips, S.J. & Dudík, M.
+PASS: cited reference: Phillips & Dudík 2008
+PASS: DOI/authority URL present: Phillips & Dudík
+PASS: URL syntax: https://doi.org/10.1111/j.0906-7590.2008.5203.x
+PASS: DOI syntax
+PASS: reference format: Phillips, S.J., Dudík, M., Elith, J., Graham, C.H., Lehmann, A., Leathwick, J., et al.
+PASS: cited reference: Phillips et al. 2009
+PASS: DOI/authority URL present: Phillips et al.
+PASS: URL syntax: https://doi.org/10.1890/07-2153.1
+PASS: DOI syntax
+PASS: reference format: Python Software Foundation
+PASS: cited reference: Python Software Foundation n.d.
+PASS: DOI/authority URL present: Python Software Foundation
+PASS: URL syntax: https://docs.python.org/3/reference/
+PASS: reference format: Roberts, D.R., Bahn, V., Ciuti, S., Boyce, M.S., Elith, J., Guillera-Arroita, G., et al.
+PASS: cited reference: Roberts et al. 2017
+PASS: DOI/authority URL present: Roberts et al.
+PASS: URL syntax: https://doi.org/10.1111/ecog.02881
+PASS: DOI syntax
+PASS: reference format: Rosser, N. & Mallet, J.
+PASS: cited reference: Rosser & Mallet 2024
+PASS: DOI/authority URL present: Rosser & Mallet
+PASS: URL syntax: https://mallet.oeb.harvard.edu/publications/interactive-maps-visualizing-geographic-distributions-and-phenotypes
+PASS: reference format: Ultralytics
+PASS: cited reference: Ultralytics n.d.
+PASS: DOI/authority URL present: Ultralytics
+PASS: URL syntax: https://docs.ultralytics.com/
+PASS: reference format: Valavi, R., Guillera-Arroita, G., Lahoz-Monfort, J.J. & Elith, J.
+PASS: cited reference: Valavi et al. 2022
+PASS: DOI/authority URL present: Valavi et al.
+PASS: URL syntax: https://doi.org/10.1002/ecm.1486
+PASS: DOI syntax
+PASS: reference format: van der Heijden, E.S.M., Näsvall, K., Seixas, F.A., Beserra Nobre, C.E., Maia, A.C.D., Salazar-Carrión, P., et al.
+PASS: cited reference: van der Heijden et al. 2025
+PASS: DOI/authority URL present: van der Heijden et al.
+PASS: URL syntax: https://doi.org/10.1073/pnas.2410939122
+PASS: DOI syntax
+PASS: reference format: Wahlberg, N.
+PASS: cited reference: Wahlberg n.d.
+PASS: DOI/authority URL present: Wahlberg
+PASS: URL syntax: https://www.nymphalidae.net/
+PASS: reference format: Warren, A.D., Davis, K.J., Stangeland, E.M., Willmott, K.R. & Grishin, N.V.
+PASS: cited reference: Warren et al. 2024
+PASS: DOI/authority URL present: Warren et al.
+PASS: URL syntax: https://www.butterfliesofamerica.com/L/Neotropical.htm
+PASS: reference format: Wessel, P. & Smith, W.H.F.
+PASS: cited reference: Wessel & Smith 1996
+PASS: DOI/authority URL present: Wessel & Smith
+PASS: URL syntax: https://doi.org/10.1029/96JB00104
+PASS: DOI syntax
+PASS: reference format: Willmott, K.R. & Freitas, A.V.L.
+PASS: cited reference: Willmott & Freitas 2006
+PASS: DOI/authority URL present: Willmott & Freitas
+PASS: URL syntax: https://doi.org/10.1111/j.1096-0031.2006.00108.x
+PASS: DOI syntax
+PASS: reference format: Wilson, A.M. & Jetz, W.
+PASS: cited reference: Wilson & Jetz 2016
+PASS: DOI/authority URL present: Wilson & Jetz
+PASS: URL syntax: https://doi.org/10.1371/journal.pbio.1002415
+PASS: DOI syntax
+PASS: reference format: Wisz, M.S., Hijmans, R.J., Li, J., Peterson, A.T., Graham, C.H., Guisan, A., et al.
+PASS: cited reference: Wisz et al. 2008
+PASS: DOI/authority URL present: Wisz et al.
+PASS: URL syntax: https://doi.org/10.1111/j.1472-4642.2008.00482.x
+PASS: DOI syntax
+PASS: reference format: You, E.
+PASS: cited reference: You n.d.
+PASS: DOI/authority URL present: You
+PASS: URL syntax: https://vuejs.org/
+PASS: no duplicate DOI entries
+PASS: all independently detected citations have entries: []
+PASS: all reference labels recognised by independent scan
+PASS: no internal figure-production markers remain
+PASS: no square-bracketed drafting instructions
+PASS: no text-only drafting markers
+PASS: manuscript links to existing S1
+PASS: manuscript prose has no em dash
+PASS: manuscript prose has no semicolon
+PASS: manuscript prose British spelling screen
+PASS: S1 has no em dash
+PASS: S1 has no semicolon
+PASS: S1 British spelling screen
+PASS: manuscript headings and numbering preserved
+PASS: unchanged protected block: # Abstract
+PASS: unchanged protected block: ## 2.2 AI Photo Processor
+PASS: unchanged protected block: # 3. Results
+PASS: unchanged protected block: # 5. Conclusions
+PASS: Discussion unchanged except British artefacts spelling
+PASS: Figure 1 caption preserved
+PASS: Figure 2 caption preserved
+PASS: protected value: 1,024-dimensional
+PASS: protected value: 2,048-dimensional
+PASS: protected value: CONCAT_DV
+PASS: protected value: scale of 30
+PASS: protected value: top 64
+PASS: protected value: 0.02
+PASS: protected value: 104,297
+PASS: protected value: 91.33%
+PASS: protected value: 3,355
+PASS: protected value: 145 species
+PASS: protected value: 1,220
+PASS: protected value: 57 species
+PASS: protected value: 89.7%
+PASS: exactly one accessible Figure 1 image reference
+PASS: all Phase 3A manuscript text unchanged apart from figure integration
+PASS: S1 byte-for-byte unchanged from Phase 3A
+PASS: one Figure 1 caption
+PASS: one Figure 2 caption
+PASS: Figure 1 SVG and PNG exist at committed paths
+PASS: Figure 1 has accessible title and description
+PASS: Figure 1 is vector artwork without external images or scripts
+PASS: Figure 1 scientific label: HUMAN REVIEW
+PASS: Figure 1 scientific label: Single-photo AI Identifier
+PASS: Figure 1 scientific label: Separate paired-collection classifier
+PASS: Figure 1 scientific label: Supervised taxonomic classifier
+PASS: Figure 1 scientific label: Independent plant occurrences
+PASS: Figure 1 scientific label: Predictions, not observations
+PASS: Figure 1 scientific label: 9 May 2026
+PASS: Figure 1 scientific label: 28 April 2026
+PASS: Figure 1 scientific label: September 2026
+PASS: Figure 1 does not attach collection accuracy to uploads
+PASS: high-resolution PNG has expected dimensions
+PASS: missing Figure 2 is explicitly recorded outside manuscript
+PASS: no missing Figure 2 image link
+PASS: exact Figure 2 author capture specification exists
+PASS: exact paired benchmark row: | Named subspecies | 2,613 | 87.93% | 97.33% |
+PASS: exact paired benchmark row: | Species | 3,355 | 91.33% | 97.91% |
+PASS: exact paired benchmark row: | Genus | 3,806 | 95.55% | 99.26% |
+PASS: exact paired benchmark row: | Family | 3,824 | 99.32% | 99.90% |
+SUMMARY: 39 reference keys, 27 unique DOI links. Structural checks passed.
+LIMIT: URL syntax is not URL reachability. GBIF receipt metadata remains an author action.
+LIMIT: Formatting and text validation do not reproduce experiments or establish runtime model weights.

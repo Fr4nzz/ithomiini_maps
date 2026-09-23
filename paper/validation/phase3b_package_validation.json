@@ -1,0 +1,91 @@
+{
+  "checked_utc": "2026-09-23T02:10:23.975003+00:00",
+  "phase3a_commit": "0cbf510b5de3afd99cd39729a297671afcfbd241",
+  "pdfs": [
+    {
+      "path": "paper/reading_copies/manuscript.pdf",
+      "pages": 16,
+      "text_extraction": "passed",
+      "blank_pages": false,
+      "replacement_glyphs": false
+    },
+    {
+      "path": "paper/reading_copies/supplementary_protocol_S1.pdf",
+      "pages": 5,
+      "text_extraction": "passed",
+      "blank_pages": false,
+      "replacement_glyphs": false
+    }
+  ],
+  "protected_files": [
+    {
+      "path": "paper/supplementary_protocol_S1.md",
+      "unchanged": true,
+      "sha256": "d8cd641b1eb8bcd19165b218f1af88a94233469277feb3640dca23dde3f82245"
+    },
+    {
+      "path": "paper/final_manuscript_evidence_20260921.md",
+      "unchanged": true,
+      "sha256": "5bb2a81578be968a67d3d9f7dfd9acf7916111b93280c0693ed3ac745d603043"
+    },
+    {
+      "path": "paper/phase2_revision_handoff_20260921.md",
+      "unchanged": true,
+      "sha256": "b7491f85315a61a31735112eae5e4dce2da58c485a0db46ef1ed3cb640aaff4d"
+    },
+    {
+      "path": "paper/phase3a_reference_audit_20260922.md",
+      "unchanged": true,
+      "sha256": "dbf48031311edd4d34ec7514fc896e23031325c8bd638627aaece6a813d7d7b0"
+    },
+    {
+      "path": "paper/phase3a_text_handoff_20260922.md",
+      "unchanged": true,
+      "sha256": "a6e72ab289fcac33a829b33398f07a5a5a3621e48b34ee3456a5f0606202b5b6"
+    }
+  ],
+  "outputs": {
+    "paper/figures/README.md": {
+      "bytes": 1376,
+      "sha256": "1dc6010a7c6291c8f3995a1981a646423993b6991196e179ba62f0fb25039a7f"
+    },
+    "paper/figures/figure1_workflow.png": {
+      "bytes": 1138103,
+      "sha256": "3e440ec090a7c85d83bf1d50ac035efd3091b5c584fef307fa2afb3e9d4254f5"
+    },
+    "paper/figures/figure1_workflow.svg": {
+      "bytes": 18842,
+      "sha256": "de2175a814201e2ac2477049f20deac6c77fadc8d69dffcbfb831a3d867bf637"
+    },
+    "paper/figures/figure2_capture_spec.md": {
+      "bytes": 7324,
+      "sha256": "6105124465c5193a32e1cfa9c7b5bc5ecd07e8f7fbbbbef814c09969faa02d12"
+    },
+    "paper/figures/figure_provenance.json": {
+      "bytes": 806,
+      "sha256": "f979225f883becb2fed248564129eb1874ce0f6a7dfebf101faf2baf115009e0"
+    },
+    "paper/figures/make_figure1.py": {
+      "bytes": 9720,
+      "sha256": "a2914d4b15bcaec3430f37af40dc6a32771c5203a78749db2befc637e01396d9"
+    },
+    "paper/reading_copies/manuscript.html": {
+      "bytes": 97246,
+      "sha256": "b3f1f205dd1aa97c56a88775ba80231c60a3db6e30e65906ea79e6c7c3b61ecf"
+    },
+    "paper/reading_copies/manuscript.pdf": {
+      "bytes": 174731,
+      "sha256": "6f0fbb4947fe7eb382d7f5c2d1b6da0f47d831c90acf84230a0215bb3abed3e9"
+    },
+    "paper/reading_copies/supplementary_protocol_S1.html": {
+      "bytes": 23324,
+      "sha256": "f89b428a4899af1e95e94c8b96d8a310d4b8b9b7ab527275de8318e2026ad1e2"
+    },
+    "paper/reading_copies/supplementary_protocol_S1.pdf": {
+      "bytes": 73408,
+      "sha256": "18c39c393d63a61adcd8dae5a3ddea9e4b8df7331fd445bc43916de53b0b3495"
+    }
+  },
+  "git_diff_check": "passed",
+  "scope": "Identity, structure and rendering only. No new experimental validation."
+}

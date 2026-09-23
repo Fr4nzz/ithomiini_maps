@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="en-GB" xml:lang="en-GB" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+<meta content="pandoc" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<title>Supplementary Protocol S1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+<style type="text/css">html { background: #ffffff; color: #20262b; }
+body { box-sizing: border-box; max-width: 1080px; margin: 0 auto; padding: 42px 40px 64px; font-family: Georgia, 'Liberation Serif', serif; font-size: 18px; line-height: 1.55; }
+p { margin: 0 0 1em; orphans: 3; widows: 3; }
+h1, h2, h3, .manuscript-title { font-family: Arial, 'Liberation Sans', sans-serif; color: #202e37; line-height: 1.25; }
+h1 { margin: 1.9em 0 0.8em; font-size: 1.65em; }
+h2 { margin: 1.65em 0 0.65em; font-size: 1.3em; }
+h3 { margin: 1.45em 0 0.6em; font-size: 1.08em; }
+.manuscript-title { font-size: 30px; line-height: 1.23; margin-bottom: 22px; }
+a { color: #285e78; text-decoration-thickness: 1px; text-underline-offset: 2px; overflow-wrap: anywhere; }
+code { font-family: 'Liberation Mono', monospace; font-size: 0.86em; overflow-wrap: anywhere; }
+pre { padding: 14px; border: 1px solid #c7cfd3; background: #f6f8f9; white-space: pre-wrap; overflow-wrap: anywhere; }
+img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.figure-block { margin: 30px 0 32px; }
+.figure-caption { margin-top: 14px; font-size: 0.94em; line-height: 1.45; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0 26px; font-size: 0.92em; line-height: 1.4; }
+th, td { border-bottom: 1px solid #c7cfd3; padding: 10px 12px; vertical-align: top; }
+th { border-top: 1.5px solid #50616b; border-bottom: 1.5px solid #50616b; font-weight: bold; text-align: left; }
+.table-group > p { font-size: 0.94em; line-height: 1.45; }
+#references ~ p { padding-left: 1.5em; text-indent: -1.5em; margin-bottom: 0.85em; font-size: 0.95em; }
+li { margin-bottom: 0.45em; }
+@media (max-width: 700px) {
+body { padding: 24px 18px 40px; font-size: 16px; }
+.manuscript-title { font-size: 25px; }
+h1 { font-size: 1.5em; }
+th, td { padding: 8px 7px; }
+table { font-size: 0.86em; }
+.figure-caption { font-size: 0.92em; }
+}
+@page { size: A4; margin: 18mm 16mm 19mm; }
+@media print {
+body { max-width: none; margin: 0; padding: 0; font-size: 10.5pt; line-height: 1.38; }
+.manuscript-title { font-size: 19pt; margin-bottom: 13pt; }
+h1 { font-size: 15pt; margin-top: 18pt; }
+h2 { font-size: 12pt; margin-top: 14pt; }
+h3 { font-size: 10.7pt; margin-top: 12pt; }
+h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+p { orphans: 3; widows: 3; }
+.figure-block, .table-group { break-inside: avoid; page-break-inside: avoid; }
+.figure-block { margin: 8pt 0 12pt; }
+.figure-caption { font-size: 9pt; line-height: 1.3; margin-top: 7pt; }
+table { font-size: 9pt; line-height: 1.3; margin-bottom: 10pt; }
+th, td { padding: 6pt; }
+tr { break-inside: avoid; }
+thead { display: table-header-group; }
+a { color: inherit; text-decoration: none; }
+#references ~ p { font-size: 9.5pt; }
+}
+</style>
+</head>
+<body>
+<h1 id="supplementary-protocol-s1.-specimen-photography-identifier-review-and-publication-in-wings-gallery">Supplementary
+Protocol S1. Specimen photography, identifier review and publication in
+Wings Gallery</h1>
+<h2 id="s1.1-scope-and-records">S1.1 Scope and records</h2>
+<p>This protocol connects paired wing photography to reviewed filenames,
+shared storage and Wings Gallery. It describes the Ithomiini collection
+workflow, with configurable choices identified separately. It does not
+validate a taxonomic identification, predict sex or replace specimen
+curation.</p>
+<p>The project uses a CAMID to identify each specimen and the suffixes
+<code>d</code> and <code>v</code> to distinguish dorsal and ventral
+photographs. Keep the specimen, its label and its photographs together
+throughout processing. Do not assign a new specimen identity solely from
+an AI reading.</p>
+<p>The software instructions refer to the browser-based AI Photo
+Processor at commit
+<code>49fe6ed226ed4914ed793e4252b74e18cf6ad8a4</code> and Wings Gallery
+at commit <code>f5cb03f17f3ba639090b32fbedde6d6645ff847b</code>. The
+original photography protocol supplies the physical workflow. Its older
+desktop-app instructions and fixed service quotas are not required for
+the browser workflow below.</p>
+<h2 id="s1.2-equipment-and-example-configuration">S1.2 Equipment and
+example configuration</h2>
+<p>The documented project setup uses a Canon EOS 550D with a Canon EF-S
+18–55 mm f/4–5.6 IS STM lens, supported above a flat imaging surface.
+The recorded working height is approximately 28 cm above the table. The
+zoom position is taped to reduce accidental movement. A ruler, colour
+reference and the specimen’s labelled envelope are included in the
+imaging arrangement.</p>
+<p>The archived setup record documents the following example, associated
+with <code>CAM077884v.jpg</code>. These values are an example
+configuration, not requirements for another collection. The original
+photograph was not available for a fresh metadata inspection during
+preparation of this protocol.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Documented example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Camera</td>
+<td style="text-align: left;">Canon EOS 550D</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lens</td>
+<td style="text-align: left;">Canon EF-S 18–55 mm f/4–5.6 IS STM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Working height</td>
+<td style="text-align: left;">Approximately 28 cm above the table</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Focal length</td>
+<td style="text-align: left;">33 mm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exposure time</td>
+<td style="text-align: left;">1/100 s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aperture</td>
+<td style="text-align: left;">f/8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sensitivity</td>
+<td style="text-align: left;">ISO 100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exposure mode</td>
+<td style="text-align: left;">Manual</td>
+</tr>
+</tbody>
+</table>
+<p>For another group, camera model, lens, working height, exposure and
+lighting are configurable. Choose settings that keep the full wing
+surfaces and label sharp without clipping pale labels or transparent
+wing regions. Record the settings and the point from which working
+height is measured. A colour reference supports visual comparison, but
+its presence alone does not establish a calibrated colour workflow.</p>
+<h2 id="s1.3-prepare-the-imaging-station">S1.3 Prepare the imaging
+station</h2>
+<ol type="1">
+<li>Secure the camera support and place the imaging board on a stable
+surface. Align the camera with the board. The project protocol uses a
+levelling aid and a marked cross to maintain placement. Keep the ruler
+near the lower edge of the photographed area.</li>
+<li>Place the colour reference on the right and the specimen envelope or
+CAMID label on the left of the wing area. Keep their positions
+consistent within the batch so that the AI Photo Processor can crop the
+label region reliably.</li>
+<li>Set the framing to include all photographed wings, the complete
+identifier and the reference objects. Check that no label or reference
+object covers a wing. Avoid strong shadows, glare and reflections across
+the label or wing surfaces.</li>
+<li>Focus on the specimen plane. Inspect a magnified preview of wing
+detail and handwriting. The project workflow uses manual focus to reduce
+changes between photographs. Recheck focus when the support, board,
+specimen height or zoom changes.</li>
+<li>Take a test photograph and inspect the saved file, not only the
+camera preview. Adjust the setup before starting the batch. A remote
+shutter or a short self-timer, such as the five-second delay in the
+original protocol, can reduce movement during exposure.</li>
+</ol>
+<p>Lighting equipment and exact placement are configurable. The
+available record does not establish a particular lamp model or lighting
+geometry as a project requirement.</p>
+<h2 id="s1.4-photograph-the-dorsal-and-ventral-surfaces">S1.4 Photograph
+the dorsal and ventral surfaces</h2>
+<ol type="1">
+<li>Confirm the CAMID against the physical specimen record. Position the
+dorsal, or upper, surfaces facing the camera. Keep left and right wings
+in a consistent arrangement, without overlaps that obscure diagnostic
+detail.</li>
+<li>Place the corresponding label or envelope in the frame and check
+every character. Keep the same CAMID visible in both photographs of a
+pair. Correct an illegible label through the collection’s curation
+procedure rather than guessing its contents.</li>
+<li>Capture the dorsal photograph. Inspect wing completeness, focus,
+exposure, label legibility and reference visibility. Repeat the
+photograph when an error cannot be corrected without losing biological
+information.</li>
+<li>Turn the wings over to expose the ventral, or lower, surfaces.
+Reposition the wings as needed to keep the same layout and avoid
+overlap. Do not change the specimen label. Assign the side from the
+photographed surface, not from the presence or absence of male hair
+pencils.</li>
+<li>Capture and inspect the ventral photograph. Confirm that both images
+belong to the same specimen before moving to the next specimen.</li>
+</ol>
+<p>Dorsal-first photography is the project sequence. Another collection
+may use a different sequence, but the sequence alone must not determine
+the final side label. If a surface is unavailable, record the missing
+view. Do not duplicate the available photograph and present it as an
+observed dorsal/ventral pair.</p>
+<h2 id="s1.5-transfer-and-organise-a-batch">S1.5 Transfer and organise a
+batch</h2>
+<p>Copy the photographs into a dated batch folder before renaming.
+Preserve an unmodified copy until the reviewed files and their backup
+have been checked. Compare the copied inventory with the camera-card
+inventory so that a date filter does not omit photographs from the same
+day or include an earlier batch accidentally.</p>
+<p>The project organises photographs by date. The following layout is a
+recommended example for another installation, not a claim about the
+names of historical project folders:</p>
+<pre class="text"><code>YYYY-MM-DD_batch-name/
+    originals/
+    reviewed_jpeg/
+    raw/
+    review_records/</code></pre>
+<p>Keep RAW files and their browser-viewable JPEG companions associated
+by their original basename. Record any missing companion. Keep the
+review CSV and rename log outside the image selection so that they are
+not processed as photographs. Folder names are configurable, but a batch
+should remain traceable from the original camera filenames to its final
+CAMIDs.</p>
+<h2 id="s1.6-process-the-labels-with-ai-photo-processor">S1.6 Process
+the labels with AI Photo Processor</h2>
+<p>Open the <a href="https://fr4nzz.github.io/rename_photos_AI/">AI
+Photo Processor browser interface</a>. Its <a href="https://github.com/Fr4nzz/rename_photos_AI/tree/49fe6ed226ed4914ed793e4252b74e18cf6ad8a4">source
+repository and instructions</a> identify the supported workflow.</p>
+<ol type="1">
+<li>In <strong>API Keys</strong>, configure an authorised Gemini API
+key. The documented app stores keys in the local browser. Do not include
+keys in filenames, screenshots, exported review files or shared protocol
+documents. Submit only images approved for external processing.</li>
+<li>In <strong>Select &amp; Rotate Images</strong>, open the batch
+folder and select the intended files. Check filename and file-type
+filters and the active image count. Rotate JPEG or PNG images where
+necessary to establish a consistent reading orientation.</li>
+<li>In <strong>Process Images</strong>, set the crop around the CAMID
+region. Check examples from across the batch, including labels near an
+edge or in a different position. A crop that removes part of an
+identifier cannot produce a reliable reading.</li>
+<li>Configure the grid dimensions, merged-image size, model, prompt and
+number of parallel messages. These are configurable, not fixed protocol
+requirements. Use a small trial batch to confirm that individual
+characters remain readable in the composite image. Keep the prompt
+explicit about the identifier fields and side labels required by the
+collection.</li>
+<li>Process the active selection. Check that failed or interrupted
+requests have not left photographs without readings. Use the provider’s
+current limits rather than the historical quotas in the original
+protocol. Record the model and prompt used for the batch.</li>
+</ol>
+<p>The browser can preview and rotate supported JPEG and PNG images. RAW
+files such as CR2 or ORF can participate in companion-file renaming, but
+direct RAW rotation requires the optional Windows backend described in
+the source repository. RAW rotation is optional. Do not assume that
+rotating a JPEG has also changed its RAW companion. Obtain any backend
+executable from the project’s own release page and follow its documented
+local setup.</p>
+<h2 id="s1.7-validate-identifiers-sides-and-filenames">S1.7 Validate
+identifiers, sides and filenames</h2>
+<p>Open <strong>Review Results</strong> and inspect the extracted fields
+beside the photograph thumbnails. Enlarge the original image where
+necessary. Review every final CAMID and side label before renaming. Pay
+particular attention to crossed-out labels, ambiguous
+<code>3</code>/<code>8</code> or <code>1</code>/<code>7</code> readings,
+lost leading zeros, missing readings, duplicate CAMIDs and incomplete
+pairs.</p>
+<p>Resolve disagreements against the physical label and specimen record.
+A plausible identifier is not enough to accept a reading. If the
+photograph is illegible, return to the specimen or rephotograph it. Do
+not infer a missing digit only because it would complete a numeric
+sequence.</p>
+<p>Use <strong>Recalculate names</strong> after correcting fields, then
+inspect the proposed filenames. The project convention places the side
+immediately after the CAMID and before the extension. For example:</p>
+<pre class="text"><code>CAM077884d.JPG
+CAM077884v.JPG</code></pre>
+<p>These two names illustrate the convention. They do not establish that
+both example files are present in the available archive. Preserve the
+<code>CAM</code> prefix and leading zeros. Use <code>d</code> only for
+dorsal and <code>v</code> only for ventral. A RAW companion uses the
+same specimen-and-side stem with its original file extension, such as
+<code>.CR2</code>. Another collection can configure different
+identifiers, but its parser and Gallery indexing rules must agree with
+that convention.</p>
+<p>Before <strong>Rename</strong>, check that distinct photographs will
+not receive the same destination name. Keep repeated takes identifiable
+until the curator chooses the intended image. Export the reviewed CSV
+and retain the rename log. The app supports reversible renaming, but
+this does not replace an independent backup. After renaming, open a
+sample of files and inspect every flagged pair or collision. Confirm
+that the final inventory matches the approved review table.</p>
+<h2 id="s1.8-upload-to-shared-storage">S1.8 Upload to shared
+storage</h2>
+<p>Upload the reviewed JPEGs to the appropriate shared Google Drive
+collection folder. Retain RAW files in the designated RAW storage rather
+than assuming they will be displayed in the Gallery. Use the
+collection’s authorised account and folder permissions. Do not publish
+credentials or internal folder identifiers in the manuscript.</p>
+<p>Check that the upload has finished and compare local and remote
+filenames and counts. Confirm that a dorsal/ventral pair still shares
+the same CAMID. Preserve any subfolder organisation used to distinguish
+collection, insectary or CRISPR material. Publication permission for a
+photograph must be resolved before it is made accessible through a
+public Gallery.</p>
+<h2 id="s1.9-index-google-drive-in-google-sheets">S1.9 Index Google
+Drive in Google Sheets</h2>
+<p>The Gallery repository contains <a href="https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/blob/f5cb03f17f3ba639090b32fbedde6d6645ff847b/list_google_drive_files.gs"><code>list_google_drive_files.gs</code></a>.
+It lists image files into the <code>Photo_links</code> sheet, including
+filenames, URLs and file metadata.</p>
+<p>For the existing project installation, use the configured spreadsheet
+and the <strong>Photo Database Tools</strong> menu to run the folder
+listing or synchronisation. Wait for batch processing to finish before
+updating the Gallery database. Check a recently uploaded CAMID, its side
+suffixes and its links in <code>Photo_links</code>. Do not assume that
+uploading to Drive has updated the spreadsheet automatically.</p>
+<p>For a new installation, an authorised administrator should open the
+destination spreadsheet, choose <strong>Extensions &gt; Apps
+Script</strong>, install the repository’s listing script and its
+documented <code>LongRun.gs</code> dependency, enable the Drive API
+service and configure <code>FOLDER_MAPPING</code> with the intended
+folder IDs. Reload the spreadsheet to expose <strong>Photo Database
+Tools</strong> and authorise the required access. These IDs and
+permissions are installation-specific. Follow the <a href="https://github.com/rapidspeciation/Shiny_Ikiam_Wings_Gallery/blob/f5cb03f17f3ba639090b32fbedde6d6645ff847b/README.md">pinned
+Gallery setup instructions</a> rather than copying another group’s
+private configuration.</p>
+<p>The script supports batch processing and dead-link cleaning. Inspect
+proposed removals against the source folders when files have been moved
+or access has changed. A permission failure should not be interpreted
+automatically as a deleted specimen photograph.</p>
+<h2 id="s1.10-update-and-check-wings-gallery">S1.10 Update and check
+Wings Gallery</h2>
+<p>In <a href="https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/">Wings
+Gallery</a>, open <strong>Update DB</strong> and use the authorised
+update control. In the documented deployment, a Cloudflare Worker checks
+the request and triggers the GitHub Actions database update. The Python
+processing step reads the spreadsheet, writes the Gallery JSON data and
+starts the subsequent deployment.</p>
+<p>Wait for the update and deployment to finish. A submitted request is
+not evidence of a completed update. Search for a newly added CAMID and
+check both wing surfaces, the image links and the relevant collection
+view. Inspect records with missing views and verify that unrelated
+specimens have not been combined. Check the intended public access
+separately from access granted to a logged-in curator.</p>
+<p>For a new installation, configure the spreadsheet access, update
+proxy, workflow credentials and deployment before using this step. These
+are administrator choices, not credentials supplied by this protocol.
+The Gallery README documents local processing through
+<code>scripts/process_data.py</code> as an alternative for an authorised
+maintainer.</p>
+<h2 id="s1.11-common-failure-checks">S1.11 Common failure checks</h2>
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Observation</th>
+<th style="text-align: left;">Check before proceeding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Label missing from a composite</td>
+<td style="text-align: left;">Inspect the crop and active selection
+against the original photograph.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Incorrect CAMID despite a plausible
+reading</td>
+<td style="text-align: left;">Compare each character with the physical
+label and specimen record.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Duplicate destination filename</td>
+<td style="text-align: left;">Check duplicate readings, repeated takes
+and incorrect side labels. Do not overwrite another specimen’s
+file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dorsal and ventral views look
+identical</td>
+<td style="text-align: left;">Inspect the original surfaces. Do not
+create a false pair by copying or merely rotating an image.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RAW file retains a different name or
+orientation</td>
+<td style="text-align: left;">Check companion matching and whether the
+optional RAW operation was actually performed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">File is in Drive but absent from
+<code>Photo_links</code></td>
+<td style="text-align: left;">Check configured folders, permissions and
+whether the listing completed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spreadsheet is current but Gallery is
+not</td>
+<td style="text-align: left;">Check the database-update workflow and
+subsequent deployment separately.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Image opens for a curator but not a
+reader</td>
+<td style="text-align: left;">Check intended sharing permissions and the
+published image link.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thumbnail or label is blurred, clipped or
+obscured</td>
+<td style="text-align: left;">Rephotograph when the lost information
+cannot be recovered from the original file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pair points to different specimens</td>
+<td style="text-align: left;">Stop publication of the affected record
+and reconcile the CAMID, side labels and source files.</td>
+</tr>
+</tbody>
+</table>
+<p>As a reproducibility recommendation, retain the original-to-final
+filename mapping, reviewed CSV, rename log, processing date, operator,
+model and prompt, software revisions and the completed Gallery update
+revision with each batch. These records make later corrections
+traceable. They are not asserted to exist for every historical
+batch.</p>
+<h2 id="s1.12-source-materials">S1.12 Source materials</h2>
+<p>Physical setup and handling instructions derive from <a href="https://github.com/Fr4nzz/ithomiini_maps/blob/0cbf510b5de3afd99cd39729a297671afcfbd241/paper/Photos%20Processing%20Protocol.md"><code>Photos Processing Protocol.md</code></a>
+and the author’s setup description in the <a href="https://github.com/Fr4nzz/ithomiini_maps/blob/0cbf510b5de3afd99cd39729a297671afcfbd241/docs/chat-transcripts/codex-ithomiini/ithomiini-maps-manuscript-019dd1d3.md">archived
+manuscript discussion</a>, particularly the 21 May 2026 camera and
+height clarification. Browser processing and database update
+instructions use the pinned software sources linked above. No setup
+photograph or interface screenshot has been reconstructed for this
+protocol.</p>
+</body>
+</html>
