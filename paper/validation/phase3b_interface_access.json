@@ -1,0 +1,18 @@
+{
+  "attempt_utc": "2026-09-23T01:48:46.149101+00:00",
+  "attempts": [
+    {
+      "url": "https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/"
+    },
+    {
+      "url": "https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/ai_identifier",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at https://rapidspeciation.github.io/Shiny_Ikiam_Wings_Gallery/ai_identifier"
+    },
+    {
+      "url": "https://rapidspeciation.github.io/ithomiini_maps/",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at https://rapidspeciation.github.io/ithomiini_maps/"
+    }
+  ],
+  "limitation": "Environment access results do not establish public service outages."
+}
