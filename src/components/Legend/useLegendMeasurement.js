@@ -29,6 +29,7 @@ import { LEGEND_LAYOUT } from './legendLayout'
  */
 export function useLegendMeasurement({
   legendRef, contentRef, containerBounds,
+  previewSize = ref(null),
   isAutoWidth, isAutoHeight, currentWidth, currentHeight,
   isResizing, resizeOverride, sortedAllItems, legendCounts,
   legendStore, dataStore
@@ -62,7 +63,7 @@ export function useLegendMeasurement({
     const allItems = sortedAllItems.value
     if (!allItems.length) return LEGEND_LAYOUT.MIN_WIDTH
 
-    const maxContainerWidth = containerBounds.value.width * LEGEND_LAYOUT.AUTO_WIDTH_MAX_CONTAINER_RATIO
+    const maxContainerWidth = containerBounds.value.width * LEGEND_LAYOUT.AUTO_WIDTH_MAX_CONTAINER_RATIO / renderScale.value
     const fontSizePx = Math.round(14 * legendStore.textScale)
     const isGrouped = legendStore.isGrouped
     const visibleCount = measuredItemCount.value ?? allItems.length
@@ -107,10 +108,12 @@ export function useLegendMeasurement({
   })
 
   const isExportMode = computed(() => dataStore.exportSettings.enabled)
+  const renderScale = computed(() => (Number(legendStore.scale) || 1) *
+    (isExportMode.value ? Number(dataStore.exportSettings.uiScale) || 1 : 1))
 
   const maxLegendHeight = computed(() => {
     if (isExportMode.value) {
-      return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.EXPORT_MAX_HEIGHT_RATIO)
+      return Math.floor((containerBounds.value.height - 20) / renderScale.value)
     }
     const h = Math.floor(containerBounds.value.height * LEGEND_LAYOUT.MAX_HEIGHT_RATIO)
     return isMobileContainer.value ? Math.min(h, LEGEND_LAYOUT.MOBILE_MAX_HEIGHT_PX) : h
@@ -118,7 +121,7 @@ export function useLegendMeasurement({
 
   const targetLegendHeight = computed(() => {
     if (isExportMode.value) {
-      return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.EXPORT_TARGET_HEIGHT_RATIO)
+      return Math.floor(containerBounds.value.height * LEGEND_LAYOUT.EXPORT_TARGET_HEIGHT_RATIO / renderScale.value)
     }
     const h = Math.floor(containerBounds.value.height * LEGEND_LAYOUT.TARGET_HEIGHT_RATIO)
     return isMobileContainer.value ? Math.min(h, LEGEND_LAYOUT.MOBILE_TARGET_HEIGHT_PX) : h
@@ -136,6 +139,8 @@ export function useLegendMeasurement({
     let availableHeight
     if (isResizing.value && resizeOverride.value) {
       availableHeight = resizeOverride.value.height
+    } else if (isExportMode.value && previewSize.value) {
+      availableHeight = previewSize.value.height
     } else if (!isAutoHeight.value) {
       availableHeight = currentHeight.value || targetLegendHeight.value
     } else {
@@ -244,10 +249,10 @@ export function useLegendMeasurement({
 
     if (moreEl) {
       const moreTop = moreEl.getBoundingClientRect().top
-      return moreTop - itemsBottom
+      return (moreTop - itemsBottom) / renderScale.value
     } else {
-      const contentBottom = contentEl.getBoundingClientRect().top + contentEl.clientHeight
-      return contentBottom - itemsBottom
+      const contentBottom = contentEl.getBoundingClientRect().bottom
+      return (contentBottom - itemsBottom) / renderScale.value
     }
   }
 
@@ -322,7 +327,7 @@ export function useLegendMeasurement({
     correctionSteps++
 
     const contentRect = contentEl.getBoundingClientRect()
-    const contentBottom = contentRect.top + contentEl.clientHeight
+    const contentBottom = contentRect.bottom
     const contentPaddingBottom = 12
     const moreIndicatorReserve = 40
 
@@ -355,7 +360,7 @@ export function useLegendMeasurement({
       const extra = includeMoreIndicator
         ? moreIndicatorReserve + contentPaddingBottom + borderSafety
         : contentPaddingBottom + borderSafety
-      return Math.max(LEGEND_LAYOUT.MIN_SNUG_HEIGHT, Math.ceil(lastBottom - legendTop + extra))
+      return Math.max(LEGEND_LAYOUT.MIN_SNUG_HEIGHT, Math.ceil((lastBottom - legendTop) / renderScale.value + extra))
     }
 
     function applyMeasuredResult(count, snugHeight, reason) {
@@ -397,8 +402,8 @@ export function useLegendMeasurement({
 
     // Not all fit — find cutoff. First try without "+N more" reserve to see
     // if N+1 items fit (saves space vs showing "+1 more" which wastes ~40px).
-    const maxBottomWithMore = contentBottom - contentPaddingBottom - moreIndicatorReserve
-    const maxBottomWithoutMore = contentBottom - contentPaddingBottom
+    const maxBottomWithMore = contentBottom - (contentPaddingBottom + moreIndicatorReserve) * renderScale.value
+    const maxBottomWithoutMore = contentBottom - contentPaddingBottom * renderScale.value
     let domFitCount = 0
     let domFitCountNoMore = 0  // items that fit if we skip "+N more"
     for (let i = 0; i < measurableItems.length; i++) {
@@ -456,7 +461,8 @@ export function useLegendMeasurement({
   })
 
   const maxResizeWidth = computed(() => {
-    return Math.min(Math.round(containerBounds.value.width * LEGEND_LAYOUT.MAX_RESIZE_WIDTH_RATIO), LEGEND_LAYOUT.MAX_WIDTH)
+    return Math.max(LEGEND_LAYOUT.MIN_WIDTH,
+      Math.min(Math.round(containerBounds.value.width * LEGEND_LAYOUT.MAX_RESIZE_WIDTH_RATIO / renderScale.value), LEGEND_LAYOUT.MAX_WIDTH))
   })
 
   // ── Cleanup ───────────────────────────────────────────────────────────

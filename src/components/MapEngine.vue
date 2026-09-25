@@ -13,7 +13,6 @@ import {
   getStylesByTheme,
   getBasemapPair,
   useLocationSearch,
-  useExportPreview,
   useScatterVisualization,
   useDataLayer,
   useStyleSwitcher,
@@ -68,7 +67,6 @@ const {
   cleanup: cleanupSearch
 } = useLocationSearch(map)
 
-const { legendTransformOrigin } = useExportPreview(wrapperSize)
 const { updateScatterVisualization } = useScatterVisualization(map)
 
 // Popup handler for data layer
@@ -409,7 +407,7 @@ const initMap = () => {
 
   map.value.addControl(new maplibregl.NavigationControl(), 'top-right')
   map.value.addControl(new maplibregl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'bottom-right')
-  map.value.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
+  map.value.addControl(new maplibregl.AttributionControl({ compact: false }), 'bottom-right')
   map.value.addControl(new maplibregl.FullscreenControl(), 'top-right')
 
   map.value.on('load', async () => {
@@ -661,10 +659,6 @@ watch(
       <Legend
         v-if="store.exportSettings.includeLegend || !store.exportSettings.enabled"
         :container-ref="mapContainer"
-        :style="{
-          transform: store.exportSettings.enabled ? 'scale(' + store.exportSettings.uiScale + ')' : 'none',
-          transformOrigin: legendTransformOrigin
-        }"
       />
     </div>
 

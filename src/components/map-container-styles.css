@@ -745,6 +745,22 @@
   border-top-color: var(--color-bg-primary, #1a1a2e) !important;
 }
 
+/* Keep credits below the ruler, independent of MapLibre control insertion order. */
+:deep(.maplibregl-ctrl-bottom-right) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: calc(100% - 20px);
+}
+:deep(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-scale) {
+  order: 0;
+  margin-bottom: 4px;
+}
+:deep(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib) {
+  order: 1;
+  max-width: 100%;
+}
+
 /* Attribution Control */
 :deep(.maplibregl-ctrl-attrib) {
   background: var(--color-bg-overlay, rgba(26, 26, 46, 0.8)) !important;

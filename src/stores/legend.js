@@ -17,6 +17,9 @@ export const useLegendStore = defineStore('legend', () => {
 
   // Position (x, y coordinates for free positioning)
   const position = ref(getStorage('legend-position', { x: 40, y: null }))
+  // A corner remains anchored as the legend and viewport change size.
+  // Older saved pixel positions without this preference are treated as free.
+  const corner = ref(getStorage('legend-corner', null))
 
   // Size ('auto' means auto-fit to content)
   const size = ref(getStorage('legend-size', { width: 'auto', height: 'auto' }))
@@ -27,6 +30,7 @@ export const useLegendStore = defineStore('legend', () => {
 
   const showLegend = ref(true)
   const textScale = ref(getStorage('legend-text-scale', 1))
+  const scale = ref(getStorage('legend-scale', 1))
 
   // Labels currently shown in the legend (updated by Legend.vue).
   // Items in the color map but NOT in this set render as grey on the map.
@@ -41,7 +45,7 @@ export const useLegendStore = defineStore('legend', () => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   const stickyEdges = ref(getStorage('legend-sticky', true))
-  const snapThreshold = ref(20) // pixels
+  const snapThreshold = ref(12) // CSS pixels from the anchored position
 
   // ═══════════════════════════════════════════════════════════════════════════
   // CUSTOMIZATIONS
@@ -271,6 +275,11 @@ export const useLegendStore = defineStore('legend', () => {
     setStorage('legend-position', position.value)
   }
 
+  function setCorner(value) {
+    corner.value = value
+    setStorage('legend-corner', value)
+  }
+
   function updateSize(width, height) {
     size.value = { width, height }
     setStorage('legend-size', size.value)
@@ -279,6 +288,11 @@ export const useLegendStore = defineStore('legend', () => {
   function setTextScale(scale) {
     textScale.value = scale
     setStorage('legend-text-scale', scale)
+  }
+
+  function setScale(value) {
+    scale.value = Math.min(2, Math.max(0.5, Number(value) || 1))
+    setStorage('legend-scale', scale.value)
   }
 
   function setStickyEdges(enabled) {
@@ -594,9 +608,11 @@ export const useLegendStore = defineStore('legend', () => {
   return {
     // State
     position,
+    corner,
     size,
     showLegend,
     textScale,
+    scale,
     stickyEdges,
     snapThreshold,
     shownLabels,
@@ -646,8 +662,10 @@ export const useLegendStore = defineStore('legend', () => {
 
     // Actions
     updatePosition,
+    setCorner,
     updateSize,
     setTextScale,
+    setScale,
     setStickyEdges,
     setShownLabels,
     setCustomLabel,
