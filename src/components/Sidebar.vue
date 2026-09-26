@@ -631,8 +631,25 @@ const updateExportHeight = (value) => {
           Export Settings
         </label>
 
+        <button class="btn-export-now" @click="emit('open-map-export')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Export Image
+        </button>
+
+        <button class="btn-export-r" @click="emit('export-for-r')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+          Export for R (Vector)
+        </button>
+
         <!-- Aspect Ratio -->
-        <div class="setting-row">
+        <div class="setting-row export-first-setting">
           <label>Aspect Ratio</label>
           <select v-model="store.exportSettings.aspectRatio" class="style-select">
             <option v-for="opt in aspectRatioOptions" :key="opt.value" :value="opt.value">
@@ -741,26 +758,6 @@ const updateExportHeight = (value) => {
             >3×</button>
           </div>
         </div>
-
-        <!-- Export Button -->
-        <button class="btn-export-now" @click="emit('open-map-export')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Export Image
-        </button>
-
-        <!-- Export for R Button -->
-        <button class="btn-export-r" @click="emit('export-for-r')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Export for R (Vector)
-        </button>
       </div>
 
       <!-- FILTERS: unified taxonomy + other filters with tile selectors -->

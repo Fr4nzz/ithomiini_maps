@@ -30,6 +30,11 @@ export function useDataLayer(map, options = {}) {
   let rangePopup = null
   let _lastClusterState = null
   let _lastClusterRadius = null
+  let _lastShapesEnabled = null
+  let lastDataInput = null
+  let lastHiddenItems = []
+  let lastHiddenAttribute = null
+  let lastPointsSource = null
 
   // Store current cluster extent parameters for recreation after style change
   const currentExtentParams = ref(null)
@@ -237,7 +242,13 @@ export function useDataLayer(map, options = {}) {
     const existingSource = map.value.getSource('points-source')
     const needsSourceRebuild = !existingSource ||
       (shouldCluster !== _lastClusterState) ||
-      (clusterRadiusPixels !== _lastClusterRadius)
+      (clusterRadiusPixels !== _lastClusterRadius) ||
+      (legendStore.shapeSettings.enabled !== _lastShapesEnabled)
+    const hiddenItems = legendStore.hiddenItems
+    const sameHiddenItems = hiddenItems.length === lastHiddenItems.length &&
+      hiddenItems.every((item, index) => item === lastHiddenItems[index])
+    const dataChanged = geojson !== lastDataInput || !sameHiddenItems ||
+      store.colorByAttribute !== lastHiddenAttribute || existingSource !== lastPointsSource
 
     if (rangePopup) { rangePopup.remove(); rangePopup = null }
 
@@ -265,11 +276,15 @@ export function useDataLayer(map, options = {}) {
       log.perf.end('addSource (full rebuild)')
       _lastClusterState = shouldCluster
       _lastClusterRadius = clusterRadiusPixels
+      _lastShapesEnabled = legendStore.shapeSettings.enabled
     } else {
-      // Fast path: only update data, keep layers
-      log.perf.start('setData (fast update)')
-      existingSource.setData(mapData)
-      log.perf.end('setData (fast update)')
+      // Style edits only need new layers. Re-sending unchanged GeoJSON makes
+      // MapLibre reprocess every occurrence on its worker thread.
+      if (dataChanged) {
+        log.perf.start('setData (fast update)')
+        existingSource.setData(mapData)
+        log.perf.end('setData (fast update)')
+      }
 
       // Still need to rebuild layers for styling changes
       ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
@@ -281,6 +296,10 @@ export function useDataLayer(map, options = {}) {
       })
       removeLayerAndSource(map.value, null, 'range-source')
     }
+    lastDataInput = geojson
+    lastHiddenItems = [...hiddenItems]
+    lastHiddenAttribute = store.colorByAttribute
+    lastPointsSource = map.value.getSource('points-source')
 
     // Heatmap visualization mode
     if (isHeatmap) {

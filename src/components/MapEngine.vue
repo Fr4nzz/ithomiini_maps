@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, shallowRef, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useDataStore } from '../stores/data'
@@ -32,7 +32,8 @@ const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapWrapper = ref(null) // Parent wrapper element
 const mapContainer = ref(null)
 const pointPopupContainer = ref(null)
-const map = ref(null)
+// MapLibre owns its internal render state; Vue only observes replacement.
+const map = shallowRef(null)
 let popup = null
 
 // Wrapper size (the available space) for accurate export preview calculations
@@ -182,16 +183,18 @@ const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateCluster
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   recreateClusterExtentCircle,
   setStyleChanging,
+  onStyleStart: () => invalidatePendingSDM(),
   onStyleReady: () => {
     if (showBoundaries.value) {
       addBoundariesLayer({ fromStyleSwitch: true })
     }
     recreateBboxVisualization()
     updateHostPlantLayer()
-  }
+  },
+  onStyleIdle: () => updateSDMLayer()
 })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
-const { updateLayer: updateSDMLayer, cursorValue: sdmCursorValue, cursorPos: sdmCursorPos } = useSDMLayer(map)
+const { updateLayer: updateSDMLayer, invalidatePending: invalidatePendingSDM, cursorValue: sdmCursorValue, cursorPos: sdmCursorPos } = useSDMLayer(map)
 const { updateLayer: updateHostPlantLayer } = useHostPlantLayer(map, { onShowPopup: handleShowPopup })
 const {
   isDrawing: isBboxDrawing,
