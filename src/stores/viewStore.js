@@ -40,13 +40,18 @@ export const useViewStore = defineStore('view', () => {
   const basemapIsDark = ref(true)
   const colorBy = ref(getStorage('map-color-by', 'subspecies'))
 
+  // Site markers overlap at regional zooms; a translucent fill keeps stacked
+  // sites readable while the border stays crisp.
+  const DEFAULT_FILL_OPACITY = 0.75
   const mapStyle = ref(getStorage('map-style', {
     pointSize: 10,
     borderWidth: 2,
     borderColor: '#ffffff',
-    fillOpacity: 0.9,
+    fillOpacity: DEFAULT_FILL_OPACITY,
     borderOpacity: 0.85,
   }))
+  // The previous default was 0.9; move untouched settings to the new default.
+  if (mapStyle.value.fillOpacity === 0.9) mapStyle.value.fillOpacity = DEFAULT_FILL_OPACITY
   const styleVersion = ref(0)
 
   const legendSettings = ref({

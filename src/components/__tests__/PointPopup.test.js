@@ -62,6 +62,9 @@ describe('PointPopup', () => {
     expect(host.querySelector('.photo-container')).not.toBeNull()
     expect(host.querySelectorAll('.taxonomy-select')).toHaveLength(2)
     expect(host.querySelector('.taxonomy-select').value).toBe('Mechanitis lysimnia')
+    // The overview already shows site details; the specimen view keeps one line.
+    expect(host.querySelector('.location-summary')).toBeNull()
+    expect(host.querySelector('.crumb-place').textContent.trim()).toBe('5 sites')
     expect(host.querySelector('.goat-section')).toBeNull()
     host.querySelector('.popup-back').click()
     await nextTick()
@@ -76,6 +79,8 @@ describe('PointPopup', () => {
     const direct = mount({ coordinates: { lat: -1, lng: -77.6 }, points: site, initialSpecies: 'Mechanitis lysimnia' })
     expect(direct.querySelector('.site-summary')).toBeNull()
     expect(direct.querySelector('.popup-back')).not.toBeNull()
+    expect(direct.querySelector('.crumb-place').textContent.trim()).toBe('Suchipakari · Ecuador')
+    expect(direct.querySelector('.location-summary')).toBeNull()
   })
 
   it('preserves the ordinary location summary and specimen layout', () => {

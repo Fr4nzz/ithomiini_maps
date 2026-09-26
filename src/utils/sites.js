@@ -18,9 +18,13 @@ export function groupRecordsBySite(features) {
   return sites
 }
 
-/** Marker area grows with the logarithm of individuals: 1 → 1×, 10 → 1.6×, 100 → 2.2×. */
+/**
+ * Radius grows gently with the logarithm of individuals (1 → 1×, 10 → 1.35×,
+ * 100 → 1.7×, capped at 1.8×). Colour also encodes individuals, so size only
+ * needs to make busy sites stand out without merging neighbouring markers.
+ */
 export function markerSizeFactor(individuals) {
-  return Math.min(3, 1 + 0.6 * Math.log10(Math.max(1, individuals)))
+  return Math.min(1.8, 1 + 0.35 * Math.log10(Math.max(1, individuals)))
 }
 
 function mostCommon(values) {

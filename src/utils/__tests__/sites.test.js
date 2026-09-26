@@ -19,9 +19,9 @@ describe('sites', () => {
 
   it('grows markers with the logarithm of individuals and caps them', () => {
     expect(markerSizeFactor(1)).toBe(1)
-    expect(markerSizeFactor(10)).toBeCloseTo(1.6)
-    expect(markerSizeFactor(100)).toBeCloseTo(2.2)
-    expect(markerSizeFactor(1e6)).toBe(3)
+    expect(markerSizeFactor(10)).toBeCloseTo(1.35)
+    expect(markerSizeFactor(100)).toBeCloseTo(1.7)
+    expect(markerSizeFactor(683)).toBe(1.8)
   })
 
   it('summarises individuals, species and legend-ordered pie segments', () => {
