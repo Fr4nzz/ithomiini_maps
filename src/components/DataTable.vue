@@ -59,6 +59,9 @@ const visibleColumns = ref({
   goat_genome: false,
   sex: true,
   mimicry_ring: true,
+  mimicry_assignment_level: false,
+  mimicry_assignment_confidence: false,
+  mimicry_source_taxon: false,
   sequencing_status: true,
   source: true,
   spatial_check: true,
@@ -79,6 +82,9 @@ const columns = [
   { key: 'goat_genome', label: 'Genome', width: '120px' },
   { key: 'sex', label: 'Sex', width: '70px' },
   { key: 'mimicry_ring', label: 'Mimicry Ring', width: '120px' },
+  { key: 'mimicry_assignment_level', label: 'Mimicry assignment', width: '210px' },
+  { key: 'mimicry_assignment_confidence', label: 'Mimicry confidence', width: '160px' },
+  { key: 'mimicry_source_taxon', label: 'Mimicry source taxon', width: '200px' },
   { key: 'sequencing_status', label: 'Status', width: '130px' },
   { key: 'source', label: 'Source', width: '130px' },
   { key: 'spatial_check', label: 'Spatial check', width: '145px' },
@@ -1402,6 +1408,9 @@ const exportTableCsv = () => {
               </span>
               <span v-else class="text-muted">—</span>
             </td>
+            <td v-if="visibleColumns.mimicry_assignment_level">{{ row.mimicry_assignment_level || 'Not recorded' }}</td>
+            <td v-if="visibleColumns.mimicry_assignment_confidence">{{ row.mimicry_assignment_confidence || 'Not recorded' }}</td>
+            <td v-if="visibleColumns.mimicry_source_taxon">{{ row.mimicry_source_taxon || 'Not recorded' }}</td>
             <td v-if="visibleColumns.sequencing_status" class="cell-status">
               <span 
                 class="status-badge"

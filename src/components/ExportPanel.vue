@@ -81,7 +81,8 @@ const exportCSV = () => {
     const columns = [
       'id', 'scientific_name', 'genus', 'species', 'subspecies',
       'family', 'tribe', 'mimicry_ring', 'sequencing_status',
-      'source', 'country', 'lat', 'lng', 'sex', 'image_url'
+      'source', 'country', 'lat', 'lng', 'sex', 'image_url',
+      'mimicry_assignment_level', 'mimicry_assignment_confidence', 'mimicry_source_taxon'
     ]
 
     const header = columns.join(',')

@@ -5,6 +5,7 @@ import { getThumbnailUrl } from '../utils/imageProxy'
 import { STATUS_COLORS } from '../utils/constants'
 import { getGoatUrl } from '../utils/goatHelpers'
 import { usePopupSelection } from '../composables/usePopupSelection'
+import { mimicryAssignmentLabel } from '../utils/mimicryProvenance'
 import { countUniqueIndividuals } from '../utils/clusterStats'
 
 const props = defineProps({
@@ -269,6 +270,15 @@ const bioprojectUrl = computed(() => {
           <div v-if="currentIndividual?.mimicry_ring && currentIndividual.mimicry_ring !== 'Unknown'" class="detail-row">
             <span class="detail-label">Mimicry Ring:</span>
             <span class="detail-value">{{ currentIndividual.mimicry_ring }}</span>
+          </div>
+
+          <div v-if="currentIndividual?.mimicry_ring && currentIndividual.mimicry_ring !== 'Unknown'" class="detail-row">
+            <span class="detail-label">Mimicry assignment:</span>
+            <span class="detail-value">{{ mimicryAssignmentLabel(currentIndividual) }}</span>
+          </div>
+          <div v-if="currentIndividual?.mimicry_source_taxon" class="detail-row">
+            <span class="detail-label">Matched taxon:</span>
+            <span class="detail-value">{{ currentIndividual.mimicry_source_taxon }}</span>
           </div>
 
           <!-- Source -->
