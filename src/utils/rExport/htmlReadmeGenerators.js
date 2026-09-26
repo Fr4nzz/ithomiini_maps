@@ -30,7 +30,9 @@ rendered view are separate, so geographic and visual edits are inspectable.
 
 FILES
   generate_map.R          Researcher-editable vector drawing script
-  data.geojson            Displayed records, original coordinates and resolved styles
+  data.geojson            Displayed markers: one per site (records in range mode),
+                          with individuals, species, colours/pie slices and sizes
+  records.geojson         Every filtered occurrence record, for analysis
   range_polygons.geojson  Editable hull/hex geometry, when range mode is active
   host_plants.geojson     Editable host plant triangles, when active
   sdm_*.png              Separate georeferenced SDM rasters, when active
@@ -53,7 +55,7 @@ VECTOR AND RASTER
   "none" for a transparent background. Cluster/heatmap views use a raster
   visualization because MapLibre's aggregation cannot be reconstructed from
   raw points by simply drawing each record. Their raw records remain in
-  data.geojson for analysis, but the script does not substitute them visually.
+  records.geojson for analysis, but the script does not substitute them visually.
 
 VIEW AND PROVENANCE
   App commit: ${view.appCommit}

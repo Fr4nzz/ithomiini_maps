@@ -1,27 +1,16 @@
-const UNKNOWN_COLOR = '#6b7280'
-
-/** Return the same visible color used by an individual map point. */
-export function clusterMemberColor(properties, {
-  colorBy, colorAttribute, activeColorMap, speciesColorMap,
-  collapsedSpecies, shownLabels,
-}) {
-  const species = properties?.scientific_name
-  if (colorBy === 'subspecies' && collapsedSpecies.includes(species)) {
-    return speciesColorMap[species] || UNKNOWN_COLOR
-  }
-  const label = properties?.[colorAttribute]
-  if (!label || (shownLabels.size > 0 && !shownLabels.has(label))) return UNKNOWN_COLOR
-  return activeColorMap[label] || UNKNOWN_COLOR
-}
-
-/** Each input feature contributes exactly one record to the ring. */
-export function clusterComposition(features, colorSettings) {
+/**
+ * Combine the colour segments of a cluster's sites. Each record contributes
+ * once, so ring proportions match the legend's record counts.
+ */
+export function combineSiteSegments(sites) {
   const counts = new Map()
-  for (const feature of features) {
-    const color = clusterMemberColor(feature.properties || feature, colorSettings)
-    counts.set(color, (counts.get(color) || 0) + 1)
+  let total = 0
+  for (const site of sites) {
+    for (const segment of site?.segments || []) {
+      counts.set(segment.color, (counts.get(segment.color) || 0) + segment.count)
+      total += segment.count
+    }
   }
-  const total = features.length
   return {
     total,
     segments: [...counts.entries()]
@@ -30,6 +19,7 @@ export function clusterComposition(features, colorSettings) {
   }
 }
 
+/** Cluster marker radius from the individuals it contains. */
 export function clusterCircleRadius(count) {
   if (count >= 500) return 32
   if (count >= 100) return 25

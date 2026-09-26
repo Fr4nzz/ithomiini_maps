@@ -54,11 +54,11 @@ function resetRangeSettings() {
     <!-- Points settings -->
     <div v-if="store.visualizationMode === 'points'" style="margin-top: 12px;">
       <label class="toggle-row scatter-toggle">
-        <input type="checkbox" v-model="store.scatterOverlappingPoints" />
-        <span>Scatter overlapping points</span>
+        <input type="checkbox" v-model="store.sizeByIndividuals" />
+        <span>Size markers by individuals</span>
       </label>
       <p class="filter-hint">
-        Evenly distribute overlapping points within 2.5km radius with connecting lines
+        One marker per site; larger markers hold more individuals.
       </p>
     </div>
 

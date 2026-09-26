@@ -4,7 +4,8 @@ test('loads committed occurrence data and a map canvas', async ({ page }) => {
   await page.goto('./')
   await expect(page.locator('.maplibregl-canvas')).toBeVisible()
   await expect(page.locator('.legend-container')).toBeVisible()
-  await expect(page.locator('.legend-item').first()).toBeVisible()
+  // Unfiltered data opens coloured by individuals per site, with a ramp key.
+  await expect(page.locator('.legend-individuals')).toBeVisible()
   // MapLibre owns its mutable render state. Vue must retain the instance,
   // rather than proxy its internal buckets and graphics resources.
   await page.waitForFunction(() => document.querySelector('#app').__vue_app__._instance.setupState.mapRef)

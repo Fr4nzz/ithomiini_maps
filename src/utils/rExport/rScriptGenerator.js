@@ -127,6 +127,27 @@ draw_shape <- function(x, y, radius, shape, fill, stroke, line_width) {
   grid::grid.polygon(x = grid::unit(xx, "native"), y = grid::unit(yy, "native"), gp = gp)
 }
 
+# A site holding several colour groups is a pie; slices follow the legend
+# order and start at 12 o'clock, as in the browser. Screen y points down.
+draw_pie <- function(x, y, radius, segments, fill_opacity, stroke, line_width) {
+  start <- -pi / 2
+  for (segment in segments) {
+    end <- start + 2 * pi * segment$fraction
+    angles <- seq(start, end, length.out = max(3, ceiling(96 * segment$fraction)))
+    fill <- segment$color
+    if (!is.null(segment$label) && segment$label %in% names(SETTINGS$palette_overrides)) {
+      fill <- SETTINGS$palette_overrides[[segment$label]]
+    }
+    grid::grid.polygon(x = grid::unit(c(x, x + radius * cos(angles)), "native"),
+      y = grid::unit(c(y, y + radius * sin(angles)), "native"),
+      gp = grid::gpar(fill = color(fill, fill_opacity), col = NA))
+    start <- end
+  }
+  grid::grid.circle(x = grid::unit(x, "native"), y = grid::unit(y, "native"),
+    r = grid::unit(radius * SETTINGS$output_scale * 72 / 96, "pt"),
+    gp = grid::gpar(fill = NA, col = stroke, lwd = line_width * SETTINGS$output_scale))
+}
+
 # Polygon rings retain their holes using grid.path's even/odd fill rule.
 draw_polygon <- function(geometry, fill, stroke, line_width) {
   polygons <- if (geometry$type == "Polygon") list(geometry$coordinates) else geometry$coordinates
@@ -171,24 +192,31 @@ paint_ranges <- function() {
   }
 }
 
+# Each feature is one site marker (or one record in range mode). Marker size
+# grows with individuals via display_size_factor; set it to 1 for equal sizes.
 paint_points <- function() {
   if (!SETTINGS$show_points || view$layers$editablePoints == 0) return(invisible(NULL))
   style <- view$layers$pointStyle
+  fill_opacity <- clamp(style$fillOpacity * SETTINGS$point_opacity_multiplier)
   for (feature in data$features) {
     p <- feature$properties
+    size <- if (is.null(p$display_size_factor)) 1 else p$display_size_factor
+    radius <- style$radius * size * SETTINGS$point_radius_multiplier + style$strokeWidth / 2
+    stroke <- p$display_stroke_color
+    if (is.null(stroke)) stroke <- style$strokeColor
+    if (length(p$display_segments) > 1) {
+      draw_pie(p$screen_x, p$screen_y, radius, p$display_segments, fill_opacity,
+        color(stroke, style$strokeOpacity), style$strokeWidth)
+      next
+    }
     fill <- p$display_color
-    category <- p[[view$colorAttribute]]
+    category <- if (is.null(p$display_label)) p[[view$colorAttribute]] else p$display_label
     if (!is.null(category) && category %in% names(SETTINGS$palette_overrides)) {
       fill <- SETTINGS$palette_overrides[[category]]
     }
-    stroke <- p$display_stroke_color
-    if (is.null(stroke)) stroke <- style$strokeColor
-    draw_shape(p$screen_x, p$screen_y,
-      style$radius * SETTINGS$point_radius_multiplier +
-        (if (style$useShapes) 0 else style$strokeWidth / 2),
-      if (style$useShapes) p$display_shape else "circle",
-      color(fill, clamp(style$fillOpacity * SETTINGS$point_opacity_multiplier)),
-      color(stroke, style$strokeOpacity), style$strokeWidth)
+    draw_shape(p$screen_x, p$screen_y, radius,
+      if (style$useShapes && !is.null(p$display_shape)) p$display_shape else "circle",
+      color(fill, fill_opacity), color(stroke, style$strokeOpacity), style$strokeWidth)
   }
 }
 
@@ -248,6 +276,21 @@ paint_legend <- function() {
     r = grid::unit(8 * SETTINGS$output_scale * 72 / 96, "pt"),
     gp = grid::gpar(fill = color(bg), col = color(legend$border)))
   for (row in legend$rows) {
+    if (row$type == "ramp") {
+      # Individuals-per-site key: the browser gradient as thin adjacent bars.
+      rb <- row$box
+      steps <- 64
+      colors <- grDevices::colorRampPalette(unlist(row$colors))(steps)
+      step_width <- rb$width / steps
+      for (i in seq_len(steps)) {
+        grid::grid.rect(x = grid::unit(rb$x + (i - 0.5) * step_width + dx, "native"),
+          y = grid::unit(rb$y + rb$height / 2 + dy, "native"),
+          width = grid::unit(step_width * 1.05 * SETTINGS$output_scale * 72 / 96, "pt"),
+          height = grid::unit(rb$height * SETTINGS$output_scale * 72 / 96, "pt"),
+          gp = grid::gpar(fill = colors[i], col = NA))
+      }
+      next
+    }
     face <- if (row$fontStyle == "italic") "italic" else if (row$fontWeight %in% c("600", "700", "bold")) "bold" else "plain"
     for (line in row$lines) {
       tb <- line$box

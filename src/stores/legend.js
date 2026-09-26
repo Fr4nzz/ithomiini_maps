@@ -32,12 +32,12 @@ export const useLegendStore = defineStore('legend', () => {
   const textScale = ref(getStorage('legend-text-scale', 1))
   const scale = ref(getStorage('legend-scale', 1))
 
-  // Labels currently shown in the legend (updated by Legend.vue).
-  // Items in the color map but NOT in this set render as grey on the map.
-  const shownLabels = ref(new Set())
+  // Session-only choice when there are too many groups to colour:
+  // null (automatic), 'categories' (top groups + Other) or 'individuals'.
+  const colorOverride = ref(null)
 
-  function setShownLabels(labels) {
-    shownLabels.value = labels instanceof Set ? labels : new Set(labels)
+  function setColorOverride(mode) {
+    colorOverride.value = mode === 'categories' || mode === 'individuals' ? mode : null
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -139,11 +139,12 @@ export const useLegendStore = defineStore('legend', () => {
   // SORTING SETTINGS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Sort by: 'alphabetical' (by display text) | 'abundance' (by count)
-  const sortBy = ref(getStorage('legend-sort-by', 'alphabetical'))
+  // Sort by: 'alphabetical' (by display text) | 'abundance' (by count).
+  // Most common groups first, matching the order colours are assigned.
+  const sortBy = ref(getStorage('legend-sort-by', 'abundance'))
 
   // Sort order: 'asc' | 'desc'
-  const sortOrder = ref(getStorage('legend-sort-order', 'asc'))
+  const sortOrder = ref(getStorage('legend-sort-order', 'desc'))
 
   // ═══════════════════════════════════════════════════════════════════════════
   // WRAP/OUTDENT SETTINGS
@@ -268,8 +269,8 @@ export const useLegendStore = defineStore('legend', () => {
            displayNameFormat.value !== 'full' ||
            prefixFormat.value !== 'fullSpecies' ||
            // Sorting/wrap changed from defaults
-           sortBy.value !== 'alphabetical' ||
-           sortOrder.value !== 'asc' ||
+           sortBy.value !== 'abundance' ||
+           sortOrder.value !== 'desc' ||
            wrapLabels.value !== true ||
            showCounts.value !== true ||
            maxItemsMode.value !== 'auto'
@@ -374,8 +375,8 @@ export const useLegendStore = defineStore('legend', () => {
     resetRef(speciesDisplayNames, 'legend-species-display-names', {})
 
     // Sorting
-    resetRef(sortBy, 'legend-sort-by', 'alphabetical')
-    resetRef(sortOrder, 'legend-sort-order', 'asc')
+    resetRef(sortBy, 'legend-sort-by', 'abundance')
+    resetRef(sortOrder, 'legend-sort-order', 'desc')
 
     // Wrap labels & counts
     resetRef(wrapLabels, 'legend-wrap-labels', true)
@@ -616,7 +617,7 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   watch(
-    [customColors, speciesStyling, speciesBorderColors, shapeSettings, groupShapes, hiddenItems, shownLabels, collapsedSpecies],
+    [customColors, speciesStyling, speciesBorderColors, shapeSettings, groupShapes, hiddenItems, collapsedSpecies, colorOverride],
     () => { styleVersion.value++ },
     { deep: true }
   )
@@ -631,7 +632,8 @@ export const useLegendStore = defineStore('legend', () => {
     scale,
     stickyEdges,
     snapThreshold,
-    shownLabels,
+    colorOverride,
+    setColorOverride,
     customLabels,
     customColors,
     styleVersion,
@@ -684,7 +686,6 @@ export const useLegendStore = defineStore('legend', () => {
     setTextScale,
     setScale,
     setStickyEdges,
-    setShownLabels,
     isSpeciesCollapsed,
     setSpeciesCollapsed,
     setCustomLabel,

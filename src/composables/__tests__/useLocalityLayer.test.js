@@ -144,7 +144,7 @@ describe('native locality labels', () => {
     state.planning.selectedSiteId = label.properties.siteId
     await layer.refresh()
     const callout = sources['collection-locality-callouts-source'].data.features[0]
-    expect(callout.properties.label).toMatch(/^20 records including /)
+    expect(callout.properties.label.replace(/\n/g, ' ')).toMatch(/^20 individuals including /)
     expect(callout.geometry.coordinates).toEqual([-77.6, -1])
     expect(callout.properties.arrowRadius).toBeGreaterThan(10)
   })
@@ -169,7 +169,7 @@ describe('native locality labels', () => {
     expect(callouts).toHaveLength(1)
     expect(callouts[0].properties.label).toContain('Suchipakari')
     expect(callouts[0].properties.label.replace(/\n/g, ' ')).toContain('Jatun Sacha')
-    expect(callouts[0].properties.label.replace(/\n/g, ' ')).toContain('3 records including')
+    expect(callouts[0].properties.label.replace(/\n/g, ' ')).toContain('3 individuals including')
   })
 
   it('keeps paired text and arrow visible during zoom without source updates', async () => {

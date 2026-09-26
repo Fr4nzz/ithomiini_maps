@@ -1,10 +1,10 @@
 import { usePlanningStore } from '../stores/planning'
 import { useDataStore } from '../stores/data'
-import { useLegendStore } from '../stores/legend'
 import { groupCollectionSites } from '../utils/collectionSites'
 import { readClusterLeaves } from '../utils/clusterLeaves'
 import { clusterCircleRadius } from '../utils/clusterComposition'
-import { visiblePointRadius } from './useDataLayer'
+import { visibleSiteRadius } from './useDataLayer'
+import { siteKeyFor } from '../utils/sites'
 import { drawLocalityLeader, groupLocalityAnchors, leaderImageSpec, LOCALITY_PALETTES } from '../utils/localityArrows'
 import { layoutLocalityLabels } from '../utils/localityLayout'
 
@@ -32,11 +32,11 @@ const interpolateRadius = (stops, zoom) => {
 export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
   const planning = usePlanningStore()
   const store = useDataStore()
-  const legendStore = useLegendStore()
   let generation = 0
   let lastKey = ''
   let cachedAnchors = []
-  let cachedMarkerCoordinates = []
+  let cachedMarkers = []
+  let sites = null
   let siteCounts = new Map()
   let disposed = false
   let selectedAnchorKey = null
@@ -55,23 +55,30 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
   let lastHighlightKey = null
   const sourceContents = new Map()
 
-  function invalidate(data) {
+  /** `siteRegistry` (from the data layer) sizes markers and expands cluster leaves. */
+  function invalidate(data, siteRegistry) {
     generation++
     lastKey = ''
     if (data) {
       const features = data.features || []
+      sites = siteRegistry || null
       cachedAnchors = groupLocalityAnchors(features)
-      // Display geometry follows scatter; locality anchors use original collection positions.
-      const seen = new Set()
-      cachedMarkerCoordinates = []
-      for (const feature of features) {
-        const coordinates = feature.geometry?.coordinates
-        if (!Array.isArray(coordinates) || coordinates.length < 2 ||
-          !Number.isFinite(coordinates[0]) || !Number.isFinite(coordinates[1])) continue
-        const key = `${coordinates[0]}:${coordinates[1]}`
-        if (seen.has(key)) continue
-        seen.add(key)
-        cachedMarkerCoordinates.push(coordinates)
+      // One obstacle per drawn marker: sizes follow individuals in point view.
+      const siteList = sites?.list() || []
+      if (siteList.length) {
+        cachedMarkers = siteList.map(site => ({ coordinates: site.coordinates, sizeFactor: site.sizeFactor }))
+      } else {
+        const seen = new Set()
+        cachedMarkers = []
+        for (const feature of features) {
+          const coordinates = feature.geometry?.coordinates
+          if (!Array.isArray(coordinates) || coordinates.length < 2 ||
+            !Number.isFinite(coordinates[0]) || !Number.isFinite(coordinates[1])) continue
+          const key = `${coordinates[0]}:${coordinates[1]}`
+          if (seen.has(key)) continue
+          seen.add(key)
+          cachedMarkers.push({ coordinates, sizeFactor: 1 })
+        }
       }
       siteCounts = new Map(groupCollectionSites(features).map(site => [site.id, site.recordCount]))
       hovered = null
@@ -225,7 +232,7 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
         seen.add(key)
         const point = m.project(coordinates)
         const radius = feature.properties?.cluster
-          ? clusterCircleRadius(Number(feature.properties.point_count)) + 4 : pointRadius()
+          ? clusterCircleRadius(clusterIndividuals(feature)) + 4 : pointRadius(feature.properties?.size_factor)
         if (point.x < -radius || point.x > width + radius ||
           point.y < -radius || point.y > height + radius) continue
         obstacles.push({ x: point.x, y: point.y, radius })
@@ -233,8 +240,8 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
       return obstacles
     }
     if (!m.getLayer('points-layer') && !m.getLayer('range-points')) return obstacles
-    const radius = pointRadius()
-    for (const coordinates of cachedMarkerCoordinates) {
+    for (const { coordinates, sizeFactor } of cachedMarkers) {
+      const radius = pointRadius(sizeFactor)
       const point = m.project(coordinates)
       if (point.x < -radius || point.x > width + radius ||
         point.y < -radius || point.y > height + radius) continue
@@ -280,7 +287,11 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
     return { placedLabels, placedCallouts }
   }
 
-  function pointRadius() {
+  function clusterIndividuals(feature) {
+    return Number(feature.properties.individuals ?? feature.properties.point_count)
+  }
+
+  function pointRadius(sizeFactor = 1) {
     const zoom = map.value.getZoom()
     if (store.visualizationMode === 'ranges') {
       const hex = store.rangeSettings?.method === 'hexbin'
@@ -288,12 +299,12 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
         : [[3, 1.5], [6, 2.5], [10, 4], [14, 6]]
       return interpolateRadius(stops, zoom) + (hex ? 0 : 0.25) + 5
     }
-    return visiblePointRadius({ pointSize: 10, borderWidth: 0, ...store.mapStyle }, zoom,
-      !!legendStore.shapeSettings?.enabled) + 5
+    return visibleSiteRadius({ pointSize: 10, borderWidth: 0, ...store.mapStyle }, zoom,
+      Number(sizeFactor) || 1) + 5
   }
 
   function siteFeature(anchor) {
-    const radius = pointRadius()
+    const radius = pointRadius(sites?.get(siteKeyFor(anchor.coordinates))?.sizeFactor)
     const leaderRadius = store.visualizationMode === 'heatmap' ? 0 : radius - 5
     return { type: 'Feature', geometry: { type: 'Point', coordinates: anchor.coordinates }, properties: {
       siteId: anchor.siteId, anchorKey: anchor.anchorKey, label: anchor.label,
@@ -306,14 +317,14 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
   }
 
   function summarizeCluster(members) {
-    const sites = groupCollectionSites(members)
-    const dominant = sites.filter(site => site.named).sort((a, b) => b.recordCount - a.recordCount)[0]
-    return { siteIds: sites.map(site => site.id), siteId: dominant?.id || sites[0]?.id || null,
-      label: dominant ? dominant.name + nearbySuffix(sites.length - 1) : 'Nearby unnamed areas' }
+    const localities = groupCollectionSites(sites ? sites.records(members) : members)
+    const dominant = localities.filter(site => site.named).sort((a, b) => b.recordCount - a.recordCount)[0]
+    return { siteIds: localities.map(site => site.id), siteId: dominant?.id || localities[0]?.id || null,
+      label: dominant ? dominant.name + nearbySuffix(localities.length - 1) : 'Nearby unnamed areas' }
   }
 
   function clusterFeature(feature, summary) {
-    const count = Number(feature.properties.point_count)
+    const count = clusterIndividuals(feature)
     const radius = clusterCircleRadius(count) + 4
     return { type: 'Feature', geometry: feature.geometry, properties: {
       clusterId: String(feature.properties.cluster_id), pointCount: count,
@@ -365,13 +376,15 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
     const rendered = clustered ? m.queryRenderedFeatures({ layers: ['clusters', 'points-layer'] }) : []
     const clusters = [...new Map(rendered.filter(f => f.properties.cluster).map(f => [f.properties.cluster_id, f])).values()]
     const key = clustered ? JSON.stringify([baseKey, clusters.map(f => f.properties.cluster_id).sort(),
-      rendered.filter(f => !f.properties.cluster).map(f => f.properties.id).sort()]) : baseKey
+      rendered.filter(f => !f.properties.cluster).map(f => f.properties.site_key).sort()]) : baseKey
     if (key === lastKey && layersReady) return
     lastKey = key
     const epoch = generation
     const source = m.getSource('points-source')
+    const renderedSites = [...new Map(rendered.filter(f => !f.properties.cluster)
+      .map(f => [f.properties.site_key || JSON.stringify(f.geometry), f])).values()]
     let anchors = clustered
-      ? groupLocalityAnchors([...new Map(rendered.filter(f => !f.properties.cluster).map(f => [f.properties.id || JSON.stringify(f.geometry), f])).values()])
+      ? groupLocalityAnchors(sites ? sites.records(renderedSites) : renderedSites)
       : cachedAnchors
     const anchorFeatures = anchors.map(siteFeature)
     if (clusterSource !== source) { clusterSummaries.clear(); clusterSource = source }
@@ -422,7 +435,7 @@ export function useLocalityLayer(map, { isDarkBasemap = () => false } = {}) {
     }
     for (const { cluster, names, selected } of clusteredCallouts.values()) {
       callouts.push(callout(cluster, selected,
-        `${cluster.properties.pointCount} records including ${names.join(', ')}`))
+        `${cluster.properties.pointCount} individuals including ${names.join(', ')}`))
     }
     const labels = [
       ...anchorFeatures.filter(f => (siteCounts.get(f.properties.siteId) || 0) >= minimum && !claimed.has(f.properties.anchorKey)),

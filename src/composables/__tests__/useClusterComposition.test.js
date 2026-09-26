@@ -4,14 +4,19 @@ import { ref } from 'vue'
 const state = vi.hoisted(() => ({
   data: {
     visualizationMode: 'clusters', clusterSettings: { compositionRings: true },
-    colorBy: 'subspecies', colorByAttribute: 'subspecies',
-    activeColorMap: { derasa: '#112233' }, speciesColorMap: {},
+    colorPlan: { mode: 'categories' },
   },
-  legend: { collapsedSpecies: [], shownLabels: new Set(['derasa']) },
 }))
 vi.mock('../../stores/data', () => ({ useDataStore: () => state.data }))
-vi.mock('../../stores/legend', () => ({ useLegendStore: () => state.legend }))
 import { useClusterComposition } from '../useClusterComposition'
+
+// Cluster leaves are site features; the registry holds each site's colour segments.
+const sites = new Map([
+  ['a', { segments: [{ color: '#112233', count: 3 }] }],
+  ['b', { segments: [{ color: '#6b7280', count: 1 }] }],
+])
+const registry = { get: key => sites.get(key) }
+const siteLeaves = [{ properties: { site_key: 'a' } }, { properties: { site_key: 'b' } }]
 
 function fixture(getClusterLeaves) {
   const layers = { clusters: {}, 'cluster-count': {} }
@@ -19,7 +24,7 @@ function fixture(getClusterLeaves) {
   const sources = { 'points-source': { getClusterLeaves } }
   const cluster = {
     type: 'Feature', geometry: { type: 'Point', coordinates: [-77, -1] },
-    properties: { cluster: true, cluster_id: 42, point_count: 2 },
+    properties: { cluster: true, cluster_id: 42, point_count: 2, individuals: 4 },
   }
   const map = ref({
     isStyleLoaded: () => true,
@@ -35,7 +40,9 @@ function fixture(getClusterLeaves) {
     removeImage: vi.fn(id => images.delete(id)),
     on: vi.fn(), off: vi.fn(),
   })
-  return { layer: useClusterComposition(map), map, sources, layers, images }
+  const layer = useClusterComposition(map)
+  layer.invalidate(null, registry)
+  return { layer, map, sources, layers, images }
 }
 
 function mockCanvas() {
@@ -55,8 +62,8 @@ describe('cluster composition layer', () => {
     const leaves = new Promise(resolve => { resolveLeaves = resolve })
     const { layer, map } = fixture(() => leaves)
     const pending = layer.refresh()
-    layer.invalidate()
-    resolveLeaves([{ properties: { subspecies: 'derasa' } }, { properties: { subspecies: 'derasa' } }])
+    layer.invalidate(null, registry)
+    resolveLeaves(siteLeaves)
     await pending
     expect(map.value.addSource).not.toHaveBeenCalled()
     expect(map.value.addImage).not.toHaveBeenCalled()
@@ -64,10 +71,7 @@ describe('cluster composition layer', () => {
 
   it('adds native ring images below count labels and reuses exact member results', async () => {
     mockCanvas()
-    const getLeaves = vi.fn(async () => [
-      { properties: { subspecies: 'derasa' } },
-      { properties: { subspecies: 'Unknown' } },
-    ])
+    const getLeaves = vi.fn(async () => siteLeaves)
     const { layer, map, sources, layers, images } = fixture(getLeaves)
     layer.attach()
     await layer.refresh()
@@ -86,5 +90,18 @@ describe('cluster composition layer', () => {
     layer.cleanup()
     expect(map.value.off).toHaveBeenCalledWith('idle', expect.any(Function))
     expect(images.size).toBe(0)
+  })
+
+  it('keeps plain clusters when sites are coloured by individuals', async () => {
+    const getLeaves = vi.fn(async () => siteLeaves)
+    const { layer, map } = fixture(getLeaves)
+    state.data.colorPlan = { mode: 'individuals' }
+    try {
+      await layer.refresh()
+      expect(getLeaves).not.toHaveBeenCalled()
+      expect(map.value.addLayer).not.toHaveBeenCalled()
+    } finally {
+      state.data.colorPlan = { mode: 'categories' }
+    }
   })
 })

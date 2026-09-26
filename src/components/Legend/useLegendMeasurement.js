@@ -345,6 +345,19 @@ export function useLegendMeasurement({
       !bounds.height
     if (isHiddenLayout) return
 
+    // Individuals mode shows a fixed-size key instead of rows: fit it snugly.
+    const keyEl = contentEl.querySelector('.legend-individuals')
+    if (keyEl) {
+      const legendEl = legendRef.value
+      if (!legendEl) return
+      const height = Math.ceil((keyEl.getBoundingClientRect().bottom - legendEl.getBoundingClientRect().top) / renderScale.value + 16)
+      measuredItemCount.value = 1
+      measuredSnugHeight.value = Math.max(80, height)
+      correctionSettled.value = true
+      prevMeasuredCount.value = 1
+      return
+    }
+
     const itemsEl = contentEl.querySelector('.legend-items')
     if (!itemsEl || !itemsEl.children.length) return
 
@@ -353,7 +366,10 @@ export function useLegendMeasurement({
     const contentRect = contentEl.getBoundingClientRect()
     const contentBottom = contentRect.bottom
     const contentPaddingBottom = 12
-    const moreIndicatorReserve = 40
+    // Rows after the items ("Other", colour-mode switch) always stay visible.
+    const trailingRows = [...contentEl.querySelectorAll('.legend-other, .legend-mode-switch')]
+    const trailingReserve = trailingRows.reduce((sum, el) => sum + el.getBoundingClientRect().height / renderScale.value + 8, 0)
+    const moreIndicatorReserve = 40 + trailingReserve
 
     const isGroupedView = itemsEl.classList.contains('grouped')
     const allMeasurableItems = isGroupedView && hasCollapsedSpeciesGroups.value
@@ -391,7 +407,7 @@ export function useLegendMeasurement({
       const borderSafety = 4
       const extra = includeMoreIndicator
         ? moreIndicatorReserve + contentPaddingBottom + borderSafety
-        : contentPaddingBottom + borderSafety
+        : trailingReserve + contentPaddingBottom + borderSafety
       return Math.max(LEGEND_LAYOUT.MIN_SNUG_HEIGHT, Math.ceil((lastBottom - legendTop) / renderScale.value + extra))
     }
 
@@ -435,7 +451,7 @@ export function useLegendMeasurement({
     // Not all fit — find cutoff. First try without "+N more" reserve to see
     // if N+1 items fit (saves space vs showing "+1 more" which wastes ~40px).
     const maxBottomWithMore = contentBottom - (contentPaddingBottom + moreIndicatorReserve) * renderScale.value
-    const maxBottomWithoutMore = contentBottom - contentPaddingBottom * renderScale.value
+    const maxBottomWithoutMore = contentBottom - (contentPaddingBottom + trailingReserve) * renderScale.value
     let domFitCount = 0
     let domFitCountNoMore = 0  // items that fit if we skip "+N more"
     for (let i = 0; i < measurableItems.length; i++) {

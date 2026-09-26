@@ -188,8 +188,11 @@ export function useLegendBaseData(dataStore, legendStore, isExportMode) {
 
     const items = []
     const baseMap = baseColors.value
+    // Only coloured groups get rows; the rest are summarised as "Other".
+    const colored = dataStore.coloredLabels
     for (const [label, color] of entries) {
       if (!legendStore.isItemVisible(label)) continue
+      if (!colored.has(label)) continue
       items.push({
         label,
         color,

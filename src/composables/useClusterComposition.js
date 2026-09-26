@@ -1,7 +1,6 @@
 import { useDataStore } from '../stores/data'
-import { useLegendStore } from '../stores/legend'
 import { readClusterLeaves } from '../utils/clusterLeaves'
-import { clusterComposition, drawCompositionRing } from '../utils/clusterComposition'
+import { combineSiteSegments, drawCompositionRing } from '../utils/clusterComposition'
 
 const SOURCE = 'cluster-composition-source'
 const LAYER = 'cluster-composition-rings'
@@ -9,15 +8,14 @@ const LAYER = 'cluster-composition-rings'
 /** MapLibre symbol images stay in map screenshots and exports. */
 export function useClusterComposition(map) {
   const store = useDataStore()
-  const legend = useLegendStore()
   const memberCache = new Map()
   const imageBySignature = new Map()
   const registeredImages = new Set()
   let generation = 0
   let lastKey = ''
   let lastPointSource = null
-  let lastStyleKey = ''
   let pendingKey = ''
+  let sites = null
   let attached = false
   let disposed = false
 
@@ -42,7 +40,9 @@ export function useClusterComposition(map) {
     pendingKey = ''
   }
 
-  function invalidate() {
+  /** Called on every data or style rebuild with the new site registry. */
+  function invalidate(_records, siteRegistry = sites) {
+    sites = siteRegistry
     generation++
     lastKey = ''
     pendingKey = ''
@@ -51,28 +51,17 @@ export function useClusterComposition(map) {
     imageBySignature.clear()
   }
 
-  function colorSettings() {
-    return {
-      colorBy: store.colorBy,
-      colorAttribute: store.colorByAttribute,
-      activeColorMap: store.activeColorMap,
-      speciesColorMap: store.speciesColorMap,
-      collapsedSpecies: store.colorBy === 'subspecies' ? legend.collapsedSpecies : [],
-      shownLabels: legend.shownLabels,
-    }
-  }
-
   function render(m, rings) {
     const usedImages = new Set()
     const features = rings.map(({ feature, composition }) => {
-      const signature = JSON.stringify([feature.properties.point_count, composition.segments])
+      const signature = JSON.stringify([feature.properties.individuals, composition.segments])
       let image = imageBySignature.get(signature)
       if (!image) {
         image = `cluster-ring-${generation}-${imageBySignature.size}`
         imageBySignature.set(signature, image)
       }
       if (!m.hasImage(image)) {
-        m.addImage(image, drawCompositionRing(composition.segments, feature.properties.point_count), { pixelRatio: 2 })
+        m.addImage(image, drawCompositionRing(composition.segments, feature.properties.individuals), { pixelRatio: 2 })
       }
       registeredImages.add(image)
       usedImages.add(image)
@@ -106,7 +95,9 @@ export function useClusterComposition(map) {
   async function refresh() {
     const m = map.value
     if (disposed || !m?.isStyleLoaded()) return
+    // Rings show category colours, so individuals mode keeps plain clusters.
     if (store.visualizationMode !== 'clusters' || store.clusterSettings.compositionRings === false ||
+        store.colorPlan.mode !== 'categories' || !sites ||
         !m.getLayer('clusters') || !m.getLayer('cluster-count')) {
       clear()
       return
@@ -116,17 +107,6 @@ export function useClusterComposition(map) {
     if (pointSource !== lastPointSource) {
       invalidate()
       lastPointSource = pointSource
-    }
-
-    const colors = colorSettings()
-    const styleKey = JSON.stringify([
-      colors.colorBy, colors.colorAttribute, colors.activeColorMap, colors.speciesColorMap,
-      colors.collapsedSpecies, [...colors.shownLabels].sort(),
-    ])
-    if (styleKey !== lastStyleKey) {
-      invalidate()
-      lastPointSource = pointSource
-      lastStyleKey = styleKey
     }
 
     const visible = m.queryRenderedFeatures({ layers: ['clusters'] })
@@ -151,7 +131,7 @@ export function useClusterComposition(map) {
             const members = await readClusterLeaves(pointSource, feature.properties.cluster_id, feature.properties.point_count)
             // A partial worker result must not produce a misleading ring.
             composition = members.length === feature.properties.point_count
-              ? clusterComposition(members, colors)
+              ? combineSiteSegments(members.map(member => sites.get(member.properties.site_key)))
               : null
           } catch { composition = null }
           if (epoch !== generation) return

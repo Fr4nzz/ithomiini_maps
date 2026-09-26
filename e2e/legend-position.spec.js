@@ -1,5 +1,12 @@
 import { test, expect } from '@playwright/test'
 
+// Unfiltered data has too many taxa to colour, so the legend would show the
+// individuals key; request the top ten groups to get a full, tall legend.
+const showFullLegend = page => page.evaluate(() => {
+  window.legendTestStores.data.filters.species = []
+  window.legendTestStores.legend.setColorOverride('categories')
+})
+
 test.beforeEach(async ({ page }) => {
   await page.route('https://basemaps.cartocdn.com/**', route => route.fulfill({
     contentType: 'application/json',
@@ -148,7 +155,7 @@ test('preview restores a free position and touch cancellation clears drag state'
 
 test('preview retains legend height and permits border resize', async ({ page }) => {
   const legend = page.locator('.legend-container')
-  await page.evaluate(() => { window.legendTestStores.data.filters.species = [] })
+  await showFullLegend(page)
   await expect.poll(async () => (await legend.boundingBox()).height)
     .toBeGreaterThan(page.viewportSize().width < 600 ? 200 : 350)
   const normal = await legend.boundingBox()
@@ -174,7 +181,7 @@ test('preview retains legend height and permits border resize', async ({ page })
 test('corner selection sticks on resize and Ctrl+corner drag scales text and box', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Ctrl+mouse drag requires a keyboard and pointer')
   const legend = page.locator('.legend-container')
-  await page.evaluate(() => { window.legendTestStores.data.filters.species = [] })
+  await showFullLegend(page)
   await expect.poll(async () => legend.locator('.legend-item').count()).toBeGreaterThan(5)
   await legend.focus()
   await page.keyboard.press('ArrowUp')
@@ -260,7 +267,7 @@ test('sticky drag snaps before release, detaches, and can be disabled', async ({
 test('full legend attracts each edge during a real pointer drag without a release jump', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Real mouse drag requires a pointer')
   const legend = page.locator('.legend-container')
-  await page.evaluate(() => { window.legendTestStores.data.filters.species = [] })
+  await showFullLegend(page)
   await expect.poll(async () => (await legend.boundingBox()).height).toBeGreaterThan(350)
   await legend.hover()
   const handle = await page.locator('.drag-handle').boundingBox()

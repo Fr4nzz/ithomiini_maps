@@ -3,7 +3,9 @@ import { useDataStore } from '../stores/data'
 import { useLegendStore } from '../stores/legend'
 import { generateRScript } from './rExport/rScriptGenerator'
 import { generateReadme } from './rExport/htmlReadmeGenerators'
-import { resolvePointFeatures, resolveRangeFeatures, snapshotLegend, snapshotControls } from './rExport/snapshot'
+import { resolvePointFeatures, resolveRangeFeatures, resolveSiteFeatures, snapshotLegend, snapshotControls } from './rExport/snapshot'
+import { groupRecordsBySite, summarizeSites } from './sites'
+import { INDIVIDUAL_RAMPS } from './colorPlan'
 import { withMapExport } from './mapExportQueue'
 import { generateSpeciesBorderColors } from './colors'
 import { useHostPlantStore } from '../stores/hostPlants'
@@ -75,25 +77,15 @@ function pointStyle(store, legendStore, zoom, mode) {
       useShapes: false
     }
   }
+  // Site markers share one radius rule; each site multiplies it by its size factor.
   const base = style.pointSize * 0.9
-  if (legendStore.shapeSettings.enabled) {
-    const iconSize = interpolate(zoom, [[3, base * 0.03], [6, base * 0.05], [10, base * 0.08], [14, base * 0.12]])
-    return {
-      radius: (15 - style.borderWidth) * iconSize,
-      fillOpacity: style.fillOpacity,
-      strokeWidth: style.borderWidth * iconSize,
-      strokeColor: style.borderColor,
-      strokeOpacity: style.fillOpacity,
-      useShapes: true
-    }
-  }
   return {
     radius: interpolate(zoom, [[3, base * 0.375], [6, base * 0.625], [10, base], [14, base * 1.5]]),
     fillOpacity: style.fillOpacity,
     strokeWidth: interpolate(zoom, [[3, style.borderWidth * 0.33], [10, style.borderWidth]]),
     strokeColor: style.borderColor,
     strokeOpacity: style.borderOpacity,
-    useShapes: legendStore.shapeSettings.enabled
+    useShapes: legendStore.shapeSettings.enabled && store.colorPlan.mode === 'categories'
   }
 }
 
@@ -172,7 +164,8 @@ async function exportForRLocked(map) {
     filters: store.filters, colorBy: store.colorBy, activeColorMap: store.activeColorMap,
     mode: store.visualizationMode,
     range: store.rangeSettings, mapStyle: store.mapStyle,
-    shown: [...legendStore.shownLabels], hidden: legendStore.hiddenItems,
+    colorPlan: store.colorPlan.mode, colored: [...store.coloredLabels], hidden: legendStore.hiddenItems,
+    sizeByIndividuals: store.sizeByIndividuals,
     shapes: legendStore.shapeSettings, groupShapes: legendStore.groupShapes,
     legendPosition: legendStore.position, legendSize: legendStore.size,
     host: { selected: hostPlantStore.selectedTaxonSlugs, opacity: hostPlantStore.opacity },
@@ -203,43 +196,51 @@ async function exportForRLocked(map) {
     : basemap
   assertStable()
 
-  const shownLabels = legendStore.shownLabels
   const speciesBorderColors = legendStore.speciesStyling.borderColor && store.colorBy === 'subspecies'
     ? generateSpeciesBorderColors(Object.keys(store.speciesSubspeciesMap).sort(), legendStore.speciesBorderColors)
     : {}
-  const features = resolvePointFeatures(displayedGeo?.features || geo.features, {
-    attribute: store.colorByAttribute,
-    palette: store.activeColorMap,
-    // MapLibre's symbol-image path currently keeps palette colors for overflow
-    // categories; its circle path greys them. Mirror that rendered behavior.
-    shownLabels: legendStore.shapeSettings.enabled ? new Set() : shownLabels,
-    sortLabels: shownLabels,
-    hiddenItems: legendStore.hiddenItems,
-    project
-  }).map(feature => {
-    const shapeKey = store.colorBy === 'subspecies'
-      ? feature.properties.scientific_name : feature.properties[store.colorByAttribute]
-    return {
-      ...feature,
-      properties: {
-        ...feature.properties,
-        display_shape: legendStore.shapeSettings.enabled
-          ? (legendStore.getGroupShape(shapeKey) || 'circle') : 'circle',
-        display_stroke_color: legendStore.shapeSettings.enabled
-          ? legendStore.speciesBorderColors[shapeKey] || store.mapStyle.borderColor
-          : legendStore.speciesStyling.borderColor && store.colorBy === 'subspecies'
-            ? speciesBorderColors[feature.properties.scientific_name] || store.mapStyle.borderColor
-            : store.mapStyle.borderColor
-      }
-    }
-  }).sort((a, b) => a.properties.display_sort_key - b.properties.display_sort_key)
+  const hidden = new Set(legendStore.hiddenItems)
+  const visibleRecords = (displayedGeo?.features || geo.features)
+    .filter(feature => !hidden.has(feature.properties[store.colorByAttribute]))
+  const shapesEnabled = legendStore.shapeSettings.enabled
+  const singleSpecies = site => site.speciesCount === 1 ? site.records[0].properties.scientific_name : null
+  const features = mode === 'ranges'
+    // Range mode draws small record points beneath the polygons.
+    ? resolvePointFeatures(visibleRecords, {
+        attribute: store.colorByAttribute,
+        palette: store.activeColorMap,
+        hiddenItems: legendStore.hiddenItems,
+        project
+      }).map(feature => ({ ...feature, properties: { ...feature.properties, display_shape: 'circle' } }))
+    : resolveSiteFeatures(summarizeSites(groupRecordsBySite(visibleRecords), {
+        plan: store.colorPlan,
+        ramp: INDIVIDUAL_RAMPS[store.basemapIsDark ? 'dark' : 'light'],
+        sizeByIndividuals: store.sizeByIndividuals,
+      }).sites, {
+        project,
+        shapeFor: site => shapesEnabled && singleSpecies(site)
+          ? legendStore.getGroupShape(singleSpecies(site)) || 'circle' : 'circle',
+        strokeFor: site => {
+          const species = singleSpecies(site)
+          if (!species) return store.mapStyle.borderColor
+          if (shapesEnabled) return legendStore.speciesBorderColors[species] || store.mapStyle.borderColor
+          return speciesBorderColors[species] || store.mapStyle.borderColor
+        }
+      })
 
   const drawPoints = mode === 'points' || (mode === 'ranges' && store.rangeSettings.showPoints)
   const ranges = mode === 'ranges'
     ? resolveRangeFeatures(geo, store.rangeSettings, store.activeColorMap, project)
     : null
-  const dataGeoJSON = { type: 'FeatureCollection', metadata: { appCommit: commitHash, colorBy: store.colorBy }, features }
+  const dataGeoJSON = {
+    type: 'FeatureCollection',
+    metadata: { appCommit: commitHash, colorBy: store.colorBy, colorMode: store.colorPlan.mode,
+      features: mode === 'ranges' ? 'records' : 'sites' },
+    features
+  }
   const dataText = JSON.stringify(dataGeoJSON, null, 2)
+  // Every filtered occurrence, independent of how the map groups them.
+  const recordsText = JSON.stringify({ type: 'FeatureCollection', features: geo.features }, null, 2)
   const dataSha256 = await sha256(new TextEncoder().encode(dataText))
   const manifest = {
     version: 2,
@@ -252,7 +253,9 @@ async function exportForRLocked(map) {
     filters: JSON.parse(JSON.stringify(store.filters)),
     dataSha256,
     filteredRecordCount: geo.features.length,
-    displayedRecordCount: features.length,
+    displayedRecordCount: visibleRecords.length,
+    displayedMarkerCount: features.length,
+    colorMode: store.colorPlan.mode,
     mode,
     rangeMethod: mode === 'ranges' ? rangeMethod : null,
     colorBy: store.colorBy,
@@ -287,6 +290,7 @@ async function exportForRLocked(map) {
   const legend = snapshotLegend(container)
   const files = {
     'data.geojson': strToU8(dataText),
+    'records.geojson': strToU8(recordsText),
     'view_config.json': strToU8(JSON.stringify(manifest, null, 2)),
     'legend.json': strToU8(JSON.stringify(legend, null, 2)),
     'generate_map.R': strToU8(generateRScript()),

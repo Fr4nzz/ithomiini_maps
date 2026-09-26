@@ -39,7 +39,10 @@ describe('useLegendStore', () => {
     const store = useLegendStore()
 
     expect(store.groupingSettings.groupBy).toBe('species')
-    expect(store.sortBy).toBe('alphabetical')
+    // Most common groups first: the same order colours are assigned in.
+    expect(store.sortBy).toBe('abundance')
+    expect(store.sortOrder).toBe('desc')
+    expect(store.colorOverride).toBeNull()
   })
 
   it('persists per-species collapse without hiding legend items', () => {

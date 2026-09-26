@@ -25,23 +25,58 @@ export function screenGeometry(geometry, project) {
   throw new Error(`Unsupported export geometry: ${geometry.type}`)
 }
 
-export function resolvePointFeatures(features, { attribute, palette, shownLabels, sortLabels = shownLabels, hiddenItems, project }) {
+/** Record-level points (range mode) in their legend colour, grey when uncoloured. */
+export function resolvePointFeatures(features, { attribute, palette, hiddenItems, project }) {
   const hidden = new Set(hiddenItems)
   return features.filter(feature => !hidden.has(feature.properties[attribute])).map(feature => {
     const category = feature.properties[attribute]
-    const shown = !shownLabels?.size || shownLabels.has(category)
     const { x, y } = project(feature.geometry.coordinates)
     return {
       ...feature,
       properties: {
         ...feature.properties,
-        display_color: shown ? palette[category] || '#6b7280' : '#6b7280',
-        display_sort_key: sortLabels?.size ? Number(sortLabels.has(category)) : 1,
+        display_color: palette[category] || '#6b7280',
+        display_sort_key: 1,
         screen_x: x,
         screen_y: y
       }
     }
   })
+}
+
+/**
+ * One marker per site, as drawn in the browser: a colour (single group or
+ * individuals ramp) or pie segments, and a size factor from individuals.
+ * Large sites come first so small ones are painted on top.
+ */
+export function resolveSiteFeatures(sites, { project, shapeFor = () => 'circle', strokeFor = () => null }) {
+  return sites.map(site => {
+    const { x, y } = project(site.coordinates)
+    const species = [...new Set(site.records.map(record => record.properties.scientific_name).filter(Boolean))].sort()
+    return {
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: site.coordinates },
+      properties: {
+        collection_location: site.locality,
+        country: site.country,
+        individuals: site.individuals,
+        record_count: site.recordCount,
+        species_count: site.speciesCount,
+        species: species.join('; '),
+        display_color: site.fill,
+        display_segments: site.segments.length > 1
+          ? site.segments.map(({ label, color, fraction }) => ({ label, color, fraction }))
+          : null,
+        display_label: site.segments.length === 1 ? site.segments[0].label : null,
+        display_size_factor: site.sizeFactor,
+        display_shape: site.segments.length > 1 ? 'circle' : shapeFor(site),
+        display_stroke_color: strokeFor(site),
+        display_sort_key: -site.individuals,
+        screen_x: x,
+        screen_y: y
+      }
+    }
+  }).sort((a, b) => a.properties.display_sort_key - b.properties.display_sort_key)
 }
 
 export function resolveRangeFeatures(geojson, settings, _palette, project) {
@@ -106,9 +141,13 @@ export function snapshotLegend(container) {
     return lines.size ? [...lines.values()] : [{ text: el.textContent.trim(), box: relative(el) }]
   }
   const rows = []
-  const selectors = '.legend-title, .legend-group-header, .legend-item, .legend-more'
+  const selectors = '.legend-title, .legend-group-header, .legend-item, .legend-more, .individuals-ramp, .individuals-scale > span'
   element.querySelectorAll(selectors).forEach(el => {
     if (!visible(el)) return
+    if (el.classList.contains('individuals-ramp')) {
+      rows.push({ type: 'ramp', box: relative(el), colors: (el.dataset.colors || '').split(',').filter(Boolean), lines: [] })
+      return
+    }
     let type = 'item'
     let textEl = el.querySelector('.legend-label') || el
     if (el.classList.contains('legend-title')) {

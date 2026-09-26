@@ -13,7 +13,6 @@ import {
   getStylesByTheme,
   getBasemapPair,
   useLocationSearch,
-  useScatterVisualization,
   useDataLayer,
   useStyleSwitcher,
   useCountryBoundaries,
@@ -41,10 +40,9 @@ const pointPopupContainer = ref(null)
 // MapLibre owns its internal render state; Vue only observes replacement.
 const map = shallowRef(null)
 let popup = null
-// Satellite imagery reads like a dark basemap for label contrast.
-const localityLayer = useLocalityLayer(map, {
-  isDarkBasemap: () => MAP_STYLES[currentStyle.value]?.theme === 'night' || currentStyle.value === 'satellite',
-})
+// Satellite imagery reads like a dark basemap for label and ramp contrast.
+const isDarkBasemap = () => MAP_STYLES[currentStyle.value]?.theme === 'night' || currentStyle.value === 'satellite'
+const localityLayer = useLocalityLayer(map, { isDarkBasemap })
 const clusterComposition = useClusterComposition(map)
 const sharedView = parseSharedMapView(new URLSearchParams(window.location.search).get('map_view'))
 
@@ -87,12 +85,11 @@ const {
   cleanup: cleanupSearch
 } = useLocationSearch(map)
 
-const { updateScatterVisualization } = useScatterVisualization(map)
 
-// Keep the restored cluster card within the map while preserving its geographic anchor.
-const fitClusterPopup = (currentPopup) => {
+// Keep the popup card within the map while preserving its geographic anchor.
+const fitPopupToMap = (currentPopup = popup) => {
   nextTick(() => requestAnimationFrame(() => {
-    if (popup !== currentPopup || !enhancedPopupData.value.isCluster || window.innerWidth <= 600) return
+    if (!currentPopup || popup !== currentPopup || window.innerWidth <= 600) return
     const bounds = currentPopup.getElement().getBoundingClientRect()
     const viewport = map.value.getContainer().getBoundingClientRect()
     const overflow = (start, end, min, max) => end > max ? end - max : start < min ? start - min : 0
@@ -149,7 +146,7 @@ const handleShowPopup = (data) => {
           .setDOMContent(pointPopupContainer.value)
           .addTo(map.value)
 
-        fitClusterPopup(popup)
+        fitPopupToMap(popup)
         popup.on('close', () => {
           showEnhancedPopup.value = false
           if (clearClusterExtentCircle) clearClusterExtentCircle()
@@ -204,7 +201,7 @@ const toggleDock = () => {
             .setDOMContent(pointPopupContainer.value)
             .addTo(map.value)
 
-          fitClusterPopup(popup)
+          fitPopupToMap(popup)
           popup.on('close', () => {
             showEnhancedPopup.value = false
             if (clearClusterExtentCircle) clearClusterExtentCircle()
@@ -215,9 +212,9 @@ const toggleDock = () => {
   }
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup, onDataChanged: data => {
-  localityLayer.invalidate(data)
-  clusterComposition.invalidate(data)
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup, onDataChanged: (data, sites) => {
+  localityLayer.invalidate(data, sites)
+  clusterComposition.invalidate(data, sites)
 } })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   recreateClusterExtentCircle,
@@ -232,6 +229,8 @@ const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   },
   onStyleIdle: () => updateSDMLayer()
 })
+// The individuals ramp runs dark→light on dark maps and light→dark on light maps.
+watch(currentStyle, () => { store.basemapIsDark = isDarkBasemap() }, { immediate: true, flush: 'sync' })
 const { showBoundaries, toggleBoundaries, addBoundariesLayer } = useCountryBoundaries(map, currentStyle)
 const { updateLayer: updateSDMLayer, invalidatePending: invalidatePendingSDM, cursorValue: sdmCursorValue, cursorPos: sdmCursorPos } = useSDMLayer(map)
 const { updateLayer: updateHostPlantLayer } = useHostPlantLayer(map, { onShowPopup: handleShowPopup })
@@ -504,7 +503,6 @@ const initMap = () => {
 
 // Track previous data length to detect actual data changes
 let previousDataLength = 0
-let previousScatterState = false
 
 // Handle open gallery from popup
 const handleOpenGallery = (mode = 'butterflies') => {
@@ -541,15 +539,10 @@ watch(
 
     if (!isMapReady()) return
 
-    const currentScatterState = store.scatterOverlappingPoints
-
-    const scatterJustToggled = currentScatterState !== previousScatterState
-    previousScatterState = currentScatterState
-
     const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    const shouldSkipZoom = Boolean(sharedView) || !dataLengthChanged || scatterJustToggled || clusteringJustToggled
+    const shouldSkipZoom = Boolean(sharedView) || !dataLengthChanged || clusteringJustToggled
 
     // Reset the clustering flag after we've used it
     if (clusteringJustToggled) {
@@ -557,19 +550,6 @@ watch(
     }
 
     debouncedAddDataLayer({ skipZoom: shouldSkipZoom })
-
-    if (store.scatterOverlappingPoints) {
-      updateScatterVisualization()
-    }
-  }
-)
-
-// Watch for scatter toggle changes
-watch(
-  () => store.scatterOverlappingPoints,
-  () => {
-    if (!isMapReady()) return
-    updateScatterVisualization()
   }
 )
 
@@ -689,7 +669,7 @@ watch(
             .setDOMContent(pointPopupContainer.value)
             .addTo(map.value)
 
-          fitClusterPopup(popup)
+          fitPopupToMap(popup)
           popup.on('close', () => {
             showEnhancedPopup.value = false
           })
@@ -756,6 +736,7 @@ watch(() => planning.focusRequestId, () => {
           @open-gallery="handleOpenGallery"
           @toggle-dock="toggleDock"
           @focus-site="planning.focusSite"
+          @layout-change="fitPopupToMap()"
         />
         <PlantPopup
           v-else-if="showEnhancedPopup && !popupDocked"
