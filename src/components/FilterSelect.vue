@@ -15,8 +15,15 @@ const props = defineProps({
   multiple: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
   showCount: { type: Boolean, default: true },
-  filterOptions: { type: Function, default: null }
+  filterOptions: { type: Function, default: null },
+  // Options shaped as [{ [groupLabel]: 'Header', [groupValues]: [...] }].
+  groupValues: { type: String, default: undefined },
+  groupLabel: { type: String, default: undefined }
 })
+
+const flatOptions = computed(() => props.groupValues
+  ? props.options.flatMap(group => group[props.groupValues] || [])
+  : props.options)
 
 const emit = defineEmits(['update:modelValue'])
 const searchText = ref('')
@@ -28,11 +35,11 @@ const visibleOptions = computed(() => {
 
 const displayedCount = computed(() => {
   if (props.filterOptions && searchText.value.trim()) return visibleOptions.value.length
-  return props.options.length
+  return new Set(flatOptions.value.map(option => option?.value ?? option)).size
 })
 
 const trackByKey = computed(() => (
-  props.options.some(option => typeof option === 'object' && option !== null)
+  flatOptions.value.some(option => typeof option === 'object' && option !== null)
     ? 'value'
     : undefined
 ))
@@ -96,7 +103,7 @@ const segmentStyle = (segment) => ({
   <div class="filter-wrapper">
     <label v-if="label" class="filter-label">
       {{ label }}
-      <span v-if="showCount && options.length > 0" class="option-count">
+      <span v-if="showCount && flatOptions.length > 0" class="option-count">
         ({{ displayedCount }})
       </span>
     </label>
@@ -117,6 +124,9 @@ const segmentStyle = (segment) => ({
       :disabled="disabled"
       :max-height="300"
       :options-limit="500"
+      :group-values="groupValues"
+      :group-label="groupLabel"
+      :group-select="false"
       class="filter-multiselect"
     >
       <template #tag="{ option, remove }">
@@ -148,7 +158,8 @@ const segmentStyle = (segment) => ({
         </span>
       </template>
       <template #option="{ option }">
-        <span class="option-with-dot">
+        <span v-if="option?.$isLabel" class="option-group-label">{{ option.$groupLabel }}</span>
+        <span v-else class="option-with-dot">
           <span
             v-if="getOptionAccentStyle(option)"
             class="color-dot"
@@ -196,6 +207,12 @@ const segmentStyle = (segment) => ({
 <style scoped>
 .filter-wrapper {
   margin-bottom: 12px;
+}
+
+.option-group-label {
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: 600;
 }
 
 .filter-label {
@@ -302,6 +319,16 @@ const segmentStyle = (segment) => ({
 
 :deep(.multiselect__option--selected.multiselect__option--highlight) {
   background: rgba(74, 222, 128, 0.25);
+}
+
+/* Species headers in grouped lists are labels, not choices. */
+:deep(.multiselect__option--group),
+:deep(.multiselect__option--group.multiselect__option--highlight),
+:deep(.multiselect__option--group.multiselect__option--disabled) {
+  padding: 8px 12px 4px;
+  background: transparent !important;
+  color: var(--color-text-secondary, #9ca3af) !important;
+  cursor: default;
 }
 
 /* Multi-select tags */
