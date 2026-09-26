@@ -119,6 +119,8 @@ export function layoutLocalityLabels(items, { project, width, height, measure, m
     // A labeled record is also a marker obstacle even if the renderer omits it from queries.
     grid.add({ left: anchor.x - radius, right: anchor.x + radius,
       top: anchor.y - radius, bottom: anchor.y + radius })
+    // Markers clipped by the map edge still block text, but are not named.
+    if (anchor.x < 0 || anchor.x > width || anchor.y < 0 || anchor.y > height) continue
     projected.push({ item, anchor, radius })
   }
   projected.sort((a, b) => a.item.priority - b.item.priority || a.item.key.localeCompare(b.item.key))
