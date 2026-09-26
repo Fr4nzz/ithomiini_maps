@@ -92,6 +92,15 @@ function resetRangeSettings() {
         </p>
       </div>
 
+      <div class="setting-row">
+        <label for="cluster-appearance">Cluster appearance</label>
+        <select id="cluster-appearance" v-model="store.clusterSettings.compositionRings" class="style-select">
+          <option :value="true">Taxon composition rings</option>
+          <option :value="false">Plain numbered circles</option>
+        </select>
+        <p v-if="store.clusterSettings.compositionRings" class="count-mode-hint">Ring segments show proportions of records, using legend colours. The centre counts all matching records.</p>
+      </div>
+
       <label class="toggle-row cluster-points-toggle">
         <input type="checkbox" v-model="store.clusterSettings.showClusterPoints" />
         <span>Show points of selected cluster</span>

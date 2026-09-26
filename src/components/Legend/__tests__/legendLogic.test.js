@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { getFeatureColor } from '../../../stores/dataColorPalette'
 
 /**
  * Tests for pure legend data transformation logic.
@@ -173,5 +174,23 @@ describe('buildItemGroupMap', () => {
   it('handles empty features', () => {
     const map = buildItemGroupMap([], 'genus', 'subspecies')
     expect(map).toEqual({})
+  })
+})
+
+describe('mixed species and subspecies colors', () => {
+  const subspeciesColors = { casabranca: '#aabbcc', solaria: '#bbccdd', travella: '#ccddee', derasa: '#ddeeff' }
+  const speciesColors = { 'Mechanitis polymnia': '#112233', 'Mechanitis lysimnia': '#223344', 'Ithomia salapia': '#334455' }
+  const collapsed = ['Mechanitis polymnia', 'Mechanitis lysimnia']
+
+  it('uses one species color for every collapsed species record', () => {
+    expect(getFeatureColor({ scientific_name: 'Mechanitis polymnia', subspecies: 'casabranca' }, subspeciesColors, speciesColors, collapsed)).toBe('#112233')
+    expect(getFeatureColor({ scientific_name: 'Mechanitis polymnia', subspecies: 'Unknown' }, subspeciesColors, speciesColors, collapsed)).toBe('#112233')
+    expect(getFeatureColor({ scientific_name: 'Mechanitis lysimnia', subspecies: 'solaria' }, subspeciesColors, speciesColors, collapsed)).toBe('#223344')
+  })
+
+  it('restores individual subspecies colors when expanded', () => {
+    expect(getFeatureColor({ scientific_name: 'Ithomia salapia', subspecies: 'travella' }, subspeciesColors, speciesColors, collapsed)).toBe('#ccddee')
+    expect(getFeatureColor({ scientific_name: 'Ithomia salapia', subspecies: 'derasa' }, subspeciesColors, speciesColors, collapsed)).toBe('#ddeeff')
+    expect(getFeatureColor({ scientific_name: 'Mechanitis polymnia', subspecies: 'casabranca' }, subspeciesColors, speciesColors, [])).toBe('#aabbcc')
   })
 })

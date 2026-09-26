@@ -44,6 +44,7 @@ export const usePersistenceStore = defineStore('persistence', () => {
       'legend-custom-labels',
       'legend-custom-colors',
       'legend-hidden-items',
+      'legend-collapsed-species',
       'legend-item-order',
       // Legend grouping settings
       'legend-grouping',
@@ -129,6 +130,7 @@ export const usePersistenceStore = defineStore('persistence', () => {
       set('legend-sticky', legendStore.stickyEdges)
       set('legend-custom-labels', legendStore.customLabels)
       set('legend-custom-colors', legendStore.customColors)
+      set('legend-collapsed-species', legendStore.collapsedSpecies)
       set('legend-hidden-items', legendStore.hiddenItems)
       set('legend-grouping', legendStore.groupingSettings)
       set('legend-species-styling', legendStore.speciesStyling)

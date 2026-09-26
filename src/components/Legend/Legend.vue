@@ -181,6 +181,7 @@ const {
   isAutoWidth, isAutoHeight, currentWidth, currentHeight,
   isResizing, resizeOverride,
   sortedAllItems,
+  itemGroupMap,
   legendCounts,
   legendStore, dataStore
 })
@@ -241,6 +242,10 @@ watch([
   invalidateMeasurement(`setting:${changed.join(',')}`)
 }, { deep: true })
 
+watch(() => legendStore.collapsedSpecies, () => {
+  invalidateMeasurement('speciesCollapse')
+}, { deep: true })
+
 watch(sortedAllItems, (newItems, oldItems) => {
   const delta = newItems.length - (oldItems?.length || 0)
   invalidateMeasurement(`data:${newItems.length}items(${delta >= 0 ? '+' : ''}${delta})`, { debounced: true })
@@ -280,10 +285,24 @@ watch(showEditUI, (editing) => {
   }
 })
 
-watch(legendItems, (items) => {
+watch([legendItems, groupedLegendData, itemGroupMap], ([items, groups, groupMap]) => {
   const labels = new Set()
-  for (const item of items) {
-    if (item.visible !== false) labels.add(item.label)
+  if (groups.type === 'grouped') {
+    for (const group of groups.groups) {
+      if (group.collapsed) {
+        for (const label of groupMap[group.name] || []) {
+          if (legendStore.isItemVisible(label)) labels.add(label)
+        }
+      } else {
+        for (const item of group.items) {
+          if (item.visible !== false) labels.add(item.label)
+        }
+      }
+    }
+  } else {
+    for (const item of items) {
+      if (item.visible !== false) labels.add(item.label)
+    }
   }
   legendStore.setShownLabels(labels)
 }, { immediate: true })
@@ -736,6 +755,7 @@ onUnmounted(() => {
           v-for="group in groupedLegendData.groups"
           :key="group.name"
           class="legend-group"
+          :class="{ 'is-collapsed': group.collapsed }"
         >
           <!-- Group header -->
           <LegendGroupHeader
@@ -745,6 +765,9 @@ onUnmounted(() => {
             :custom-label="group.customLabel"
             :border-color="group.borderColor"
             :count="group.items.length"
+            :collapsible="group.collapsible"
+            :collapsed="group.collapsed"
+            :species-color="group.speciesColor"
             :dot-size="dotSize"
             :is-export-mode="isExportMode"
             :headers-hidden="!legendStore.groupingSettings.showHeaders && !legendStore.isNonTaxonomyGroupBy"
@@ -762,10 +785,11 @@ onUnmounted(() => {
             @apply-prefix-format-to-all="handleApplyPrefixFormatToAll"
             @dropdown-open="hasOpenPopup = true"
             @dropdown-close="hasOpenPopup = false"
+            @toggle-collapse="legendStore.setSpeciesCollapsed(group.name, !group.collapsed)"
           />
 
-          <!-- Group items (always shown) -->
-          <div class="legend-group-items">
+          <!-- Expanded groups show individual subspecies colors. -->
+          <div v-if="!group.collapsed" class="legend-group-items">
             <LegendItem
               v-for="item in group.items"
               v-show="item.visible !== false || showEditUI"

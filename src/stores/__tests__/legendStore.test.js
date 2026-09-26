@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useLegendStore } from '../legend'
+import { usePersistenceStore } from '../persistence'
 
 describe('useLegendStore', () => {
   beforeEach(() => {
@@ -39,5 +40,21 @@ describe('useLegendStore', () => {
 
     expect(store.groupingSettings.groupBy).toBe('species')
     expect(store.sortBy).toBe('alphabetical')
+  })
+
+  it('persists per-species collapse without hiding legend items', () => {
+    usePersistenceStore().setEnabled(true)
+    const store = useLegendStore()
+    store.setSpeciesCollapsed('Mechanitis polymnia', true)
+    store.setSpeciesCollapsed('Mechanitis polymnia', true)
+    store.setSpeciesCollapsed('Mechanitis lysimnia', true)
+
+    expect(store.collapsedSpecies).toEqual(['Mechanitis polymnia', 'Mechanitis lysimnia'])
+    expect(store.hiddenItems).toEqual([])
+    expect(JSON.parse(localStorage.getItem('legend-collapsed-species'))).toEqual(store.collapsedSpecies)
+
+    store.setSpeciesCollapsed('Mechanitis polymnia', false)
+    expect(store.isSpeciesCollapsed('Mechanitis polymnia')).toBe(false)
+    expect(store.isSpeciesCollapsed('Mechanitis lysimnia')).toBe(true)
   })
 })

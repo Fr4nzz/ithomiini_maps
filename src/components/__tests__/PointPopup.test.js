@@ -1,0 +1,70 @@
+// @vitest-environment happy-dom
+import { afterEach, describe, expect, it } from 'vitest'
+import { createApp, nextTick } from 'vue'
+import { createPinia } from 'pinia'
+import PointPopup from '../PointPopup.vue'
+
+const mounted = []
+afterEach(() => {
+  for (const { app, host } of mounted.splice(0)) { app.unmount(); host.remove() }
+})
+
+function mount(props) {
+  const host = document.createElement('div')
+  document.body.append(host)
+  const app = createApp(PointPopup, props)
+  app.use(createPinia())
+  app.mount(host)
+  mounted.push({ app, host })
+  return host
+}
+
+const points = ['Suchipakari', 'Rio Pusuno', 'San Pedro de Arajuno', 'Y de Misahualli', '<img src=x onerror=alert(1)>']
+  .map((collection_location, index) => ({
+    id: `CAM0000${index + 1}`, source: 'Sanger Institute', collection_location,
+    lat: -1 - index * 0.06, lng: -77.6, country: 'Ecuador',
+    scientific_name: index % 2 ? 'Mechanitis lysimnia' : 'Mechanitis polymnia',
+    subspecies: index % 2 ? 'lysimnia' : 'polymnia', observation_date: '18-Jan-22'
+  }))
+
+describe('PointPopup', () => {
+  it('keeps specimen and taxonomy controls visible with four cluster localities and an individual total', async () => {
+    let focused = null
+    const host = mount({
+      coordinates: { lat: -1, lng: -77.6 }, points, isCluster: true,
+      onFocusSite: site => { focused = site }
+    })
+    expect(host.querySelector('.photo-container')).not.toBeNull()
+    expect(host.querySelector('.individuals-section')).not.toBeNull()
+    expect(host.querySelectorAll('.taxonomy-select')).toHaveLength(2)
+    expect(host.querySelectorAll('.cluster-site')).toHaveLength(4)
+    expect(host.textContent).toContain('5individuals')
+    expect(host.textContent).not.toContain('Dates:')
+    expect(host.querySelector('img')).toBeNull()
+    expect(host.textContent).toContain('<img src=x onerror=alert(1)>')
+    host.querySelector('[aria-label="Focus Suchipakari on map"]').click()
+    expect(focused.name).toBe('Suchipakari')
+    expect(focused.recordCount).toBe(1)
+    const mapsLink = [...host.querySelectorAll('.cluster-site')]
+      .find(row => row.textContent.includes('Suchipakari')).querySelector('.locality-map-link')
+    expect(new URL(mapsLink.href).searchParams.get('query')).toBe('-1,-77.6')
+    expect(mapsLink.target).toBe('_blank')
+    expect(mapsLink.rel).toContain('noopener')
+    host.querySelector('.cluster-sites-toggle').click()
+    await nextTick()
+    expect(host.querySelectorAll('.cluster-site')).toHaveLength(5)
+    expect(host.textContent).toContain('<img src=x onerror=alert(1)>')
+    expect(host.querySelector('img')).toBeNull()
+    expect(host.querySelector('.goat-section')).toBeNull()
+  })
+
+  it('preserves the ordinary location summary and specimen layout', () => {
+    const host = mount({ coordinates: { lat: -1, lng: -77.6 }, points: [points[0]] })
+    expect(host.querySelector('.photo-container')).not.toBeNull()
+    expect(host.textContent).toContain('Location Summary')
+    expect(host.textContent).toContain('Suchipakari')
+    expect(new URL(host.querySelector('.location-summary .locality-map-link').href).searchParams.get('query')).toBe('-1,-77.6')
+    expect(host.querySelector('.cluster-sites')).toBeNull()
+    expect(host.querySelector('.cluster-sites-toggle')).toBeNull()
+  })
+})

@@ -1,6 +1,7 @@
 <script setup>
-import { ref, shallowRef, onMounted, provide } from 'vue'
+import { ref, shallowRef, onMounted, provide, watch } from 'vue'
 import { useDataStore } from './stores/data'
+import { usePlanningStore } from './stores/planning'
 import { useMobileLayout } from './composables/useMobileLayout'
 import Sidebar from './components/Sidebar.vue'
 import MapEngine from './components/MapEngine.vue'
@@ -20,6 +21,10 @@ provide('mobileLayout', mobileLayout)
 const { isMobile } = mobileLayout
 
 const showMobileSidebar = ref(false)
+const planning = usePlanningStore()
+watch(() => planning.showComparison, visible => {
+  if (visible && isMobile.value) showMobileSidebar.value = false
+})
 const commandPaletteRef = ref(null)
 
 // View state

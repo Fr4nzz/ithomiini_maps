@@ -73,6 +73,20 @@ export const useLegendStore = defineStore('legend', () => {
     showHeaders: true,                 // Headers visible (default shown)
   }))
 
+  // Collapsing a species changes its display color only; it never changes filters.
+  const collapsedSpecies = ref(getStorage('legend-collapsed-species', []))
+
+  function isSpeciesCollapsed(species) {
+    return collapsedSpecies.value.includes(species)
+  }
+
+  function setSpeciesCollapsed(species, collapsed) {
+    collapsedSpecies.value = collapsed
+      ? [...new Set([...collapsedSpecies.value, species])]
+      : collapsedSpecies.value.filter(name => name !== species)
+    setStorage('legend-collapsed-species', collapsedSpecies.value)
+  }
+
   // Species-level styling options
   const speciesStyling = ref(getStorage('legend-species-styling', {
     borderColor: false,                // Per-species border colors on map
@@ -245,6 +259,7 @@ export const useLegendStore = defineStore('legend', () => {
            Object.keys(speciesAbbreviationVisible.value).length > 0 ||
            Object.keys(groupShapes.value).length > 0 ||
            Object.keys(speciesDisplayNames.value).length > 0 ||
+           collapsedSpecies.value.length > 0 ||
            // Grouping settings changed from defaults
            groupingSettings.value.showHeaders !== true ||
            // Species styling enabled
@@ -344,6 +359,7 @@ export const useLegendStore = defineStore('legend', () => {
     resetRef(speciesAbbreviations, 'legend-species-abbreviations', {})
     resetRef(speciesAbbreviationVisible, 'legend-species-abbrev-visible', {})
     resetRef(groupShapes, 'legend-group-shapes', {})
+    resetRef(collapsedSpecies, 'legend-collapsed-species', [])
 
     // Grouping settings (preserve enabled/groupBy, reset display options)
     Object.assign(groupingSettings.value, { showHeaders: true })
@@ -600,7 +616,7 @@ export const useLegendStore = defineStore('legend', () => {
   }
 
   watch(
-    [customColors, speciesStyling, speciesBorderColors, shapeSettings, groupShapes, hiddenItems, shownLabels],
+    [customColors, speciesStyling, speciesBorderColors, shapeSettings, groupShapes, hiddenItems, shownLabels, collapsedSpecies],
     () => { styleVersion.value++ },
     { deep: true }
   )
@@ -627,6 +643,7 @@ export const useLegendStore = defineStore('legend', () => {
     speciesBorderColors,
     speciesAbbreviations,
     speciesAbbreviationVisible,
+    collapsedSpecies,
 
     // Shape state
     shapeSettings,
@@ -668,6 +685,8 @@ export const useLegendStore = defineStore('legend', () => {
     setScale,
     setStickyEdges,
     setShownLabels,
+    isSpeciesCollapsed,
+    setSpeciesCollapsed,
     setCustomLabel,
     setCustomColor,
     toggleItemVisibility,

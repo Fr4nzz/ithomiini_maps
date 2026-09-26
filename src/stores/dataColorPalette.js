@@ -5,6 +5,16 @@ import { computed } from 'vue'
 import { STATUS_COLORS, SOURCE_COLORS, DYNAMIC_COLORS } from '../utils/constants'
 import { useLegendStore } from './legend'
 
+// Both the legend and map use this rule. A collapsed species always takes its
+// species color, including records with an unknown subspecies.
+export function getFeatureColor(properties, subspeciesColors, speciesColors, collapsedSpecies) {
+  const species = properties?.scientific_name
+  if (collapsedSpecies?.includes(species)) {
+    return speciesColors[species] || subspeciesColors[properties?.subspecies] || '#6b7280'
+  }
+  return subspeciesColors[properties?.subspecies] || '#6b7280'
+}
+
 /**
  * Composable for color mapping logic
  * @param {import('vue').Ref} colorBy - Current color-by mode
@@ -109,8 +119,26 @@ export function useColorMapping(colorBy, displayGeoJSON, colorByAttribute) {
     return base
   })
 
+  const speciesColorMap = computed(() => {
+    const species = [...new Set((displayGeoJSON.value?.features || [])
+      .map(feature => feature.properties.scientific_name)
+      .filter(value => value && value !== 'Unknown' && value !== 'NA'))].sort()
+    const colors = generateColorPalette(species)
+    const customColors = useLegendStore().customColors
+    for (const name of species) {
+      if (customColors[name]) colors[name] = customColors[name]
+    }
+    return colors
+  })
+
   // Legend title based on colorBy
   const legendTitle = computed(() => {
+    const legendStore = useLegendStore()
+    if (colorBy.value === 'subspecies' &&
+        legendStore.effectiveGroupBy === 'species' &&
+        legendStore.collapsedSpecies.length > 0) {
+      return 'Species / subspecies'
+    }
     const titles = {
       'status': 'Sequencing Status',
       'subspecies': 'Subspecies',
@@ -126,6 +154,7 @@ export function useColorMapping(colorBy, displayGeoJSON, colorByAttribute) {
     speciesSubspeciesMap,
     baseColorMap,
     activeColorMap,
+    speciesColorMap,
     legendTitle
   }
 }

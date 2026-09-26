@@ -31,7 +31,7 @@ export function useLegendMeasurement({
   legendRef, contentRef, containerBounds,
   previewSize = ref(null),
   isAutoWidth, isAutoHeight, currentWidth, currentHeight,
-  isResizing, resizeOverride, sortedAllItems, legendCounts,
+  isResizing, resizeOverride, sortedAllItems, itemGroupMap, legendCounts,
   legendStore, dataStore
 }) {
   // ── Text measurement ──────────────────────────────────────────────────
@@ -75,12 +75,19 @@ export function useLegendMeasurement({
       const width = measureTextWidth(label, fontSizePx)
       if (width > maxTextWidth) maxTextWidth = width
     }
+    if (dataStore.colorBy === 'subspecies' && legendStore.effectiveGroupBy === 'species') {
+      for (const species of Object.keys(itemGroupMap.value)) {
+        const width = measureTextWidth(legendStore.getSpeciesDisplayName(species) || species, fontSizePx)
+        if (width > maxTextWidth) maxTextWidth = width
+      }
+    }
 
     const dotSz = Math.max(6, Math.min(16, dataStore.mapStyle.pointSize))
     const padding = 16 * 2
     const gap = 8
     const safetyMargin = 4
     const indentation = isGrouped ? 20 : 0
+    const collapsedControls = hasCollapsedSpeciesGroups.value ? 24 : 0
 
     let countWidth = 0
     if (legendStore.showCounts) {
@@ -94,7 +101,7 @@ export function useLegendMeasurement({
       countWidth = measureTextWidth(maxCount.toLocaleString(), countFontSize) + 8
     }
 
-    const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + countWidth + safetyMargin
+    const idealWidth = maxTextWidth + dotSz + gap + padding + indentation + collapsedControls + countWidth + safetyMargin
     return Math.min(Math.max(Math.ceil(idealWidth), LEGEND_LAYOUT.MIN_WIDTH), maxContainerWidth, LEGEND_LAYOUT.MAX_WIDTH)
   })
 
@@ -168,6 +175,23 @@ export function useLegendMeasurement({
   let correctionSteps = 0
   let lastMeasuredCount = -1
   let followUpScheduledForGeneration = -1
+
+  const hasCollapsedSpeciesGroups = computed(() =>
+    dataStore.colorBy === 'subspecies' &&
+    legendStore.effectiveGroupBy === 'species' &&
+    legendStore.collapsedSpecies.length > 0
+  )
+
+  const totalDisplayRows = computed(() => {
+    if (!hasCollapsedSpeciesGroups.value) return sortedAllItems.value.length
+    const visibleLabels = new Set(sortedAllItems.value.map(item => item.label))
+    let count = 0
+    for (const [species, labels] of Object.entries(itemGroupMap.value)) {
+      const visibleCount = [...labels].filter(label => visibleLabels.has(label)).length
+      if (visibleCount) count += legendStore.isSpeciesCollapsed(species) ? 1 : visibleCount
+    }
+    return count
+  })
 
   // ── effectiveMaxItems ─────────────────────────────────────────────────
   // The actual item limit: measured value when available, upper bound otherwise
@@ -270,7 +294,7 @@ export function useLegendMeasurement({
   }
 
   function logSettled(el, unusedSpace) {
-    const totalItems = sortedAllItems.value.length
+    const totalItems = totalDisplayRows.value
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
     log.legend.info(`[Legend] SETTLED ${measuredItemCount.value}/${totalItems} items | ${sizeMode} ${Math.round(effectiveWidth.value)}×${el.clientHeight} gap=${Math.round(unusedSpace)}px steps=${correctionSteps} | ${logContext()}`)
     log.legend.info(`[Perf] legendMeasurement: settled in ${correctionSteps} steps`)
@@ -332,13 +356,21 @@ export function useLegendMeasurement({
     const moreIndicatorReserve = 40
 
     const isGroupedView = itemsEl.classList.contains('grouped')
-    const allMeasurableItems = isGroupedView
-      ? itemsEl.querySelectorAll('.legend-group-items > .legend-item')
-      : itemsEl.children
+    const allMeasurableItems = isGroupedView && hasCollapsedSpeciesGroups.value
+      ? [...itemsEl.querySelectorAll('.legend-group')].flatMap(group =>
+          group.classList.contains('is-collapsed')
+            ? [group.querySelector('.legend-group-header')]
+            : [...group.querySelectorAll('.legend-group-items > .legend-item')]
+        ).filter(Boolean)
+      : isGroupedView
+        ? [...itemsEl.querySelectorAll('.legend-group-items > .legend-item')]
+        : [...itemsEl.children]
 
-    const measurableItems = [...allMeasurableItems].filter(el => !el.classList.contains('is-hidden'))
+    const measurableItems = [...allMeasurableItems].filter(el =>
+      !el.classList.contains('is-hidden') || el.closest('.legend-group')?.classList.contains('is-collapsed')
+    )
 
-    const totalSorted = sortedAllItems.value.length
+    const totalSorted = totalDisplayRows.value
     const sizeMode = `${isAutoWidth.value ? 'auto' : 'manual'}/${isAutoHeight.value ? 'auto' : 'manual'}`
 
     if (!measurableItems.length) return
@@ -416,7 +448,7 @@ export function useLegendMeasurement({
     // DOM→unique: count distinct labels in fitting DOM items (not ratio)
     let count = domFitCount
     let countNoMore = domFitCountNoMore
-    if (isGroupedView && measurableItems.length > totalSorted) {
+    if (isGroupedView && !hasCollapsedSpeciesGroups.value && measurableItems.length > totalSorted) {
       const uniqueFit = new Set()
       const uniqueFitNoMore = new Set()
       for (let i = 0; i < measurableItems.length; i++) {

@@ -21,12 +21,18 @@ import {
 } from '../composables/useMapEngine'
 import { useSDMLayer } from '../composables/useSDMLayer'
 import { useHostPlantLayer } from '../composables/useHostPlantLayer'
+import { usePlanningStore } from '../stores/planning'
+import { parseSharedMapView } from '../utils/sharedMapView'
+import { useLocalityLayer } from '../composables/useLocalityLayer'
+import { useClusterComposition } from '../composables/useClusterComposition'
+import SiteComparison from './SiteComparison.vue'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 import { Sun, Moon, Palette } from 'lucide-vue-next'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
+const planning = usePlanningStore()
 const themeStore = useThemeStore()
 const emit = defineEmits(['map-ready', 'open-gallery'])
 const mapWrapper = ref(null) // Parent wrapper element
@@ -35,6 +41,12 @@ const pointPopupContainer = ref(null)
 // MapLibre owns its internal render state; Vue only observes replacement.
 const map = shallowRef(null)
 let popup = null
+// Satellite imagery reads like a dark basemap for label contrast.
+const localityLayer = useLocalityLayer(map, {
+  isDarkBasemap: () => MAP_STYLES[currentStyle.value]?.theme === 'night' || currentStyle.value === 'satellite',
+})
+const clusterComposition = useClusterComposition(map)
+const sharedView = parseSharedMapView(new URLSearchParams(window.location.search).get('map_view'))
 
 // Wrapper size (the available space) for accurate export preview calculations
 const wrapperSize = ref({ width: 1600, height: 900 })
@@ -44,6 +56,13 @@ let mapContainerResizeObserver = null
 // Enhanced popup state for multi-point locations
 const showEnhancedPopup = ref(false)
 const popupDocked = ref(false)
+const activeDock = computed(() => {
+  if (store.exportSettings.enabled) return null
+  if (planning.showComparison && !planning.comparisonMinimized) return 'comparison'
+  if (popupDocked.value && showEnhancedPopup.value) return 'detail'
+  return null
+})
+watch(activeDock, () => nextTick(() => map.value?.resize()))
 const enhancedPopupData = ref({
   popupType: 'point',
   coordinates: { lat: 0, lng: 0 },
@@ -70,10 +89,24 @@ const {
 
 const { updateScatterVisualization } = useScatterVisualization(map)
 
+// Keep the restored cluster card within the map while preserving its geographic anchor.
+const fitClusterPopup = (currentPopup) => {
+  nextTick(() => requestAnimationFrame(() => {
+    if (popup !== currentPopup || !enhancedPopupData.value.isCluster || window.innerWidth <= 600) return
+    const bounds = currentPopup.getElement().getBoundingClientRect()
+    const viewport = map.value.getContainer().getBoundingClientRect()
+    const overflow = (start, end, min, max) => end > max ? end - max : start < min ? start - min : 0
+    const x = overflow(bounds.left, bounds.right, viewport.left + 12, viewport.right - 12)
+    const y = overflow(bounds.top, bounds.bottom, viewport.top + 12, viewport.bottom - 12)
+    if (x || y) map.value.panBy([x, y], { duration: 0 })
+  }))
+}
+
 // Popup handler for data layer
 const handleShowPopup = (data) => {
   if (popup) popup.remove()
   showEnhancedPopup.value = false
+  if (popupDocked.value && planning.showComparison) planning.comparisonMinimized = true
 
   enhancedPopupData.value = {
     popupType: data.type === 'plant' ? 'plant' : 'point',
@@ -116,6 +149,7 @@ const handleShowPopup = (data) => {
           .setDOMContent(pointPopupContainer.value)
           .addTo(map.value)
 
+        fitClusterPopup(popup)
         popup.on('close', () => {
           showEnhancedPopup.value = false
           if (clearClusterExtentCircle) clearClusterExtentCircle()
@@ -135,6 +169,7 @@ const toggleDock = () => {
   popupDocked.value = !popupDocked.value
 
   if (popupDocked.value) {
+    if (planning.showComparison) planning.comparisonMinimized = true
     if (popup) {
       popup.remove()
       popup = null
@@ -169,6 +204,7 @@ const toggleDock = () => {
             .setDOMContent(pointPopupContainer.value)
             .addTo(map.value)
 
+          fitClusterPopup(popup)
           popup.on('close', () => {
             showEnhancedPopup.value = false
             if (clearClusterExtentCircle) clearClusterExtentCircle()
@@ -179,7 +215,10 @@ const toggleDock = () => {
   }
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup })
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup, onDataChanged: data => {
+  localityLayer.invalidate(data)
+  clusterComposition.invalidate(data)
+} })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
   recreateClusterExtentCircle,
   setStyleChanging,
@@ -374,6 +413,9 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  clusterComposition.cleanup()
+  localityLayer.cleanup()
+  if (addDataLayerTimer) clearTimeout(addDataLayerTimer)
   if (map.value) {
     map.value.remove()
     map.value = null
@@ -398,8 +440,8 @@ const initMap = () => {
   map.value = new maplibregl.Map({
     container: mapContainer.value,
     style: styleConfig.style,
-    center: [-60, -5],
-    zoom: 4,
+    center: sharedView?.center || [-60, -5],
+    zoom: sharedView?.zoom || 4,
     attributionControl: false,
     maxZoom: 18,
     minZoom: 2,
@@ -415,10 +457,19 @@ const initMap = () => {
 
   map.value.on('load', async () => {
     // Shape images are generated on-demand in addDataLayer
-    addDataLayer()
+    localityLayer.attach()
+    clusterComposition.attach()
+    addDataLayer({ skipZoom: Boolean(sharedView) })
     updateHostPlantLayer()
     updateSDMLayer()
     emit('map-ready', map.value)
+  })
+
+  map.value.on('moveend', () => {
+    const center = map.value.getCenter()
+    const params = new URLSearchParams(window.location.search)
+    params.set('map_view', [center.lng.toFixed(5), center.lat.toFixed(5), map.value.getZoom().toFixed(2)].join(','))
+    window.history.replaceState({}, '', `${window.location.pathname}?${params}`)
   })
 
   // Close cluster popup when cluster data is recalculated
@@ -498,7 +549,7 @@ watch(
     const dataLengthChanged = newLength !== previousDataLength
     previousDataLength = newLength
 
-    const shouldSkipZoom = !dataLengthChanged || scatterJustToggled || clusteringJustToggled
+    const shouldSkipZoom = Boolean(sharedView) || !dataLengthChanged || scatterJustToggled || clusteringJustToggled
 
     // Reset the clustering flag after we've used it
     if (clusteringJustToggled) {
@@ -638,6 +689,7 @@ watch(
             .setDOMContent(pointPopupContainer.value)
             .addTo(map.value)
 
+          fitClusterPopup(popup)
           popup.on('close', () => {
             showEnhancedPopup.value = false
           })
@@ -648,22 +700,40 @@ watch(
     })
   }
 )
+watch([() => planning.localitySettings, () => planning.shortlistIds, () => planning.selectedSiteId], () => {
+  localityLayer.invalidate()
+  localityLayer.refresh()
+}, { deep: true })
+
+watch(() => planning.focusRequestId, () => {
+  const id = planning.selectedSiteId
+  const site = planning.sites.find(s => s.id === id)
+  if (!site || !map.value) return
+  closeEnhancedPopup()
+  map.value.flyTo({ center: site.coordinates, zoom: Math.max(map.value.getZoom(), 11), duration: 600 })
+})
 </script>
 
 <template>
-  <div ref="mapWrapper" class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled, 'panel-docked': popupDocked && showEnhancedPopup }">
+  <div ref="mapWrapper" class="map-wrapper" :class="{ 'export-mode': store.exportSettings.enabled, 'panel-docked': !!activeDock, 'comparison-docked': activeDock === 'comparison' }">
     <div
       ref="mapContainer"
       class="map"
       :class="{ 'map-export-preview': store.exportSettings.enabled }"
       :style="mapContainerStyle"
     >
+      <div v-if="store.visualizationMode === 'heatmap' && (store.exportSettings.includeLegend || !store.exportSettings.enabled)" class="density-legend" role="note" title="Relative to the filtered records, not abundance">
+        <strong>Record density</strong>
+        <div class="density-ramp"></div><div class="density-scale"><span>Lower</span><span>Higher</span></div>
+      </div>
       <!-- Legend Component (customizable, draggable) -->
       <Legend
         v-if="store.exportSettings.includeLegend || !store.exportSettings.enabled"
         :container-ref="mapContainer"
       />
     </div>
+
+    <SiteComparison v-if="!store.exportSettings.enabled" />
 
     <!-- Export info badge (shown when in export mode) -->
     <div v-if="store.exportSettings.enabled" class="export-info-badge">
@@ -685,6 +755,7 @@ watch(
           @close="closeEnhancedPopup"
           @open-gallery="handleOpenGallery"
           @toggle-dock="toggleDock"
+          @focus-site="planning.focusSite"
         />
         <PlantPopup
           v-else-if="showEnhancedPopup && !popupDocked"
@@ -695,13 +766,14 @@ watch(
           @close="closeEnhancedPopup"
           @open-gallery="handleOpenGallery"
           @toggle-dock="toggleDock"
+          @focus-site="planning.focusSite"
         />
       </div>
     </div>
 
     <!-- Docked detail panel (right sidebar) -->
     <Transition name="panel-slide">
-      <div v-if="popupDocked && showEnhancedPopup" class="detail-panel-dock">
+      <div v-if="activeDock === 'detail'" class="detail-panel-dock">
         <div class="detail-panel-header">
           <span>Detail Panel</span>
           <div class="detail-panel-actions">
@@ -730,6 +802,7 @@ watch(
             @close="closeEnhancedPopup"
             @open-gallery="handleOpenGallery"
             @toggle-dock="toggleDock"
+            @focus-site="planning.focusSite"
           />
           <PlantPopup
             v-else
@@ -740,6 +813,7 @@ watch(
             @close="closeEnhancedPopup"
             @open-gallery="handleOpenGallery"
             @toggle-dock="toggleDock"
+            @focus-site="planning.focusSite"
           />
         </div>
       </div>
@@ -980,3 +1054,11 @@ watch(
 
 
 <style scoped src="./map-container-styles.css"></style>
+
+<style scoped>
+.density-legend { position: absolute; z-index: 3; bottom: 64px; right: 10px; width: 168px; padding: 8px 10px; border-radius: 8px; color: var(--color-text-primary, #ecf0f3); background: var(--color-bg-secondary, #202234); border: 1px solid var(--color-border, #41445d); font-size: 12px; pointer-events: auto; }
+.density-legend strong { display: block; margin-bottom: 8px; }
+.density-ramp { height: 9px; border-radius: 3px; background: linear-gradient(90deg, #3171a1, #428fac, #65b9ac, #b8dd9b, #f6e8a5); }
+.density-scale { display: flex; justify-content: space-between; margin-top: 4px; }
+@media (max-width: 600px) { .density-legend { right: 8px; width: 144px; } }
+</style>

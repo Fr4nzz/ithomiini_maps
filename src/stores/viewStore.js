@@ -3,20 +3,25 @@ import { ref, computed, watch } from 'vue'
 import { getStorage, setStorage } from '../utils/storageHelpers'
 import { useScatterVisualization } from './dataPointGrouping'
 import { useColorMapping } from './dataColorPalette'
+import { useLegendStore } from './legend'
 import { useFilterStore } from './filterStore'
+import { usePlanningStore } from './planning'
 
 export const useViewStore = defineStore('view', () => {
   const filterStore = useFilterStore()
   const { filteredGeoJSON: filteredGeoJSONRef } = storeToRefs(filterStore)
 
   const clusteringEnabled = ref(getStorage('app-clustering-enabled', false))
-  const clusterSettings = ref(getStorage('app-cluster-settings', {
-    radiusPixels: 80,
-    showClusterPoints: true,
-  }))
+  const clusterSettings = ref({
+    compositionRings: true,
+    ...getStorage('app-cluster-settings', {
+      radiusPixels: 80,
+      showClusterPoints: true,
+    }),
+  })
 
   const visualizationMode = ref(getStorage('app-visualization-mode', 'points'))
-  const DEFAULT_HEATMAP_SETTINGS = { radius: 15, intensity: 1.5, opacity: 0.8 }
+  const DEFAULT_HEATMAP_SETTINGS = { radius: 40, intensity: 1, opacity: 0.7 }
   const heatmapSettings = ref(getStorage('app-heatmap-settings', DEFAULT_HEATMAP_SETTINGS))
 
   const DEFAULT_RANGE_SETTINGS = {
@@ -100,6 +105,7 @@ export const useViewStore = defineStore('view', () => {
 
   const {
     speciesSubspeciesMap,
+    speciesColorMap,
     baseColorMap,
     activeColorMap,
     legendTitle,
@@ -107,6 +113,7 @@ export const useViewStore = defineStore('view', () => {
 
   const appendVisualizationURLParams = (params) => {
     if (visualizationMode.value !== 'points') params.set('viz', visualizationMode.value)
+    if (clusterSettings.value.compositionRings === false) params.set('cluster_style', 'plain')
     if (visualizationMode.value === 'ranges') {
       const rs = rangeSettings.value
       if (rs.method !== 'hexbin') params.set('range_method', rs.method)
@@ -120,8 +127,16 @@ export const useViewStore = defineStore('view', () => {
 
   const syncURLState = () => {
     const params = new URLSearchParams()
+    const existing = new URLSearchParams(window.location.search)
+    for (const key of ['view', 'map_view']) {
+      if (existing.has(key)) params.set(key, existing.get(key))
+    }
+    const collapsed = useLegendStore().collapsedSpecies || []
+    if (collapsed.length) params.set('legend_closed', JSON.stringify(collapsed))
     filterStore.appendFilterURLParams(params)
     appendVisualizationURLParams(params)
+    // Resolve the planning store only when syncing, after both stores finish setup.
+    usePlanningStore().appendURLParams(params)
 
     const newURL = params.toString()
       ? `${window.location.pathname}?${params}`
@@ -131,7 +146,14 @@ export const useViewStore = defineStore('view', () => {
 
   const restoreVisualizationFromURL = () => {
     const params = new URLSearchParams(window.location.search)
+    usePlanningStore().restoreFromURL(params)
+    if (params.get('cluster_style') === 'plain') clusterSettings.value.compositionRings = false
+    else if (params.get('cluster_style') === 'composition') clusterSettings.value.compositionRings = true
 
+    try {
+      const closed = JSON.parse(params.get('legend_closed') || 'null')
+      if (Array.isArray(closed)) useLegendStore().collapsedSpecies = closed.filter(s => typeof s === 'string').slice(0, 500)
+    } catch { /* Ignore invalid shared display settings. */ }
     if (params.get('viz')) visualizationMode.value = params.get('viz')
     if (params.get('range_method')) rangeSettings.value.method = params.get('range_method')
     if (params.get('range_group')) rangeSettings.value.groupBy = params.get('range_group')
@@ -147,7 +169,9 @@ export const useViewStore = defineStore('view', () => {
   }
 
   watch(() => filterStore.filters, syncURLState, { deep: true })
+  watch(() => useLegendStore().collapsedSpecies, syncURLState, { deep: true })
   watch(visualizationMode, syncURLState)
+  watch(() => clusterSettings.value.compositionRings, syncURLState)
   watch(rangeSettings, syncURLState, { deep: true })
 
   watch(clusteringEnabled, value => setStorage('app-clustering-enabled', value))
@@ -190,10 +214,12 @@ export const useViewStore = defineStore('view', () => {
     scatterVisualizationData,
     colorByAttribute,
     speciesSubspeciesMap,
+    speciesColorMap,
     baseColorMap,
     activeColorMap,
     legendTitle,
     appendVisualizationURLParams,
+    syncURLState,
     restoreVisualizationFromURL,
     resetVisualizationState,
   }

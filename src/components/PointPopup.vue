@@ -1,11 +1,13 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useDataStore } from '../stores/data'
 import { getThumbnailUrl } from '../utils/imageProxy'
 import { STATUS_COLORS } from '../utils/constants'
 import { getGoatUrl } from '../utils/goatHelpers'
 import { usePopupSelection } from '../composables/usePopupSelection'
-import { countUniqueIndividuals } from '../utils/clusterStats'
+import { computeClusterStats, countUniqueIndividuals } from '../utils/clusterStats'
+import { groupCollectionSites, recordedPointsForFeatures } from '../utils/collectionSites'
+import LocalityMapLink from './LocalityMapLink.vue'
 
 const props = defineProps({
   coordinates: {
@@ -35,9 +37,14 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['close', 'open-gallery', 'toggle-dock'])
+const emit = defineEmits(['close', 'open-gallery', 'toggle-dock', 'focus-site'])
 
 const store = useDataStore()
+const showAllClusterSites = ref(false)
+const summaryStats = computed(() => props.clusterStats || computeClusterStats(props.points, props.coordinates.lat, props.coordinates.lng))
+const clusterSites = computed(() => props.isCluster ? groupCollectionSites(props.points).filter(site => site.named) : [])
+const visibleClusterSites = computed(() => showAllClusterSites.value ? clusterSites.value : clusterSites.value.slice(0, 4))
+const locationSite = computed(() => ({ recordedPoints: recordedPointsForFeatures(props.points) }))
 
 // Group points by species
 const groupedBySpecies = computed(() => {
@@ -86,14 +93,14 @@ const selectIndividual = (index) => {
 
 // Total counts
 const totalSpecies = computed(() => Object.keys(groupedBySpecies.value).length)
-const totalRecords = computed(() => props.clusterStats?.recordCount ?? props.points.length)
+const totalRecords = computed(() => props.isCluster ? summaryStats.value?.recordCount ?? props.points.length : props.points.length)
 const totalIndividuals = computed(() => props.clusterStats?.individualCount ?? countUniqueIndividuals(props.points))
 const hasDuplicateRecords = computed(() => totalRecords.value !== totalIndividuals.value)
 
 // Format radius similar to scale bar (round to nice numbers)
 const formattedRadius = computed(() => {
-  if (!props.clusterStats?.radiusKm) return null
-  const km = props.clusterStats.radiusKm
+  if (!summaryStats.value?.radiusKm) return null
+  const km = summaryStats.value.radiusKm
 
   if (km < 0.1) {
     // Less than 100m - show in meters
@@ -172,7 +179,7 @@ const bioprojectUrl = computed(() => {
 </script>
 
 <template>
-  <div class="point-popup">
+  <div class="point-popup" :class="{ 'cluster-popup': isCluster }">
     <div class="popup-actions">
       <button class="popup-action-btn" @click="emit('toggle-dock')" title="Dock to right panel">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -360,12 +367,12 @@ const bioprojectUrl = computed(() => {
           <div class="summary-title">{{ isCluster ? 'Cluster Summary' : 'Location Summary' }}</div>
 
           <!-- Cluster-specific: Location count -->
-          <div v-if="isCluster && clusterStats" class="detail-row">
+          <div v-if="isCluster && summaryStats" class="detail-row">
             <span
               class="detail-label"
-              title="Unique coordinate sites rounded to four decimal places"
+              title="Named collection sites in this cluster"
             >Sites:</span>
-            <span class="detail-value">{{ clusterStats.locationCount }}</span>
+            <span class="detail-value">{{ clusterSites.length }}</span>
           </div>
 
           <div v-if="isCluster && clusterStats?.individualCount" class="detail-row">
@@ -377,15 +384,25 @@ const bioprojectUrl = computed(() => {
           </div>
 
           <!-- Regular location: Location name -->
-          <div v-else-if="locationName" class="detail-row">
+          <div v-if="!isCluster && locationName" class="detail-row">
             <span class="detail-label">Location:</span>
             <span class="detail-value location-name">{{ locationName }}</span>
+            <LocalityMapLink :site="locationSite" />
           </div>
 
+          <div v-if="isCluster && clusterSites.length" class="cluster-sites">
+            <div v-for="site in visibleClusterSites" :key="site.id" class="cluster-site">
+              <span class="cluster-site-label"><button type="button" :title="site.name" :aria-label="`Focus ${site.name} on map`" @click="emit('focus-site', site)">{{ site.name }}</button><small>{{ site.recordCount }}</small></span>
+              <LocalityMapLink :site="site" />
+            </div>
+            <button v-if="clusterSites.length > 4" type="button" class="cluster-sites-toggle" :aria-expanded="showAllClusterSites" @click="showAllClusterSites = !showAllClusterSites">
+              {{ showAllClusterSites ? 'Show fewer sites' : `Show ${clusterSites.length - 4} more sites` }}
+            </button>
+          </div>
           <!-- Cluster: Countries with codes -->
-          <div v-if="isCluster && clusterStats?.countriesFormatted" class="detail-row">
+          <div v-if="isCluster && summaryStats?.countriesFormatted" class="detail-row">
             <span class="detail-label">Countries:</span>
-            <span class="detail-value">{{ clusterStats.countriesFormatted }}</span>
+            <span class="detail-value">{{ summaryStats.countriesFormatted }}</span>
           </div>
 
           <!-- Regular location: Single country -->
@@ -394,11 +411,12 @@ const bioprojectUrl = computed(() => {
             <span class="detail-value">{{ currentIndividual.country }}</span>
           </div>
 
-          <div class="detail-row">
-            <span class="detail-label">{{ isCluster ? 'Center:' : 'Coordinates:' }}</span>
+          <div v-if="!isCluster" class="detail-row">
+            <span class="detail-label">Coordinates:</span>
             <span class="detail-value coords">
               {{ coordinates.lat.toFixed(4) }}, {{ coordinates.lng.toFixed(4) }}
             </span>
+            <LocalityMapLink v-if="!locationName" :site="locationSite" />
           </div>
 
           <!-- Cluster: Geographic radius -->
@@ -423,7 +441,7 @@ const bioprojectUrl = computed(() => {
           </div>
 
           <!-- Sex counts (only show if we have sex data) -->
-          <div v-if="maleCount > 0 || femaleCount > 0" class="sex-stats">
+          <div v-if="!isCluster && (maleCount > 0 || femaleCount > 0)" class="sex-stats">
             <span v-if="maleCount > 0" class="sex-count male">♂ {{ maleCount }}</span>
             <span v-if="femaleCount > 0" class="sex-count female">♀ {{ femaleCount }}</span>
             <span v-if="totalRecords - maleCount - femaleCount > 0" class="sex-count unknown">
@@ -434,7 +452,7 @@ const bioprojectUrl = computed(() => {
       </div>
     </div>
 
-    <div v-if="goatInfo && !store.goatLoading" class="goat-section">
+    <div v-if="!isCluster && goatInfo && !store.goatLoading" class="goat-section">
       <div class="goat-header">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="goat-icon">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
@@ -533,6 +551,9 @@ const bioprojectUrl = computed(() => {
   box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
   border: 1px solid var(--color-border, #3d3d5c);
 }
+.point-popup.cluster-popup { box-sizing: border-box; width: 480px; max-width: min(480px, calc(100vw - 24px)); }
+
+:global(.enhanced-popup .point-popup.cluster-popup) { max-height: min(75vh, 650px); overflow-y: auto; overscroll-behavior: contain; scrollbar-color: var(--color-border-light, #5d5d7c) transparent; }
 
 .popup-actions {
   position: absolute;
@@ -830,6 +851,15 @@ const bioprojectUrl = computed(() => {
   font-style: italic;
 }
 
+.cluster-sites { margin: 7px 0; border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15)); }
+.cluster-site { display: flex; align-items: center; gap: 6px; padding: 3px 0; border-bottom: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15)); }
+.cluster-site-label { display: flex; align-items: baseline; gap: 5px; flex: 1; min-width: 0; color: var(--color-text-primary, #e0e0e0); font-size: .72rem; line-height: 1.2; }
+.cluster-site-label > button { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 0; border: 0; background: transparent; color: var(--color-text-primary, #e0e0e0); font: inherit; text-align: left; cursor: pointer; }
+.cluster-site-label small { flex: none; color: var(--color-text-secondary, #aaa); font-size: .68rem; font-variant-numeric: tabular-nums; }
+.cluster-site-label > button:hover { color: var(--color-accent, #4ade80); text-decoration: underline; }
+.cluster-site-label > button:focus-visible, .cluster-sites-toggle:focus-visible { outline: 2px solid var(--color-accent, #4ade80); outline-offset: 2px; }
+.cluster-sites-toggle { margin-top: 6px; padding: 2px 0; border: 0; background: transparent; color: var(--color-accent, #4ade80); font: inherit; font-size: .7rem; cursor: pointer; }
+
 .coords {
   font-family: monospace;
   font-size: 0.7rem;
@@ -1034,5 +1064,9 @@ const bioprojectUrl = computed(() => {
   font-size: 0.55rem;
   color: var(--color-text-muted, #666);
   font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .point-popup { box-sizing: border-box; min-width: 0; width: min(480px, calc(100vw - 24px)); }
 }
 </style>
