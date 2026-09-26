@@ -28,20 +28,22 @@ const points = ['Suchipakari', 'Rio Pusuno', 'San Pedro de Arajuno', 'Y de Misah
   }))
 
 describe('PointPopup', () => {
-  it('keeps specimen and taxonomy controls visible with four cluster localities and an individual total', async () => {
+  it('opens clusters on a species overview with sites, then drills into specimens', async () => {
     let focused = null
     const host = mount({
       coordinates: { lat: -1, lng: -77.6 }, points, isCluster: true,
       onFocusSite: site => { focused = site }
     })
-    expect(host.querySelector('.photo-container')).not.toBeNull()
-    expect(host.querySelector('.individuals-section')).not.toBeNull()
-    expect(host.querySelectorAll('.taxonomy-select')).toHaveLength(2)
-    expect(host.querySelectorAll('.cluster-site')).toHaveLength(4)
+    expect(host.querySelector('.site-summary')).not.toBeNull()
+    expect(host.querySelector('.photo-container')).toBeNull()
     expect(host.textContent).toContain('5individuals')
-    expect(host.textContent).not.toContain('Dates:')
-    expect(host.querySelector('img')).toBeNull()
+    const rows = [...host.querySelectorAll('.species-row')]
+    expect(rows.map(row => row.querySelector('.species-row-name').textContent)).toEqual(['Mechanitis polymnia', 'Mechanitis lysimnia'])
+    expect(rows[0].querySelector('.species-row-count').textContent).toBe('3')
+
+    expect(host.querySelectorAll('.cluster-site')).toHaveLength(4)
     expect(host.textContent).toContain('<img src=x onerror=alert(1)>')
+    expect(host.querySelector('img')).toBeNull()
     host.querySelector('[aria-label="Focus Suchipakari on map"]').click()
     expect(focused.name).toBe('Suchipakari')
     expect(focused.recordCount).toBe(1)
@@ -53,9 +55,27 @@ describe('PointPopup', () => {
     host.querySelector('.cluster-sites-toggle').click()
     await nextTick()
     expect(host.querySelectorAll('.cluster-site')).toHaveLength(5)
-    expect(host.textContent).toContain('<img src=x onerror=alert(1)>')
-    expect(host.querySelector('img')).toBeNull()
+
+    rows[1].click()
+    await nextTick()
+    expect(host.querySelector('.site-summary')).toBeNull()
+    expect(host.querySelector('.photo-container')).not.toBeNull()
+    expect(host.querySelectorAll('.taxonomy-select')).toHaveLength(2)
+    expect(host.querySelector('.taxonomy-select').value).toBe('Mechanitis lysimnia')
     expect(host.querySelector('.goat-section')).toBeNull()
+    host.querySelector('.popup-back').click()
+    await nextTick()
+    expect(host.querySelector('.site-summary')).not.toBeNull()
+  })
+
+  it('opens a site with several species on the overview unless a species was requested', async () => {
+    const site = points.slice(0, 2).map(point => ({ ...point, collection_location: 'Suchipakari', lat: -1 }))
+    const overview = mount({ coordinates: { lat: -1, lng: -77.6 }, points: site })
+    expect(overview.querySelector('.summary-name').textContent).toBe('Suchipakari')
+    expect(overview.querySelector('.summary-meta').textContent).toContain('Ecuador')
+    const direct = mount({ coordinates: { lat: -1, lng: -77.6 }, points: site, initialSpecies: 'Mechanitis lysimnia' })
+    expect(direct.querySelector('.site-summary')).toBeNull()
+    expect(direct.querySelector('.popup-back')).not.toBeNull()
   })
 
   it('preserves the ordinary location summary and specimen layout', () => {

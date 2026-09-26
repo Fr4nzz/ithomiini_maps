@@ -1,5 +1,6 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import { useDataStore } from '../stores/data'
 import { getThumbnailUrl } from '../utils/imageProxy'
 import { STATUS_COLORS } from '../utils/constants'
@@ -37,7 +38,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['close', 'open-gallery', 'toggle-dock', 'focus-site'])
+const emit = defineEmits(['close', 'open-gallery', 'toggle-dock', 'focus-site', 'layout-change'])
 
 const store = useDataStore()
 const showAllClusterSites = ref(false)
@@ -171,6 +172,45 @@ const goatTaxonUrl = computed(() => {
   return getGoatUrl(selectedSpecies.value, store.getGoatForSpecies)
 })
 
+// ── Site / cluster summary ───────────────────────────────────────────────
+// Sites with several species (and every cluster) open on a species overview;
+// choosing a species shows the specimen view below.
+const view = ref(null)
+watch(() => props.points, () => { view.value = null })
+const hasSummary = computed(() => props.isCluster || totalSpecies.value > 1)
+const showSummary = computed(() =>
+  hasSummary.value && (view.value ?? (props.initialSpecies ? 'detail' : 'summary')) === 'summary')
+const openSpecies = (species) => {
+  selectSpecies(species)
+  view.value = 'detail'
+}
+// The specimen view is taller; let the map keep the card on screen.
+watch(showSummary, () => emit('layout-change'), { flush: 'post' })
+
+const mostCommon = (values) => {
+  const counts = new Map()
+  for (const value of values) {
+    if (!value || value === 'Unknown') continue
+    counts.set(value, (counts.get(value) || 0) + 1)
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || null
+}
+const siteName = computed(() => mostCommon(props.points.map(point => point.collection_location)))
+const siteCountry = computed(() => mostCommon(props.points.map(point => point.country)))
+
+const speciesRows = computed(() => {
+  const plan = store.colorPlan
+  const rows = Object.entries(groupedBySpecies.value).map(([species, group]) => {
+    const records = Object.values(group.subspecies).flatMap(subspecies => subspecies.individuals)
+    const colors = plan.mode === 'categories'
+      ? [...new Set(records.map(record => plan.colorForRecord(record)))].slice(0, 4)
+      : []
+    return { species, count: group.count, colors }
+  })
+  return rows.sort((a, b) => b.count - a.count || a.species.localeCompare(b.species))
+})
+const maxSpeciesCount = computed(() => Math.max(1, ...speciesRows.value.map(row => row.count)))
+
 const bioprojectUrl = computed(() => {
   const bp = goatInfo.value?.bioproject
   if (!bp?.value) return null
@@ -195,7 +235,83 @@ const bioprojectUrl = computed(() => {
       </button>
     </div>
 
-    <div class="popup-layout">
+    <!-- Summary: who is here, before any single specimen -->
+    <div v-if="showSummary" class="site-summary">
+      <header class="summary-header">
+        <div class="summary-place">
+          <span class="summary-name">{{ isCluster ? `${clusterSites.length || 'Several'} sites` : (siteName || 'Unnamed site') }}</span>
+          <LocalityMapLink v-if="!isCluster" :site="locationSite" />
+        </div>
+        <div class="summary-meta">
+          <template v-if="isCluster">
+            {{ summaryStats?.countriesFormatted }}<template v-if="formattedRadius"> · {{ formattedRadius }} radius</template>
+          </template>
+          <template v-else>
+            <template v-if="siteCountry">{{ siteCountry }} · </template>
+            <span class="coords">{{ coordinates.lat.toFixed(4) }}, {{ coordinates.lng.toFixed(4) }}</span>
+          </template>
+        </div>
+      </header>
+
+      <div class="location-stats summary-stats">
+        <div class="stat">
+          <span class="stat-value">{{ totalIndividuals }}</span>
+          <span class="stat-label">individuals</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ totalSpecies }}</span>
+          <span class="stat-label">species</span>
+        </div>
+        <div v-if="hasDuplicateRecords" class="stat">
+          <span class="stat-value">{{ totalRecords }}</span>
+          <span class="stat-label">records</span>
+        </div>
+        <div v-if="!isCluster && (maleCount > 0 || femaleCount > 0)" class="sex-stats">
+          <span v-if="maleCount > 0" class="sex-count male">♂ {{ maleCount }}</span>
+          <span v-if="femaleCount > 0" class="sex-count female">♀ {{ femaleCount }}</span>
+        </div>
+      </div>
+
+      <div v-if="isCluster && clusterSites.length" class="cluster-sites summary-block">
+        <div class="section-header">
+          <span class="count-badge">{{ clusterSites.length }}</span>
+          <span class="section-label">Sites</span>
+        </div>
+        <div v-for="site in visibleClusterSites" :key="site.id" class="cluster-site">
+          <span class="cluster-site-label"><button type="button" :title="site.name" :aria-label="`Focus ${site.name} on map`" @click="emit('focus-site', site)">{{ site.name }}</button><small>{{ site.recordCount }}</small></span>
+          <LocalityMapLink :site="site" />
+        </div>
+        <button v-if="clusterSites.length > 4" type="button" class="cluster-sites-toggle" :aria-expanded="showAllClusterSites" @click="showAllClusterSites = !showAllClusterSites">
+          {{ showAllClusterSites ? 'Show fewer sites' : `Show ${clusterSites.length - 4} more sites` }}
+        </button>
+      </div>
+
+      <div class="summary-block">
+        <div class="section-header">
+          <span class="count-badge">{{ totalSpecies }}</span>
+          <span class="section-label">Species</span>
+        </div>
+        <ul class="species-summary" :class="{ 'no-dots': !speciesRows.some(row => row.colors.length) }">
+          <li v-for="row in speciesRows" :key="row.species">
+            <button type="button" class="species-row" :title="`Show ${row.species} specimens`" @click="openSpecies(row.species)">
+              <span v-if="row.colors.length || speciesRows.some(other => other.colors.length)" class="species-dots" aria-hidden="true">
+                <span v-for="color in row.colors" :key="color" class="species-dot" :style="{ background: color }" />
+              </span>
+              <span class="species-row-name">{{ row.species }}</span>
+              <span class="species-row-bar" aria-hidden="true"><span :style="{ width: `${100 * row.count / maxSpeciesCount}%` }" /></span>
+              <span class="species-row-count">{{ row.count }}</span>
+              <ChevronRight :size="14" aria-hidden="true" class="species-row-chevron" />
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button v-if="!showSummary && hasSummary" type="button" class="popup-back" @click="view = 'summary'">
+      <ChevronLeft :size="14" aria-hidden="true" /> All species
+    </button>
+
+    <div v-if="!showSummary" class="popup-layout">
       <!-- Left Column: Photo & Individual Details -->
       <div class="popup-left-section">
         <!-- Photo -->
@@ -452,7 +568,7 @@ const bioprojectUrl = computed(() => {
       </div>
     </div>
 
-    <div v-if="!isCluster && goatInfo && !store.goatLoading" class="goat-section">
+    <div v-if="!showSummary && !isCluster && goatInfo && !store.goatLoading" class="goat-section">
       <div class="goat-header">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="goat-icon">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
@@ -864,6 +980,30 @@ const bioprojectUrl = computed(() => {
   font-family: monospace;
   font-size: 0.7rem;
 }
+
+/* Site / cluster summary */
+.site-summary { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+/* Leave room for the dock and close buttons in the top-right corner. */
+.summary-header { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-right: 60px; }
+.summary-place { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.summary-name { font-size: 0.95rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.summary-meta { font-size: 0.72rem; color: var(--color-text-secondary, #aaa); }
+.summary-stats { margin-top: 0; padding-top: 0; border-top: 0; align-items: baseline; flex-wrap: wrap; }
+.summary-stats .sex-stats { margin: 0 0 0 auto; padding: 0; border: 0; }
+.species-summary { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow-y: auto; }
+.species-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 64px 28px 14px; align-items: center; gap: 8px; width: 100%; padding: 5px 4px; border: 0; border-radius: 4px; background: transparent; color: var(--color-text-primary, #e0e0e0); font: inherit; text-align: left; cursor: pointer; }
+.no-dots .species-row { grid-template-columns: minmax(0, 1fr) 64px 28px 14px; }
+.species-row:hover, .species-row:focus-visible { background: var(--color-bg-tertiary, #2d2d4a); outline: none; }
+.species-row:hover .species-row-chevron { color: var(--color-accent, #4ade80); }
+.species-dots { display: flex; gap: 2px; }
+.species-dot { width: 7px; height: 7px; border-radius: 50%; }
+.species-row-name { font-size: 0.78rem; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.species-row-bar { height: 4px; border-radius: 2px; background: var(--color-bg-tertiary, #2d2d4a); overflow: hidden; }
+.species-row-bar > span { display: block; height: 100%; background: var(--color-accent, #4ade80); opacity: 0.7; }
+.species-row-count { font-size: 0.75rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--color-text-secondary, #aaa); }
+.species-row-chevron { color: var(--color-text-muted, #666); }
+.popup-back { display: inline-flex; align-items: center; gap: 2px; margin: -2px 0 8px; padding: 2px 4px 2px 0; border: 0; background: transparent; color: var(--color-accent, #4ade80); font: inherit; font-size: 0.72rem; cursor: pointer; }
+.popup-back:hover { text-decoration: underline; }
 
 .location-stats {
   display: flex;
