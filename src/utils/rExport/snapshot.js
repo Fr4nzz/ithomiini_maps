@@ -153,7 +153,8 @@ export function snapshotLegend(container) {
     let textEl = el.querySelector('.legend-label') || el
     if (el.classList.contains('legend-title')) {
       type = 'title'
-      textEl = el.querySelector('span') || el
+      // The live title may be the species/subspecies switch; draw its active level.
+      textEl = el.querySelector('.legend-title-text, .level-option.active') || el.querySelector('span') || el
     } else if (el.classList.contains('legend-group-header')) {
       type = 'header'
       textEl = el.querySelector('.species-name') || el

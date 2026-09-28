@@ -61,6 +61,16 @@ describe('colour plan', () => {
     expect(plan.colorForRecord({ scientific_name: 'Ithomia salapia', subspecies: 'Unknown' })).toBe(OTHER_COLOR)
   })
 
+  it('does not colour a subspecies recorded as the species name', () => {
+    const features = [
+      { properties: { scientific_name: 'Ithomia salapia', subspecies: 'Ithomia salapia' } },
+      { properties: { scientific_name: 'Ithomia salapia', subspecies: 'derasa' } },
+    ]
+    const plan = planColors(features, { attribute: 'subspecies' })
+    expect(plan.groups.map(group => group.label)).toEqual(['derasa'])
+    expect(plan.colorForRecord(features[0].properties)).toBe(OTHER_COLOR)
+  })
+
   it('applies fixed palettes and custom colours without changing the default', () => {
     const plan = planColors(records({ Sequenced: 2, Pending: 1 }), {
       attribute: 'subspecies', fixedColors: { Sequenced: '#00ff00' }, customColors: { Pending: '#123456' },

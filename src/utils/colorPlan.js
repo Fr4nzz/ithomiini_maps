@@ -17,7 +17,8 @@ export function colorGroupFor(properties, { attribute, collapsedSpecies }) {
   const species = properties?.scientific_name
   if (collapsedSpecies?.has(species)) return { key: `species:${species}`, label: species, species, collapsed: true }
   const value = properties?.[attribute]
-  if (isMissingValue(value)) return null
+  // A subspecies recorded as the species name is an unknown subspecies.
+  if (isMissingValue(value) || (attribute === 'subspecies' && value === species)) return null
   return { key: `value:${value}`, label: value, species: null, collapsed: false }
 }
 
