@@ -8,6 +8,8 @@ const OTHER_GROUP = Object.freeze({ key: 'other', label: 'Other', color: OTHER_C
 const MISSING = new Set(['', 'NA', 'null', 'NOT_FOUND'])
 /** Blank and placeholder values ("Unknown", "Unknown species") never take a colour. */
 export const isMissingValue = value => value == null || MISSING.has(value) || /^unknown\b/i.test(value)
+// Undecided identifications ("travella/derasa", "ssp.?", "or ninonia") are not a subspecies.
+const UNCERTAIN_SUBSPECIES = /[/?]|\bor\b/
 
 /**
  * A colour group is a category value, or a whole species when that species is
@@ -17,8 +19,9 @@ export function colorGroupFor(properties, { attribute, collapsedSpecies }) {
   const species = properties?.scientific_name
   if (collapsedSpecies?.has(species)) return { key: `species:${species}`, label: species, species, collapsed: true }
   const value = properties?.[attribute]
-  // A subspecies recorded as the species name is an unknown subspecies.
-  if (isMissingValue(value) || (attribute === 'subspecies' && value === species)) return null
+  // A subspecies recorded as the species name, or left undecided, is unknown.
+  if (isMissingValue(value) || (attribute === 'subspecies' &&
+    (value === species || UNCERTAIN_SUBSPECIES.test(value)))) return null
   return { key: `value:${value}`, label: value, species: null, collapsed: false }
 }
 
