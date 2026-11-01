@@ -240,7 +240,7 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect__tags:hover) {
-  border-color: #4d4d6d;
+  border-color: var(--color-border-control);
 }
 
 :deep(.multiselect--active .multiselect__tags) {
@@ -310,13 +310,13 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect__option--selected) {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent-text);
   font-weight: 500;
 }
 
 :deep(.multiselect__option--selected.multiselect__option--highlight) {
-  background: rgba(74, 222, 128, 0.25);
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 /* Species headers in grouped lists are labels, not choices. */
@@ -332,7 +332,7 @@ const segmentStyle = (segment) => ({
 /* Multi-select tags */
 :deep(.multiselect__tag) {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-radius: 4px;
   padding: 2px 24px 2px 8px;
   margin-right: 4px;
@@ -347,7 +347,7 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect__tag-icon:after) {
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 :deep(.multiselect__tag-icon:hover) {
@@ -375,14 +375,14 @@ const segmentStyle = (segment) => ({
 }
 
 .option-match-meta {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.25;
 }
 
 .option-synonym-meta {
-  color: #ef4444;
+  color: var(--color-danger-text);
   font-size: 0.72rem;
   font-weight: 600;
   line-height: 1.25;
@@ -398,7 +398,7 @@ const segmentStyle = (segment) => ({
 
 .custom-filter-tag {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   position: relative;
   overflow: hidden;
   border: 0;
@@ -511,20 +511,20 @@ const segmentStyle = (segment) => ({
   font-size: 0.66rem;
   line-height: 1.1;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   color: var(--color-text-secondary);
 }
 
 .option-badge-high {
-  color: #4ade80;
+  color: var(--color-accent-text);
 }
 
 .option-badge-medium {
-  color: #fbbf24;
+  color: var(--color-warning-text);
 }
 
 .option-badge-low {
-  color: #fb7185;
+  color: var(--color-danger-text);
 }
 
 .no-result,

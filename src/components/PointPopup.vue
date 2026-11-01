@@ -438,7 +438,6 @@ const bioprojects = computed(() => {
             <span class="detail-label">Status:</span>
             <span
               class="detail-value status-badge"
-              :style="{ color: STATUS_COLORS[currentIndividual?.sequencing_status] || '#6b7280' }"
             >
               <span class="status-dot" :style="{ background: STATUS_COLORS[currentIndividual?.sequencing_status] || '#6b7280' }"></span>
               {{ currentIndividual?.sequencing_status || 'Unknown' }}
@@ -823,11 +822,11 @@ const bioprojects = computed(() => {
   color: #fff;
   cursor: pointer;
   transition: all 0.2s;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .expand-btn:hover {
-  background: rgba(59, 130, 246, 0.9);
+  background: var(--color-info-fill);
   opacity: 1;
 }
 
@@ -850,7 +849,7 @@ const bioprojects = computed(() => {
 
 .count-badge {
   background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -997,7 +996,7 @@ const bioprojects = computed(() => {
 
 .summary-title {
   font-size: 0.7rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -1012,9 +1011,9 @@ const bioprojects = computed(() => {
 .cluster-site-label { display: flex; align-items: baseline; gap: 5px; flex: 1; min-width: 0; color: var(--color-text-primary); font-size: .72rem; line-height: 1.2; }
 .cluster-site-label > button { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 0; border: 0; background: transparent; color: var(--color-text-primary); font: inherit; text-align: left; cursor: pointer; }
 .cluster-site-label small { flex: none; color: var(--color-text-secondary); font-size: .68rem; font-variant-numeric: tabular-nums; }
-.cluster-site-label > button:hover { color: var(--color-accent); text-decoration: underline; }
+.cluster-site-label > button:hover { color: var(--color-accent-text); text-decoration: underline; }
 .cluster-site-label > button:focus-visible, .cluster-sites-toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-.cluster-sites-toggle { margin-top: 6px; padding: 2px 0; border: 0; background: transparent; color: var(--color-accent); font: inherit; font-size: .7rem; cursor: pointer; }
+.cluster-sites-toggle { margin-top: 6px; padding: 2px 0; border: 0; background: transparent; color: var(--color-accent-text); font: inherit; font-size: .7rem; cursor: pointer; }
 
 .coords {
   font-family: monospace;
@@ -1034,7 +1033,7 @@ const bioprojects = computed(() => {
 .species-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 64px 28px 14px; align-items: center; gap: 8px; width: 100%; padding: 5px 4px; border: 0; border-radius: 4px; background: transparent; color: var(--color-text-primary); font: inherit; text-align: left; cursor: pointer; }
 .no-dots .species-row { grid-template-columns: minmax(0, 1fr) 64px 28px 14px; }
 .species-row:hover, .species-row:focus-visible { background: var(--color-bg-tertiary); outline: none; }
-.species-row:hover .species-row-chevron { color: var(--color-accent); }
+.species-row:hover .species-row-chevron { color: var(--color-accent-text); }
 .species-dots { display: flex; gap: 2px; }
 .species-dot { width: 7px; height: 7px; border-radius: 50%; }
 .species-row-name { font-size: 0.78rem; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1045,7 +1044,7 @@ const bioprojects = computed(() => {
 .popup-crumbs { display: flex; align-items: center; gap: 6px; min-width: 0; margin: -2px 60px 8px 0; font-size: 0.72rem; }
 .crumb-place { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-text-secondary); }
 .crumb-place::before { content: '·'; margin-right: 6px; color: var(--color-text-muted); }
-.popup-back { display: inline-flex; flex-shrink: 0; align-items: center; gap: 2px; padding: 2px 4px 2px 0; border: 0; background: transparent; color: var(--color-accent); font: inherit; cursor: pointer; }
+.popup-back { display: inline-flex; flex-shrink: 0; align-items: center; gap: 2px; padding: 2px 4px 2px 0; border: 0; background: transparent; color: var(--color-accent-text); font: inherit; cursor: pointer; }
 .popup-back:hover { text-decoration: underline; }
 
 .location-stats {
@@ -1065,7 +1064,7 @@ const bioprojects = computed(() => {
 .stat-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .stat-label {
@@ -1083,7 +1082,7 @@ const bioprojects = computed(() => {
   background: var(--color-accent-subtle);
   border: 1px solid var(--color-accent-subtle);
   border-radius: 5px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -1120,11 +1119,11 @@ const bioprojects = computed(() => {
 }
 
 .sex-count.male {
-  color: #60a5fa; /* Blue for male */
+  color: var(--color-sex-male);
 }
 
 .sex-count.female {
-  color: #f472b6; /* Pink for female */
+  color: var(--color-sex-female);
 }
 
 .sex-count.unknown {
@@ -1134,8 +1133,8 @@ const bioprojects = computed(() => {
 /* GoaT genome line (expands to details) */
 .goat-section {
   margin-top: 8px;
-  background: rgba(59, 130, 246, 0.06);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--color-info-fill) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-info-fill) 20%, transparent);
   border-radius: 8px;
   padding: 6px 10px;
 }
@@ -1163,7 +1162,7 @@ const bioprojects = computed(() => {
 
 .goat-chevron {
   flex-shrink: 0;
-  color: #60a5fa;
+  color: var(--color-info-text);
   transition: transform 0.15s;
 }
 
@@ -1193,7 +1192,7 @@ const bioprojects = computed(() => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #60a5fa;
+  color: var(--color-info-text);
 }
 
 .goat-header-link {
@@ -1203,7 +1202,7 @@ const bioprojects = computed(() => {
   gap: 3px;
   font-size: 0.65rem;
   font-weight: 500;
-  color: #60a5fa;
+  color: var(--color-info-text);
   text-decoration: none;
   padding: 2px 6px;
   border-radius: 3px;
@@ -1211,8 +1210,8 @@ const bioprojects = computed(() => {
 }
 
 .goat-header-link:hover {
-  background: rgba(59, 130, 246, 0.15);
-  color: #93c5fd;
+  background: color-mix(in srgb, var(--color-info-fill) 15%, transparent);
+  color: var(--color-info-text);
 }
 
 .goat-grid {
@@ -1255,7 +1254,7 @@ const bioprojects = computed(() => {
 .est-badge {
   font-size: 0.6rem;
   font-weight: 400;
-  color: #f59e0b;
+  color: var(--color-warning-text);
   cursor: help;
 }
 
@@ -1264,20 +1263,20 @@ const bioprojects = computed(() => {
   align-items: center;
   gap: 4px;
   font-size: 0.75rem;
-  color: #60a5fa;
+  color: var(--color-info-text);
   text-decoration: none;
   font-weight: 500;
 }
 
 .goat-bioproject-link:hover {
-  color: #93c5fd;
+  color: var(--color-info-text);
   text-decoration: underline;
 }
 
 .goat-citation {
   margin-top: 8px;
   padding-top: 6px;
-  border-top: 1px solid rgba(59, 130, 246, 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--color-info-fill) 15%, transparent);
   font-size: 0.55rem;
   color: var(--color-text-muted);
   font-style: italic;

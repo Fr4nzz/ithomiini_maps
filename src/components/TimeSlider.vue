@@ -258,7 +258,7 @@ const isFilterActive = computed(() => {
 }
 
 .drag-feedback.active {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .drag-separator {

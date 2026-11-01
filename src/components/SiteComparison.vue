@@ -134,7 +134,7 @@ function focus(site) {
 .site-comparison { position: absolute; top: 0; right: 0; z-index: 25; display: flex; flex-direction: column; box-sizing: border-box; width: 380px; height: 100%; color: var(--color-text-primary); background: var(--color-bg-primary); border-left: 1px solid var(--color-border); box-shadow: -4px 0 20px rgba(0,0,0,.3); overflow: hidden; font-size: .82rem; }
 .field-sites-tab { position: absolute; right: 0; top: 210px; z-index: 24; display: flex; align-items: center; justify-content: center; gap: 2px; width: 48px; height: 48px; padding: 0 6px 0 2px; border: 1px solid var(--color-border); border-right: 0; border-radius: 10px 0 0 10px; color: var(--color-text-primary); background: var(--color-bg-primary); box-shadow: -3px 3px 10px rgba(0,0,0,.15); }
 @media (max-width: 768px) { .field-sites-tab { top: 270px; } }
-.field-sites-tab:hover { color: var(--color-accent); background: var(--color-bg-secondary); }
+.field-sites-tab:hover { color: var(--color-accent-text); background: var(--color-bg-secondary); }
 .field-sites-slide-enter-active, .field-sites-slide-leave-active { transition: transform 200ms cubic-bezier(.22, 1, .36, 1); }
 .field-sites-slide-enter-from, .field-sites-slide-leave-to { transform: translateX(100%); }
 @media (prefers-reduced-motion: reduce) { .field-sites-slide-enter-active, .field-sites-slide-leave-active { transition: none; } }
@@ -150,12 +150,12 @@ button { font: inherit; cursor: pointer; }
 .comparison-controls input, .comparison-controls select { width: 100%; min-width: 0; padding: 7px 8px; color: var(--color-text-primary); background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: 6px; font: inherit; font-size: .77rem; }
 .comparison-controls input::placeholder { color: var(--color-text-secondary); }
 .view-filter { display: flex; align-items: center; gap: 7px; align-self: flex-start; margin: 0 16px 10px; padding: 6px 9px; color: var(--color-text-secondary); border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-bg-primary); font-size: .74rem; }
-.view-filter:hover, .view-filter.active { color: var(--color-accent); border-color: var(--color-accent); }
+.view-filter:hover, .view-filter.active { color: var(--color-accent-text); border-color: var(--color-accent); }
 .site-list { flex: 1; min-height: 0; overflow-y: auto; border-top: 1px solid var(--color-border); scrollbar-color: var(--color-border) transparent; }
 .site-row { display: flex; align-items: flex-start; border-bottom: 1px solid var(--color-border); }
 .site-row.selected { background: var(--color-bg-tertiary); }
 .site-focus { flex: 1; min-width: 0; display: grid; gap: 4px; padding: 12px 0 12px 16px; text-align: left; color: inherit; border: 0; background: transparent; }
-.site-focus:hover .site-name { color: var(--color-accent); }
+.site-focus:hover .site-name { color: var(--color-accent-text); }
 .site-name { display: flex; align-items: center; gap: 6px; font-weight: 650; overflow-wrap: anywhere; }
 .site-country { color: var(--color-text-secondary); font-size: .72rem; }
 .target-breakdown { display: grid; gap: 3px; margin: 3px 0; font-size: .72rem; }
@@ -164,9 +164,9 @@ button { font: inherit; cursor: pointer; }
 .target-breakdown strong { color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
 .label-button { display: grid; place-items: center; flex: none; width: 32px; height: 32px; margin: 0; color: var(--color-text-secondary); border: 0; border-radius: 6px; background: transparent; }
 .label-button:hover, .label-button.active { color: var(--color-text-primary); }
-.label-button.pinned { color: var(--color-accent); }
+.label-button.pinned { color: var(--color-accent-text); }
 .empty-sites { margin: 0; padding: 24px 16px; color: var(--color-text-secondary); line-height: 1.5; }
-.show-more { width: 100%; padding: 12px; color: var(--color-accent); border: 0; background: transparent; font-weight: 650; }
+.show-more { width: 100%; padding: 12px; color: var(--color-accent-text); border: 0; background: transparent; font-weight: 650; }
 .show-more:hover { background: var(--color-bg-tertiary); }
 .comparison-footer { display: flex; gap: 8px; padding: 11px 16px; border-top: 1px solid var(--color-border); }
 .comparison-footer button { display: flex; justify-content: center; align-items: center; gap: 5px; flex: 1; min-width: 0; padding: 8px 6px; color: var(--color-text-primary); border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-bg-tertiary); font-size: .75rem; }

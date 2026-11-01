@@ -398,13 +398,13 @@ html, body, #app {
 }
 
 .view-toggle-bar button:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-secondary);
 }
 
 .view-toggle-bar button.active {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
 }
 
@@ -431,7 +431,7 @@ html, body, #app {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%);
+  background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
   z-index: 100;
 }
 
@@ -443,21 +443,21 @@ html, body, #app {
   width: 60px;
   height: 60px;
   margin: 0 auto 24px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #4ade80;
+  border: 3px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .loading-text {
   font-size: 1.2em;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   margin-bottom: 8px;
 }
 
 .loading-subtext {
   font-size: 0.9em;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 /* Modal Overlay */
@@ -571,12 +571,12 @@ html, body, #app {
   gap: 6px;
   min-height: 40px;
   padding: 8px 14px 8px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
   border-radius: 10px;
-  background: rgba(26, 26, 46, 0.88);
+  background: color-mix(in srgb, var(--color-bg-primary) 88%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.82rem;
   font-weight: 600;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -605,10 +605,10 @@ html, body, #app {
   width: 38px;
   height: 38px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 14%, transparent);
   border-radius: 10px;
-  background: rgba(26, 26, 46, 0.7);
-  color: #e0e0e0;
+  background: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
+  color: var(--color-text-primary);
   cursor: pointer;
 }
 
@@ -705,7 +705,7 @@ html, body, #app {
 
 .mobile-pill--active {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
 }
 
@@ -714,12 +714,12 @@ html, body, #app {
   align-items: center;
   gap: 5px;
   padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
   border-radius: 999px;
-  background: rgba(26, 26, 46, 0.85);
+  background: color-mix(in srgb, var(--color-bg-primary) 85%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.78rem;
   font-weight: 600;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
@@ -740,7 +740,7 @@ html, body, #app {
 
 .mobile-pill--primary {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
 }
 

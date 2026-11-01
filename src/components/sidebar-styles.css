@@ -36,7 +36,7 @@
 .logo svg {
   width: 36px;
   height: 36px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .logo-icon {
@@ -106,7 +106,7 @@
 
 .view-toggle button.active {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .view-toggle button svg {
@@ -116,8 +116,8 @@
 
 /* Record Count */
 .record-count {
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
-  border: 1px solid rgba(74, 222, 128, 0.2);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 10%, transparent) 0%, color-mix(in srgb, var(--color-accent) 5%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 16px;
@@ -127,7 +127,7 @@
 .record-count .count {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -144,16 +144,16 @@
   gap: 8px;
   padding: 8px 12px;
   margin-bottom: 12px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.25);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
   border-radius: 6px;
   font-size: 0.75rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .bbox-indicator svg {
   flex-shrink: 0;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .bbox-indicator span {
@@ -164,9 +164,9 @@
 .bbox-clear {
   padding: 2px 8px;
   background: transparent;
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
   border-radius: 3px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.65rem;
   font-weight: 600;
   cursor: pointer;
@@ -174,7 +174,7 @@
 }
 
 .bbox-clear:hover {
-  background: rgba(74, 222, 128, 0.2);
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
   border-color: var(--color-accent);
 }
 
@@ -203,19 +203,19 @@
 }
 
 .action-btn:hover:not(:disabled) {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
   border-color: var(--color-accent);
 }
 
 .action-btn.active {
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent-text);
   border-color: var(--color-accent);
 }
 
 .action-btn.active:hover {
-  background: rgba(74, 222, 128, 0.25);
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 .action-btn:disabled {
@@ -238,7 +238,7 @@
   top: -4px;
   right: -4px;
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   font-size: 0.6rem;
   font-weight: 600;
   padding: 2px 5px;
@@ -254,14 +254,14 @@
 
 /* Export Settings Panel */
 .export-settings-panel {
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.03) 100%);
-  border: 1px solid rgba(74, 222, 128, 0.2);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 8%, transparent) 0%, color-mix(in srgb, var(--color-accent) 3%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
   border-radius: 8px;
   padding: 14px;
 }
 
 .export-settings-panel .section-label {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .btn-export-now {
@@ -274,7 +274,7 @@
   background: var(--color-accent);
   border: none;
   border-radius: 6px;
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -282,9 +282,9 @@
 }
 
 .btn-export-now:hover {
-  background: #5eeb94;
+  background: var(--color-accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 .btn-export-now svg {
@@ -301,9 +301,9 @@
   padding: 10px 16px;
   margin-top: 8px;
   background: var(--color-bg-tertiary);
-  border: 1px solid #6366f1;
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
-  color: #a5b4fc;
+  color: var(--color-text-primary);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -311,15 +311,15 @@
 }
 
 .btn-export-r:hover {
-  background: #3730a3;
-  border-color: #818cf8;
-  color: #e0e7ff;
+  background: var(--color-bg-hover);
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
 }
 
 .btn-export-r svg {
   width: 16px;
   height: 16px;
-  color: #6366f1;
+  color: var(--color-accent-text);
 }
 
 .export-first-setting {
@@ -349,7 +349,7 @@
 
 .format-toggle button:hover,
 .dpi-toggle button:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
@@ -357,7 +357,7 @@
 .dpi-toggle button.active {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .section-label {
@@ -385,8 +385,8 @@
   gap: 6px;
   padding: 3px 8px 3px 10px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--color-text-primary) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   color: var(--color-text-secondary);
   font-size: 0.72rem;
   font-weight: 500;
@@ -407,23 +407,23 @@
 .shortcut-hint kbd {
   padding: 1px 5px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   color: var(--color-text-muted);
   font-size: 0.62rem;
   font-family: inherit;
 }
 
 .shortcut-hint:hover {
-  background: rgba(74, 222, 128, 0.1);
-  border-color: rgba(74, 222, 128, 0.3);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-accent-text);
 }
 
 .shortcut-hint:hover kbd {
-  background: rgba(74, 222, 128, 0.15);
-  border-color: rgba(74, 222, 128, 0.3);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-accent-text);
 }
 
 /* Smart Search Tile (header) */
@@ -434,9 +434,9 @@
   gap: 6px;
   padding: 7px 10px;
   border-radius: 8px;
-  background: rgba(74, 222, 128, 0.08);
-  border: 1px solid rgba(74, 222, 128, 0.25);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
+  color: var(--color-accent-text);
   font-size: 0.72rem;
   font-weight: 500;
   cursor: pointer;
@@ -451,8 +451,8 @@
   white-space: nowrap;
 }
 .smart-search-tile:hover {
-  background: rgba(74, 222, 128, 0.15);
-  border-color: rgba(74, 222, 128, 0.5);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
 
 /* Filter tile groups */
@@ -489,13 +489,13 @@
   white-space: nowrap;
 }
 .filter-tile:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 .filter-tile.active {
-  background: rgba(74, 222, 128, 0.12);
-  border-color: rgba(74, 222, 128, 0.4);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  color: var(--color-accent-text);
 }
 .filter-tile-count {
   display: inline-flex;
@@ -505,14 +505,14 @@
   height: 16px;
   padding: 0 4px;
   border-radius: 8px;
-  background: rgba(74, 222, 128, 0.2);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  color: var(--color-accent-text);
   font-size: 0.62rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 .filter-tile:not(.active) .filter-tile-count {
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   color: var(--color-text-secondary);
 }
 
@@ -538,8 +538,8 @@
   transition: color 0.15s, background 0.15s;
 }
 .source-bulk-link:hover {
-  color: var(--color-accent);
-  background: rgba(74, 222, 128, 0.08);
+  color: var(--color-accent-text);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
 }
 .source-tile-row {
   display: flex;
@@ -564,14 +564,14 @@
   bottom: 0;
   width: 100%;
   transform-origin: left center;
-  background: rgba(74, 222, 128, 0.22);
+  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
   transform: scaleX(0);
   transition: transform 0.15s ease-out;
   pointer-events: none;
   z-index: 0;
 }
 .source-tile.active .source-tile-progress {
-  background: rgba(74, 222, 128, 0.3);
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 /* Stack of active filter controls rendered below tile groups */
@@ -684,7 +684,7 @@
 
 .host-confidence-toggle button:hover,
 .host-species-level-toggle:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
@@ -692,7 +692,7 @@
 .host-species-level-toggle.active {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .host-confidence-toggle button::after {
@@ -757,7 +757,7 @@
 .camid-textarea:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .camid-textarea::placeholder {
@@ -795,12 +795,12 @@
 
 .camid-suggestion:hover,
 .camid-suggestion.selected {
-  background: var(--color-bg-hover, #363653);
+  background: var(--color-bg-hover);
 }
 
 .camid-suggestion.selected {
-  color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+  color: var(--color-accent-text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 /* Collapsible Sections */
@@ -826,7 +826,7 @@
 }
 
 .collapse-toggle:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
@@ -843,8 +843,8 @@
 .active-badge {
   margin-left: auto;
   padding: 2px 8px;
-  background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent-text);
   border-radius: 4px;
   font-size: 0.7rem;
 }
@@ -960,7 +960,7 @@
 .host-plant-source-link {
   width: fit-content;
   font-size: 10px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-decoration: none;
 }
 
@@ -1022,11 +1022,11 @@
 .btn-export {
   background: var(--color-accent);
   border: none;
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .btn-export:hover {
-  background: #5eeb94;
+  background: var(--color-accent-hover);
 }
 
 .btn-reset svg,
@@ -1043,7 +1043,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   padding: 8px 16px;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -1120,7 +1120,7 @@
   min-width: 45px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
@@ -1131,7 +1131,7 @@
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.8rem;
   font-weight: 600;
   text-align: center;
@@ -1148,7 +1148,7 @@
 .setting-input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .setting-hint {
@@ -1177,7 +1177,7 @@
 .style-select:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 /* Sex Select */
@@ -1200,7 +1200,7 @@
 .sex-select:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 /* Export Settings */
@@ -1285,7 +1285,7 @@
 }
 
 .setting-label svg {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   flex-shrink: 0;
 }
 
@@ -1308,13 +1308,13 @@
 }
 
 .toggle-button.active {
-  background: rgba(74, 222, 128, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .toggle-button.active:hover {
-  background: rgba(74, 222, 128, 0.25);
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 /* Update Database Section */
@@ -1339,13 +1339,13 @@
 }
 
 .update-toggle:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .update-toggle svg:first-child {
   width: 18px;
   height: 18px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .update-toggle .chevron {
@@ -1404,7 +1404,7 @@
 .update-password input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .update-password input:disabled {
@@ -1422,7 +1422,7 @@
   background: var(--color-accent);
   border: none;
   border-radius: 6px;
-  color: #1a1a2e;
+  color: var(--color-on-accent);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -1430,7 +1430,7 @@
 }
 
 .update-btn:hover:not(:disabled) {
-  background: #3fcd73;
+  background: var(--color-accent-hover);
   transform: translateY(-1px);
 }
 
@@ -1456,15 +1456,15 @@
 }
 
 .update-message.success {
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  color: #4ade80;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-accent-text);
 }
 
 .update-message.error {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  background: color-mix(in srgb, var(--color-danger-fill) 12%, transparent);
+  border: 1px solid var(--color-danger-text);
+  color: var(--color-danger-text);
 }
 
 .goat-filter-group {
@@ -1498,14 +1498,14 @@
 }
 
 .goat-toggle-group button:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
 .goat-toggle-group button.active {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: #60a5fa;
-  color: #60a5fa;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .goat-checkboxes {
@@ -1524,7 +1524,7 @@
   flex: 1;
   padding: 8px 10px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-size: 0.8rem;
@@ -1540,8 +1540,7 @@
 
 .chr-input:focus {
   outline: none;
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  border-color: var(--color-focus);
 }
 
 .chr-input::placeholder {
@@ -1584,7 +1583,7 @@
 }
 .sdm-opacity-value {
   font-size: 11px;
-  color: var(--accent-color, #4ade80);
+  color: var(--color-accent-text);
   min-width: 30px;
   text-align: right;
 }
@@ -1600,7 +1599,7 @@
   user-select: none;
 }
 .sdm-extent-row input[type="checkbox"] {
-  accent-color: var(--accent-color, #4ade80);
+  accent-color: var(--color-accent);
   cursor: pointer;
 }
 
@@ -1634,7 +1633,7 @@
   height: 14px;
   border-radius: 999px;
   position: relative;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary) 8%, transparent);
 }
 .sdm-gradient-scale {
   display: flex;
@@ -1661,20 +1660,20 @@
 }
 .sdm-confidence-badge {
   display: inline-block;
-  font-size: 10px;
+  font-size: 11px;
   padding: 2px 7px;
   border-radius: 4px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
-.sdm-confidence-badge.high { background: rgba(34,197,94,0.2); color: #4ade80; }
-.sdm-confidence-badge.medium { background: rgba(250,204,21,0.2); color: #facc15; }
-.sdm-confidence-badge.low { background: rgba(251,146,60,0.2); color: #fb923c; }
-.sdm-confidence-badge.exploratory { background: rgba(248,113,113,0.2); color: #f87171; }
+.sdm-confidence-badge.high { background: color-mix(in srgb, var(--color-accent) 16%, transparent); color: var(--color-accent-text); }
+.sdm-confidence-badge.medium { background: color-mix(in srgb, var(--color-warning) 16%, transparent); color: var(--color-warning-text); }
+.sdm-confidence-badge.low { background: color-mix(in srgb, var(--color-warning) 16%, transparent); color: var(--color-warning-text); }
+.sdm-confidence-badge.exploratory { background: color-mix(in srgb, var(--color-danger) 16%, transparent); color: var(--color-danger-text); }
 .sdm-species-meta {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--color-text-secondary);
   margin-top: 2px;
 }
@@ -1718,8 +1717,8 @@
 }
 .sdm-response-toggle:hover,
 .sdm-response-toggle.active {
-  color: var(--color-accent);
-  border-color: rgba(74, 222, 128, 0.35);
+  color: var(--color-accent-text);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
 }
 .sdm-response-toggle svg {
   width: 12px;
@@ -1754,7 +1753,7 @@
 .sdm-env-range {
   font-size: 9px;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-variant-numeric: tabular-nums;
 }
 .sdm-chart-wrap {

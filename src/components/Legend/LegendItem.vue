@@ -237,7 +237,6 @@ function toggleVisibility() {
   color: var(--color-text-muted);
   font-style: normal;
   font-variant-numeric: tabular-nums;
-  opacity: 0.7;
 }
 
 .visibility-toggle {

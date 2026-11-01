@@ -76,7 +76,7 @@
 .export-info-badge .export-ratio {
   font-size: 0.85em;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .export-info-badge .export-dimensions {
@@ -93,7 +93,7 @@
 
 :deep(.maplibregl-ctrl-group) {
   background: var(--color-bg-overlay) !important;
-  border: 1px solid var(--color-border) !important;
+  border: 1px solid var(--color-border-control) !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 10px var(--color-shadow-color) !important;
   backdrop-filter: blur(4px);
@@ -120,14 +120,6 @@
   position: relative;
 }
 
-:deep(.maplibregl-ctrl-compass .maplibregl-ctrl-icon) {
-  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-}
-
-:deep(.maplibregl-ctrl-compass:hover .maplibregl-ctrl-icon) {
-  filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
-}
-
 :deep(.maplibregl-ctrl-compass::after) {
   content: 'Rotate';
   position: absolute;
@@ -149,30 +141,13 @@
   opacity: 1;
 }
 
-:deep(.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon),
-:deep(.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon) {
-  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-}
-
-:deep(.maplibregl-ctrl-zoom-in:hover .maplibregl-ctrl-icon),
-:deep(.maplibregl-ctrl-zoom-out:hover .maplibregl-ctrl-icon) {
-  filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
-}
-
-:deep(.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon) {
-  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-}
-
-:deep(.maplibregl-ctrl-fullscreen:hover .maplibregl-ctrl-icon) {
-  filter: brightness(0) saturate(100%) invert(80%) sepia(50%) saturate(500%) hue-rotate(90deg) brightness(100%) contrast(100%);
-}
-
+/* Control glyphs: style.css (dark mode lightens MapLibre's dark icons). */
 :deep(.maplibregl-ctrl-scale) {
   background: var(--color-bg-overlay) !important;
-  border: 1px solid var(--color-border) !important;
+  border: 1px solid var(--color-text-secondary) !important;
   border-radius: 4px !important;
-  color: var(--color-text-secondary) !important;
-  font-size: 10px !important;
+  color: var(--color-text-primary) !important;
+  font-size: 11px !important;
   padding: 2px 6px !important;
 }
 
@@ -210,7 +185,7 @@
 }
 
 .search-input-wrapper:focus-within .search-icon {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .location-search input {
@@ -231,7 +206,7 @@
 .search-spinner {
   width: 18px;
   height: 18px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   animation: spin 1s linear infinite;
   flex-shrink: 0;
 }
@@ -297,7 +272,7 @@
 .result-icon {
   width: 16px;
   height: 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -376,12 +351,12 @@
 .mode-toggle-btn .mode-icon {
   width: 18px;
   height: 18px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* In light mode, show sun icon with appropriate color */
 .mode-toggle-btn.is-light .mode-icon {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .dropdown-trigger {
@@ -409,7 +384,7 @@
 .dropdown-trigger .layer-icon {
   width: 16px;
   height: 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .dropdown-trigger .chevron {
@@ -482,14 +457,14 @@
 
 .theme-group button.active {
   background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .theme-group button.active::before {
   content: '✓';
   position: absolute;
   left: 12px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .dropdown-divider {
@@ -654,13 +629,13 @@
 .bbox-clear-btn:hover {
   background: var(--color-bg-secondary);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .bbox-draw-btn.drawing {
-  background: rgba(74, 222, 128, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .bbox-draw-btn svg,
@@ -788,7 +763,7 @@
 :deep(.maplibregl-ctrl-attrib) {
   background: var(--color-bg-overlay) !important;
   color: var(--color-text-secondary) !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   border-radius: 4px !important;
 }
 
@@ -830,11 +805,12 @@
 }
 
 :deep(.maplibregl-ctrl-attrib a) {
-  color: var(--color-accent) !important;
+  color: var(--color-accent-text) !important;
 }
 
 :deep(.maplibregl-ctrl-attrib a:hover) {
-  color: var(--color-accent-hover) !important;
+  color: var(--color-accent-text) !important;
+  text-decoration: underline;
 }
 
 /* Theme Dropdown */
@@ -877,7 +853,7 @@
 
 .theme-menu button.active {
   background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .theme-swatch {
@@ -1028,11 +1004,9 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
-.sdm-cursor-row.warm .sdm-cursor-value {
-  color: #f0a23a;
-}
-.sdm-cursor-row.cool .sdm-cursor-value {
-  color: #4a9fd4;
+/* The dot carries the species' ramp colour; the value reads in text colour on either mode. */
+.sdm-cursor-value {
+  color: var(--color-text-primary);
 }
 .panel-docked .bbox-controls {
   right: calc(var(--dock-width) + 50px);

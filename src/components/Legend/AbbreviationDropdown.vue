@@ -257,7 +257,7 @@ onClickOutside(dropdownRef, () => {
 }
 
 .check-icon {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   flex-shrink: 0;
 }
 
@@ -281,7 +281,7 @@ onClickOutside(dropdownRef, () => {
 .apply-all-button:hover {
   background: var(--color-accent-subtle);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* Custom input mode */
@@ -334,7 +334,7 @@ onClickOutside(dropdownRef, () => {
 .custom-submit {
   background: var(--color-accent);
   border: 1px solid var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   font-weight: 500;
 }
 

@@ -427,7 +427,7 @@ const clearSelection = () => {
 .selector-header h3 svg {
   width: 22px;
   height: 22px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .selector-header h3 .header-icon {
@@ -481,7 +481,7 @@ const clearSelection = () => {
 }
 
 .dropdown-trigger:hover {
-  border-color: #5d5d7c;
+  border-color: var(--color-border-control);
 }
 
 .dropdown-trigger.active {
@@ -574,11 +574,11 @@ const clearSelection = () => {
 }
 
 .dropdown-option:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
 }
 
 .dropdown-option.selected {
-  background: rgba(74, 222, 128, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .option-check {
@@ -600,7 +600,7 @@ const clearSelection = () => {
 .option-check svg {
   width: 12px;
   height: 12px;
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .option-name {
@@ -630,7 +630,7 @@ const clearSelection = () => {
   gap: 8px;
   margin: 12px 20px 0;
   padding: 10px 14px;
-  background: rgba(74, 222, 128, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
   border-radius: 8px;
 }
 
@@ -647,7 +647,7 @@ const clearSelection = () => {
   background: var(--color-accent);
   border: none;
   border-radius: 4px;
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -783,11 +783,11 @@ const clearSelection = () => {
 .btn-apply {
   background: var(--color-accent);
   border: none;
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .btn-apply:hover {
-  background: #5eeb94;
+  background: var(--color-accent-hover);
 }
 
 /* Responsive */

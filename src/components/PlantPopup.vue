@@ -288,7 +288,7 @@ const openGallery = () => {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -336,8 +336,8 @@ const openGallery = () => {
   height: 32px;
   border: 0;
   border-radius: 6px;
-  background: rgba(59, 130, 246, 0.9);
-  color: white;
+  background: var(--color-info-fill);
+  color: var(--color-on-info);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,7 +347,7 @@ const openGallery = () => {
 }
 
 .open-gallery-btn:hover {
-  background: #60a5fa;
+  background: color-mix(in srgb, var(--color-info-fill) 85%, black);
   transform: translateY(-1px);
 }
 
@@ -366,7 +366,7 @@ const openGallery = () => {
 
 .count-badge {
   background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -468,7 +468,7 @@ const openGallery = () => {
 
 .summary-title {
   font-size: 0.7rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -496,7 +496,7 @@ const openGallery = () => {
 .stat-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .stat-label {
@@ -513,7 +513,7 @@ const openGallery = () => {
   background: var(--color-accent-subtle);
   border: 1px solid var(--color-accent-subtle);
   border-radius: 5px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;

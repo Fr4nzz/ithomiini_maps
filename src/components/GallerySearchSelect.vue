@@ -109,10 +109,10 @@ function selectOption(option) {
 .gallery-search-input {
   width: 100%;
   padding: 8px 28px 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-style: italic;
   cursor: text;
@@ -125,13 +125,13 @@ function selectOption(option) {
 }
 
 .gallery-search-input:hover {
-  border-color: #5d5d7c;
+  border-color: var(--color-border-control);
 }
 
 .gallery-search-input:focus {
   outline: none;
-  border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .select-caret {
@@ -140,7 +140,7 @@ function selectOption(option) {
   top: 50%;
   width: 16px;
   height: 16px;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   pointer-events: none;
   transform: translateY(-50%);
 }
@@ -154,8 +154,8 @@ function selectOption(option) {
   max-height: 220px;
   overflow-y: auto;
   padding: 6px;
-  background: #20203a;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
 }
@@ -170,14 +170,14 @@ function selectOption(option) {
   border: 0;
   border-radius: 4px;
   background: transparent;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   text-align: left;
   cursor: pointer;
 }
 
 .gallery-search-option:hover,
 .gallery-search-option.selected {
-  background: rgba(74, 222, 128, 0.12);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
 }
 
 .option-label {
@@ -185,13 +185,13 @@ function selectOption(option) {
 }
 
 .option-meta {
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-size: 0.68rem;
 }
 
 .gallery-search-empty {
   padding: 10px;
-  color: #888;
+  color: var(--color-text-muted);
   font-size: 0.76rem;
   font-style: italic;
 }

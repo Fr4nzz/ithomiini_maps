@@ -203,14 +203,14 @@ onUnmounted(() => {
 }
 
 .shape-button:hover {
-  background: rgba(255,255,255,0.05);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
   border-color: var(--color-text-secondary);
 }
 
 .shape-button.active {
   background: var(--color-accent-subtle);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* Color picker row */

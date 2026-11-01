@@ -150,7 +150,7 @@ const triggerDatabaseUpdate = async () => {
 }
 
 .collapse-toggle:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
@@ -185,13 +185,13 @@ const triggerDatabaseUpdate = async () => {
 }
 
 .update-toggle:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .update-toggle svg:first-child {
   width: 18px;
   height: 18px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .update-toggle .chevron {
@@ -250,7 +250,7 @@ const triggerDatabaseUpdate = async () => {
 .update-password input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .update-password input:disabled {
@@ -268,7 +268,7 @@ const triggerDatabaseUpdate = async () => {
   background: var(--color-accent);
   border: none;
   border-radius: 6px;
-  color: #1a1a2e;
+  color: var(--color-on-accent);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -276,7 +276,7 @@ const triggerDatabaseUpdate = async () => {
 }
 
 .update-btn:hover:not(:disabled) {
-  background: #3fcd73;
+  background: var(--color-accent-hover);
   transform: translateY(-1px);
 }
 
@@ -302,14 +302,14 @@ const triggerDatabaseUpdate = async () => {
 }
 
 .update-message.success {
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  color: #4ade80;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-accent-text);
 }
 
 .update-message.error {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  background: color-mix(in srgb, var(--color-danger-fill) 12%, transparent);
+  border: 1px solid var(--color-danger-text);
+  color: var(--color-danger-text);
 }
 </style>

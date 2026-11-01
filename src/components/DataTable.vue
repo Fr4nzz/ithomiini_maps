@@ -1926,7 +1926,7 @@ const exportTableCsv = () => {
 }
 
 .record-count strong {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .page-info {
@@ -1980,7 +1980,7 @@ const exportTableCsv = () => {
 .table-mode-toggle .mode-icon {
   width: 16px;
   height: 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .table-mode-toggle {
@@ -1990,7 +1990,7 @@ const exportTableCsv = () => {
 }
 
 .table-mode-toggle.is-light .mode-icon {
-  color: #f59e0b;
+  color: var(--color-warning-text);
 }
 
 .table-theme-trigger .chevron {
@@ -2014,7 +2014,7 @@ const exportTableCsv = () => {
   left: 0;
   min-width: 160px;
   padding: 4px;
-  background: var(--color-bg-overlay, var(--color-bg-primary, #1a1a2e));
+  background: var(--color-bg-overlay);
   border: 1px solid var(--color-border);
   border-radius: 8px;
   box-shadow: 0 8px 24px var(--color-shadow-color);
@@ -2039,7 +2039,7 @@ const exportTableCsv = () => {
 .table-theme-menu button:hover,
 .table-theme-menu button.active {
   background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .theme-swatch {
@@ -2093,13 +2093,13 @@ const exportTableCsv = () => {
 }
 
 .view-mode-toggle button:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
 .view-mode-toggle button.active {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent-text);
 }
 
 .view-mode-toggle.sub-toggle button {
@@ -2123,7 +2123,7 @@ const exportTableCsv = () => {
 
 .btn-columns:hover,
 .btn-columns.active {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
@@ -2148,19 +2148,19 @@ const exportTableCsv = () => {
 }
 
 .column-filter-toggle:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
 .column-filter-toggle.active {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: #60a5fa;
-  color: #60a5fa;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .filter-count {
-  background: #60a5fa;
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   font-size: 0.65rem;
   font-weight: 700;
   padding: 1px 6px;
@@ -2262,7 +2262,7 @@ const exportTableCsv = () => {
 }
 
 .data-table th.sorted {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* Drag-to-resize handle on the trailing edge of each header cell. */
@@ -2300,7 +2300,7 @@ const exportTableCsv = () => {
 
 .sort-indicator {
   margin-left: 6px;
-  color: #60a5fa;
+  color: var(--color-accent-text);
 }
 
 /* Filter Row */
@@ -2327,8 +2327,7 @@ const exportTableCsv = () => {
 }
 
 .column-filter-input:focus {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  border-color: var(--color-focus);
 }
 
 .column-filter-input::placeholder {
@@ -2355,8 +2354,7 @@ const exportTableCsv = () => {
 }
 
 .column-filter-select:focus {
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  border-color: var(--color-focus);
 }
 
 .filter-range {
@@ -2392,7 +2390,7 @@ const exportTableCsv = () => {
 
 .filter-indicator {
   font-size: 0.75rem;
-  color: #60a5fa;
+  color: var(--color-accent-text);
   font-weight: 400;
 }
 
@@ -2404,7 +2402,7 @@ const exportTableCsv = () => {
 }
 
 .data-table tbody tr:hover {
-  background: rgba(74, 222, 128, 0.05);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
 }
 
 /* Cell Types */
@@ -2450,13 +2448,13 @@ const exportTableCsv = () => {
 }
 
 .sex-badge.male {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
+  background: var(--color-sex-male-bg);
+  color: var(--color-sex-male);
 }
 
 .sex-badge.female {
-  background: rgba(236, 72, 153, 0.15);
-  color: #f472b6;
+  background: var(--color-sex-female-bg);
+  color: var(--color-sex-female);
 }
 
 .cell-coord {
@@ -2508,7 +2506,7 @@ const exportTableCsv = () => {
   align-items: center;
   justify-content: center;
   font-size: 10px;
-  color: #f59e0b;
+  color: #fbbf24;
   font-weight: bold;
 }
 
@@ -2521,7 +2519,11 @@ const exportTableCsv = () => {
   display: inline-block;
   padding: 2px 8px;
   background: rgba(168, 85, 247, 0.15);
-  color: #c084fc;
+  color: #d8b4fe;
+}
+
+:global([data-mode="light"]) .mimicry-badge {
+  color: #7e22ce;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 500;
@@ -2532,7 +2534,7 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 6px;
   padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
   border-radius: 4px;
   font-size: 0.75rem;
 }
@@ -2551,7 +2553,7 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 6px;
   padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
   border-radius: 4px;
   font-size: 0.75rem;
   color: var(--curated-color);
@@ -2583,7 +2585,7 @@ const exportTableCsv = () => {
 
 .original-value em {
   text-decoration: line-through;
-  color: rgba(245, 158, 11, 0.7);
+  color: var(--color-warning-text);
 }
 
 .text-muted {
@@ -2623,13 +2625,13 @@ const exportTableCsv = () => {
 }
 
 .genome-text.direct, .genome-link.direct {
-  background: rgba(74, 222, 128, 0.15);
-  color: #4ade80;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent-text);
 }
 
 .genome-text.estimated, .genome-link:not(.direct) {
-  background: rgba(59, 130, 246, 0.12);
-  color: #60a5fa;
+  background: color-mix(in srgb, var(--color-info-fill) 12%, transparent);
+  color: var(--color-info-text);
 }
 
 .genome-link:hover {
@@ -2638,7 +2640,7 @@ const exportTableCsv = () => {
 }
 
 .bioproject-link {
-  color: #60a5fa;
+  color: var(--color-info-text);
   text-decoration: none;
   font-size: 0.8rem;
   font-family: monospace;
@@ -2646,7 +2648,7 @@ const exportTableCsv = () => {
 
 .bioproject-link:hover {
   text-decoration: underline;
-  color: #93c5fd;
+  color: var(--color-info-text);
 }
 
 .cell-records {
@@ -2689,7 +2691,7 @@ const exportTableCsv = () => {
 .row-expand-btn:hover,
 .row-expand-btn.active {
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .row-expand-btn svg {
@@ -2724,8 +2726,8 @@ const exportTableCsv = () => {
   min-height: 24px;
   padding: 3px 7px;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
   color: var(--color-text-primary);
   font-size: 0.74rem;
   line-height: 1.2;
@@ -2812,8 +2814,8 @@ const exportTableCsv = () => {
 
 .host-chip.species,
 .host-chip.high {
-  background: rgba(74, 222, 128, 0.14);
-  border-color: rgba(74, 222, 128, 0.28);
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 28%, transparent);
   color: #86efac;
 }
 
@@ -2882,7 +2884,7 @@ const exportTableCsv = () => {
   min-width: 34px;
   padding: 3px 8px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
   color: var(--color-text-secondary);
   font-size: 0.72rem;
   font-weight: 700;
@@ -2892,22 +2894,22 @@ const exportTableCsv = () => {
 .confidence-pill.species,
 .confidence-pill.high,
 .confidence-pill.direct {
-  background: rgba(74, 222, 128, 0.16);
-  color: #4ade80;
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  color: var(--color-accent-text);
 }
 
 .confidence-pill.genus,
 .confidence-pill.medium,
 .confidence-pill.literature {
-  background: rgba(251, 191, 36, 0.15);
-  color: #fbbf24;
+  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  color: var(--color-warning-text);
 }
 
 .confidence-pill.family,
 .confidence-pill.low,
 .confidence-pill.needs-check {
-  background: rgba(251, 113, 133, 0.15);
-  color: #fb7185;
+  background: color-mix(in srgb, var(--color-danger) 15%, transparent);
+  color: var(--color-danger-text);
 }
 
 .host-expanded-row td {
@@ -2951,12 +2953,12 @@ const exportTableCsv = () => {
 }
 
 .source-link {
-  color: #60a5fa;
+  color: var(--color-info-text);
   text-decoration: none;
 }
 
 .source-link:hover {
-  color: #93c5fd;
+  color: var(--color-info-text);
   text-decoration: underline;
 }
 
@@ -2972,15 +2974,15 @@ const exportTableCsv = () => {
   align-items: center;
   padding: 3px 7px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
   color: var(--color-text-muted);
   font-size: 0.72rem;
   font-weight: 700;
 }
 
 .mapped-badge.mapped {
-  background: rgba(74, 222, 128, 0.14);
-  color: #4ade80;
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  color: var(--color-accent-text);
 }
 
 
@@ -3066,7 +3068,7 @@ const exportTableCsv = () => {
 }
 
 .page-btn:hover:not(:disabled) {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
@@ -3077,7 +3079,7 @@ const exportTableCsv = () => {
 
 .page-btn.active {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
 }
 

@@ -260,7 +260,6 @@ function statusClass(tier) {
         <span class="detail-label">Status:</span>
         <span
           class="detail-value status-badge"
-          :style="{ color: STATUS_COLORS[currentSpecimen?.sequencing_status] || '#6b7280' }"
         >
           <span class="status-dot" :style="{ background: STATUS_COLORS[currentSpecimen?.sequencing_status] || '#6b7280' }"></span>
           {{ currentSpecimen?.sequencing_status || 'Unknown' }}
@@ -380,8 +379,8 @@ function statusClass(tier) {
   width: 340px;
   min-width: 340px;
   flex-shrink: 0;
-  background: #1a1a2e;
-  border-right: 1px solid #3d3d5c;
+  background: var(--color-bg-primary);
+  border-right: 1px solid var(--color-border);
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -406,26 +405,26 @@ function statusClass(tier) {
   gap: 8px;
   min-height: 34px;
   padding: 6px 8px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-left-width: 3px;
   border-radius: 6px;
 }
 
 .photo-order-row.context-field {
-  border-left-color: #4ade80;
+  border-left-color: var(--color-accent);
 }
 
 .photo-order-row.context-ambiguous {
-  border-left-color: #60a5fa;
+  border-left-color: var(--color-info-text);
 }
 
 .photo-order-row.context-preserved {
-  border-left-color: #facc15;
+  border-left-color: var(--color-warning-text);
 }
 
 .photo-order-name {
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.78rem;
   line-height: 1.2;
 }
@@ -442,16 +441,16 @@ function statusClass(tier) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #cbd5e1;
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  color: var(--color-text-secondary);
   cursor: pointer;
 }
 
 .order-move-btn:not(:disabled):hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  color: var(--color-text-primary);
 }
 
 .order-move-btn:disabled {
@@ -463,10 +462,10 @@ function statusClass(tier) {
   width: 100%;
   min-height: 34px;
   padding: 7px 9px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.78rem;
 }
 
@@ -480,8 +479,8 @@ function statusClass(tier) {
   grid-template-columns: 1fr 1fr;
   gap: 4px;
   padding: 4px;
-  background: rgba(10, 10, 24, 0.35);
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
 }
 
@@ -491,14 +490,14 @@ function statusClass(tier) {
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: #aaa;
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   cursor: pointer;
 }
 
 .mode-btn.active {
-  background: #4ade80;
-  color: #111827;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 .section-header {
@@ -509,8 +508,8 @@ function statusClass(tier) {
 }
 
 .count-badge {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  color: var(--color-accent-text);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -521,7 +520,7 @@ function statusClass(tier) {
 
 .section-label {
   font-size: 0.7rem;
-  color: #888;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -529,10 +528,10 @@ function statusClass(tier) {
 .sidebar-select {
   width: 100%;
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-style: italic;
   cursor: pointer;
@@ -540,13 +539,13 @@ function statusClass(tier) {
 }
 
 .sidebar-select:hover {
-  border-color: #5d5d7c;
+  border-color: var(--color-border-control);
 }
 
 .sidebar-select:focus {
   outline: none;
-  border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .sidebar-select.individual-select {
@@ -556,17 +555,17 @@ function statusClass(tier) {
 
 .single-individual-id {
   padding: 8px 10px;
-  background: #252540;
-  border: 1px solid #3d3d5c;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #14b8a6;
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-family: monospace;
 }
 
 .sidebar-divider {
   height: 1px;
-  background: #3d3d5c;
+  background: var(--color-border);
   margin: 4px 0;
 }
 
@@ -584,13 +583,13 @@ function statusClass(tier) {
 }
 
 .detail-label {
-  color: #888;
+  color: var(--color-text-muted);
   flex-shrink: 0;
   min-width: 50px;
 }
 
 .detail-value {
-  color: #e0e0e0;
+  color: var(--color-text-primary);
   word-break: break-word;
 }
 
@@ -613,10 +612,10 @@ function statusClass(tier) {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
   border-radius: 5px;
-  color: #4ade80;
+  color: var(--color-accent-text);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -624,9 +623,9 @@ function statusClass(tier) {
 }
 
 .observation-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
-  color: #86efac;
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  color: var(--color-accent-text);
 }
 
 .observation-link svg {
@@ -643,10 +642,10 @@ function statusClass(tier) {
   width: 100%;
   margin-top: 8px;
   padding: 8px 10px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  border: 1px solid var(--color-accent);
   border-radius: 5px;
-  color: #60a5fa;
+  color: var(--color-accent-text);
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
@@ -654,9 +653,9 @@ function statusClass(tier) {
 }
 
 .view-on-map-btn:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: rgba(59, 130, 246, 0.6);
-  color: #93c5fd;
+  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .view-on-map-btn svg {
@@ -675,15 +674,15 @@ function statusClass(tier) {
 }
 
 .search-summary {
-  background: rgba(74, 222, 128, 0.05);
-  border: 1px solid rgba(74, 222, 128, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
   border-radius: 6px;
   padding: 10px;
 }
 
 .summary-title {
   font-size: 0.7rem;
-  color: #4ade80;
+  color: var(--color-accent-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -703,18 +702,18 @@ function statusClass(tier) {
 }
 
 .stat-row .stat-label {
-  color: #888;
+  color: var(--color-text-muted);
 }
 
 .stat-row .stat-value {
-  color: #4ade80;
+  color: var(--color-accent-text);
   font-weight: 600;
 }
 
 .stat-row.total-row {
   margin-top: 4px;
   padding-top: 6px;
-  border-top: 1px solid rgba(74, 222, 128, 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 .stat-row.total-row .stat-value {
@@ -723,7 +722,7 @@ function statusClass(tier) {
 
 /* Collapsible Section */
 .collapsible-section {
-  border-top: 1px solid #3d3d5c;
+  border-top: 1px solid var(--color-border);
   padding-top: 8px;
 }
 
@@ -735,13 +734,13 @@ function statusClass(tier) {
   padding: 4px 0;
   background: none;
   border: none;
-  color: #aaa;
+  color: var(--color-text-secondary);
   font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
 }
 
-.collapse-toggle:hover { color: #e0e0e0; }
+.collapse-toggle:hover { color: var(--color-text-primary); }
 
 .collapse-toggle svg {
   width: 14px;
@@ -769,23 +768,23 @@ function statusClass(tier) {
 }
 
 .proxy-option:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
 }
 
 .proxy-option input[type="radio"] {
   margin-top: 3px;
-  accent-color: #4ade80;
+  accent-color: var(--color-accent);
   cursor: pointer;
 }
 
 .proxy-option-name {
   font-size: 0.78rem;
-  color: #e0e0e0;
+  color: var(--color-text-primary);
 }
 
 .proxy-option-desc {
   font-size: 0.68rem;
-  color: #888;
+  color: var(--color-text-muted);
   display: block;
   margin-top: 1px;
 }
@@ -804,9 +803,9 @@ function statusClass(tier) {
   flex-shrink: 0;
 }
 
-.status-ok { background: #4ade80; }
-.status-blocked { background: #ef4444; }
-.status-unknown { background: #666; }
+.status-ok { background: var(--color-accent); }
+.status-blocked { background: var(--color-danger); }
+.status-unknown { background: var(--color-text-muted); }
 
 /* Close button only shown in the mobile drawer */
 .gallery-sidebar-close {

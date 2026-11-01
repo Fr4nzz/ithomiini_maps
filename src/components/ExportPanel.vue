@@ -481,7 +481,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 .panel-tabs button.active {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 /* Content */
@@ -515,7 +515,7 @@ const activeTab = ref(props.initialTab || 'export')
   display: block;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -548,7 +548,7 @@ const activeTab = ref(props.initialTab || 'export')
 }
 
 .export-btn:hover:not(:disabled) {
-  background: #353558;
+  background: var(--color-bg-hover);
   border-color: var(--color-accent);
 }
 
@@ -560,20 +560,12 @@ const activeTab = ref(props.initialTab || 'export')
 .export-btn svg {
   width: 24px;
   height: 24px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   flex-shrink: 0;
 }
 
-.export-btn.r-export {
-  border-color: #6366f1;
-}
-
-.export-btn.r-export svg {
-  color: #6366f1;
-}
-
 .export-btn.r-export:hover:not(:disabled) {
-  border-color: #818cf8;
+  border-color: var(--color-accent);
 }
 
 .btn-text {
@@ -663,7 +655,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 .copy-btn:hover {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
 }
 
@@ -677,7 +669,7 @@ const activeTab = ref(props.initialTab || 'export')
   display: flex;
   gap: 10px;
   padding: 12px;
-  background: rgba(74, 222, 128, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
   border-radius: 8px;
   font-size: 0.8rem;
   color: var(--color-text-secondary);
@@ -686,7 +678,7 @@ const activeTab = ref(props.initialTab || 'export')
 .citation-info svg {
   width: 18px;
   height: 18px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -712,7 +704,7 @@ const activeTab = ref(props.initialTab || 'export')
 .gbif-citation-section .citation-label svg {
   width: 16px;
   height: 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .gbif-citation-box {
@@ -735,18 +727,18 @@ const activeTab = ref(props.initialTab || 'export')
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
   border-radius: 4px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .gbif-link:hover {
-  background: rgba(74, 222, 128, 0.2);
-  border-color: rgba(74, 222, 128, 0.5);
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
 
 .gbif-link svg {
@@ -771,7 +763,7 @@ const activeTab = ref(props.initialTab || 'export')
 .gbif-stats .stat-value {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .gbif-stats .stat-label {
@@ -786,7 +778,7 @@ const activeTab = ref(props.initialTab || 'export')
   gap: 8px;
   padding: 12px 16px;
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 500;

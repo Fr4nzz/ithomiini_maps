@@ -1008,7 +1008,7 @@ const updateExportHeight = (value) => {
               <span v-if="otherFilterActiveCount('goat') > 0" class="filter-tile-count">
                 {{ otherFilterActiveCount('goat') }}
               </span>
-              <span v-if="store.goatLoading" class="active-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; margin-left: 6px;">
+              <span v-if="store.goatLoading" class="active-badge" style="background: color-mix(in srgb, var(--color-info-fill) 15%, transparent); color: var(--color-info-text); margin-left: 6px;">
                 Loading...
               </span>
             </button>
@@ -1108,7 +1108,7 @@ const updateExportHeight = (value) => {
               :multiple="true"
             />
 
-            <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--error-color, #f87171);">
+            <p v-if="sdmStore.selectedSpecies.length > 2" class="filter-hint" style="color: var(--color-danger-text);">
               Max 2 species for overlay comparison
             </p>
 

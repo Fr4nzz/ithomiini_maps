@@ -197,7 +197,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 .header-title svg {
   width: 16px;
   height: 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .date-coverage {
@@ -208,7 +208,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 }
 
 .coverage-stat {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .coverage-stat.muted {
@@ -257,14 +257,14 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 }
 
 .range-btn:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   color: var(--color-text-primary);
 }
 
 .range-btn.active {
-  background: rgba(74, 222, 128, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* Custom dates */
@@ -321,7 +321,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   align-items: center;
   justify-content: space-between;
   padding: 8px 10px;
-  background: rgba(74, 222, 128, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
   border-radius: 6px;
   margin-bottom: 10px;
 }
@@ -331,7 +331,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   align-items: center;
   gap: 6px;
   font-size: 0.75rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .filter-badge svg {
@@ -342,16 +342,16 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 .btn-clear {
   padding: 4px 10px;
   background: transparent;
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
   border-radius: 4px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-clear:hover {
-  background: rgba(74, 222, 128, 0.15);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 /* Filter note */

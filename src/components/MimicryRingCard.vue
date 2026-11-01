@@ -202,13 +202,13 @@ const onNextSubspecies = (event) => {
 }
 
 .ring-card:hover {
-  background: #353558;
+  background: var(--color-bg-hover);
   transform: translateY(-2px);
 }
 
 .ring-card.selected {
   border-color: var(--color-accent);
-  background: rgba(74, 222, 128, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .ring-card.unavailable {
@@ -334,7 +334,7 @@ const onNextSubspecies = (event) => {
 .nav-btn:hover:not(.disabled) {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 .nav-btn.disabled {
@@ -354,19 +354,19 @@ const onNextSubspecies = (event) => {
   right: 4px;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .source-badge.sanger {
-  background: rgba(59, 130, 246, 0.9);
-  color: white;
+  background: var(--color-info-fill);
+  color: var(--color-on-info);
 }
 
 .source-badge.gbif {
-  background: rgba(107, 114, 128, 0.9);
-  color: white;
+  background: #4b5563;
+  color: #ffffff;
 }
 
 /* Ring Info */
@@ -389,7 +389,7 @@ const onNextSubspecies = (event) => {
 }
 
 .ring-count.unavailable-text {
-  color: #ef4444;
+  color: var(--color-danger-text);
   font-style: italic;
 }
 
@@ -419,6 +419,6 @@ const onNextSubspecies = (event) => {
 .select-indicator svg {
   width: 12px;
   height: 12px;
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 </style>

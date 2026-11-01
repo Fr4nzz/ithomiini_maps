@@ -606,7 +606,7 @@ onClickOutside(settingsPanelRef, (e) => {
 
 .swap-button:hover:not(.disabled) {
   background: var(--color-bg-tertiary);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .swap-button.disabled {
@@ -634,7 +634,7 @@ onClickOutside(settingsPanelRef, (e) => {
 
 .toolbar-button.active {
   background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .reset-button:hover {
@@ -852,7 +852,7 @@ onClickOutside(settingsPanelRef, (e) => {
 .wrap-toggle-button.active {
   background: var(--color-accent-subtle);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* Manual count input (Max Items) */

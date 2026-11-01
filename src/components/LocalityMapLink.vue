@@ -42,7 +42,7 @@ const mapsUrl = ([longitude, latitude]) =>
 </template>
 
 <style scoped>
-.locality-map-link { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; width: 32px; height: 32px; border: 1px solid transparent; border-radius: 4px; color: var(--color-accent); cursor: pointer; list-style: none; }
+.locality-map-link { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; width: 32px; height: 32px; border: 1px solid transparent; border-radius: 4px; color: var(--color-accent-text); cursor: pointer; list-style: none; }
 .locality-map-link::-webkit-details-marker { display: none; }
 .locality-map-link:hover { border-color: var(--color-accent); background: var(--color-accent-subtle); }
 .locality-map-link:focus-visible, .locality-map-options a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }

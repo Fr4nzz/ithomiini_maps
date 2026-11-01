@@ -60,7 +60,7 @@ function clampMinimum(event) {
 .locality-mode { display: grid; grid-template-columns: 1fr 1fr; margin-top: 12px; border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden; }
 .locality-mode button { padding: 6px 4px; border: 0; color: var(--color-text-secondary); background: var(--color-bg-primary); font: inherit; cursor: pointer; }
 .locality-mode button + button { border-left: 1px solid var(--color-border); }
-.locality-mode button.active { color: var(--color-accent); background: var(--color-bg-tertiary); }
+.locality-mode button.active { color: var(--color-accent-text); background: var(--color-bg-tertiary); }
 .locality-mode button:disabled { opacity: .45; cursor: default; }
 .locality-mode button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
 .locality-minimum { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
@@ -69,7 +69,7 @@ function clampMinimum(event) {
 .record-stepper input { width: 45px; height: 30px; padding: 0 2px; border: 0; border-radius: 0; text-align: center; color: var(--color-text-primary); background: var(--color-bg-primary); font: inherit; font-variant-numeric: tabular-nums; appearance: textfield; -moz-appearance: textfield; }
 .record-stepper input::-webkit-inner-spin-button, .record-stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .record-stepper :disabled { opacity: .45; cursor: default; }
-.record-stepper button:hover:not(:disabled) { color: var(--color-accent); }
+.record-stepper button:hover:not(:disabled) { color: var(--color-accent-text); }
 .record-stepper :focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
 @media (prefers-reduced-motion: reduce) { .switch-track::after { transition: none; } }
 </style>
