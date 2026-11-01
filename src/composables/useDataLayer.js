@@ -171,10 +171,23 @@ function drawClusterOutline(radius) {
   return context.getImageData(0, 0, size, size)
 }
 
+/**
+ * Heatmap ramps per basemap: on dark tiles density rises to pale yellow, on light tiles to deep blue, so
+ * the densest cells always stand out from the tiles. The density legend (MapEngine.vue) draws the same stops.
+ */
+export const HEATMAP_RAMPS = {
+  dark: ['rgba(31, 83, 129, 0)', 'rgba(49, 113, 161, 0.3)', '#428fac', '#65b9ac', '#b8dd9b', '#f6e8a5'],
+  light: ['rgba(184, 221, 155, 0)', 'rgba(184, 221, 155, 0.45)', '#65b9ac', '#428fac', '#3171a1', '#173f6b'],
+}
+const HEATMAP_STOPS = [0, 0.1, 0.3, 0.55, 0.8, 1]
+
+/** Marker halo on light basemaps: grey and pale markers keep >= 3:1 against Positron-like tiles. */
+const LIGHT_BASEMAP_HALO = 'rgba(17, 24, 39, 0.8)'
+
 export function useDataLayer(map, options = {}) {
   const store = useDataStore()
   const legendStore = useLegendStore()
-  const { onShowPopup, onDataChanged } = options
+  const { onShowPopup, onDataChanged, isDarkBasemap = () => true } = options
   let dataGeneration = 0
   let clusterClickGeneration = 0
 
@@ -538,7 +551,7 @@ export function useDataLayer(map, options = {}) {
       // Full rebuild: remove everything and recreate
       ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
         'cluster-extent-dynamic-outline', 'cluster-points-layer',
-        'points-layer', 'points-hover', 'points-highlight', 'heatmap-layer',
+        'points-halo', 'points-layer', 'points-hover', 'points-highlight', 'heatmap-layer',
         'range-fill', 'range-outline', 'range-points'
       ].forEach(id => removeLayerAndSource(map.value, id))
       ;['points-source', 'cluster-extent-dynamic-source', 'cluster-points-source',
@@ -564,7 +577,7 @@ export function useDataLayer(map, options = {}) {
       // Still need to rebuild layers for styling changes
       ;['clusters', 'cluster-count', 'cluster-extent-dynamic',
         'cluster-extent-dynamic-outline', 'cluster-points-layer',
-        'points-layer', 'points-hover', 'points-highlight', 'heatmap-layer',
+        'points-halo', 'points-layer', 'points-hover', 'points-highlight', 'heatmap-layer',
         'range-fill', 'range-outline', 'range-points'
       ].forEach(id => {
         if (map.value.getLayer(id)) map.value.removeLayer(id)
@@ -596,12 +609,7 @@ export function useDataLayer(map, options = {}) {
           'heatmap-radius': heatSettings.radius,
           'heatmap-color': [
             'interpolate', ['linear'], ['heatmap-density'],
-            0, 'rgba(31, 83, 129, 0)',
-            0.1, 'rgba(49, 113, 161, 0.3)',
-            0.3, '#428fac',
-            0.55, '#65b9ac',
-            0.8, '#b8dd9b',
-            1, '#f6e8a5'
+            ...HEATMAP_STOPS.flatMap((stop, i) => [stop, HEATMAP_RAMPS[isDarkBasemap() ? 'dark' : 'light'][i]])
           ],
           'heatmap-opacity': heatSettings.opacity
         }
@@ -799,7 +807,9 @@ export function useDataLayer(map, options = {}) {
           ],
           'circle-color': '#34404b',
           'circle-opacity': 0.9,
-          'circle-stroke-width': 0
+          // A light ring keeps the dark disc apart from dark tiles.
+          'circle-stroke-width': isDarkBasemap() ? 1.5 : 0,
+          'circle-stroke-color': 'rgba(255, 255, 255, 0.75)'
         }
       })
 
@@ -834,6 +844,20 @@ export function useDataLayer(map, options = {}) {
       'icon-size': buildSiteIconSize(style, sizeFactor),
       'icon-allow-overlap': true,
       'icon-ignore-placement': style.fillOpacity === 0 && style.borderOpacity === 0,
+    }
+    if (!isDarkBasemap()) {
+      map.value.addLayer({
+        id: 'points-halo',
+        type: 'circle',
+        source: 'points-source',
+        filter: unclustered,
+        paint: {
+          'circle-radius': siteRadiusExpression(style, style.borderWidth / 2 + 0.75, sizeFactor),
+          'circle-color': 'transparent',
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': LIGHT_BASEMAP_HALO,
+        },
+      })
     }
     map.value.addLayer({
       id: 'points-layer',

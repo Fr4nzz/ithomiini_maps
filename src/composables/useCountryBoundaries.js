@@ -70,8 +70,7 @@ export function useCountryBoundaries(map, currentStyle) {
     removeLayerAndSource(map.value, 'country-boundaries-line', 'country-boundaries')
 
     const borderStyle = getBorderStyle(currentStyle.value)
-    const hasPointsLayer = !!map.value.getLayer('points-layer')
-    const beforeLayer = hasPointsLayer ? 'points-layer' : undefined
+    const beforeLayer = ['points-halo', 'points-layer'].find(id => map.value.getLayer(id))
 
     try {
       map.value.addSource('country-boundaries', {

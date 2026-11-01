@@ -24,6 +24,7 @@ import { usePlanningStore } from '../stores/planning'
 import { parseSharedMapView } from '../utils/sharedMapView'
 import { useLocalityLayer } from '../composables/useLocalityLayer'
 import { useClusterComposition } from '../composables/useClusterComposition'
+import { HEATMAP_RAMPS } from '../composables/useDataLayer'
 import SiteComparison from './SiteComparison.vue'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
@@ -217,7 +218,7 @@ const toggleDock = () => {
   }
 }
 
-const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup, onDataChanged: (data, sites) => {
+const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateClusterExtentCircle, updateClusterExtentColors, setStyleChanging } = useDataLayer(map, { onShowPopup: handleShowPopup, isDarkBasemap, onDataChanged: (data, sites) => {
   localityLayer.invalidate(data, sites)
   clusterComposition.invalidate(data, sites)
 } })
@@ -272,6 +273,9 @@ watch(
     })
   }
 )
+
+// The heatmap key shows the ramp drawn on the current basemap (useDataLayer.js).
+const densityRamp = computed(() => `linear-gradient(90deg, ${HEATMAP_RAMPS[isDarkBasemap() ? 'dark' : 'light'].slice(1).join(', ')})`)
 
 // Map layer dropdown
 const showMapLayerDropdown = ref(false)
@@ -708,7 +712,7 @@ watch(() => planning.focusRequestId, () => {
     >
       <div v-if="store.visualizationMode === 'heatmap' && (store.exportSettings.includeLegend || !store.exportSettings.enabled)" class="density-legend" role="note" title="Relative to the filtered records, not abundance">
         <strong>Record density</strong>
-        <div class="density-ramp"></div><div class="density-scale"><span>Lower</span><span>Higher</span></div>
+        <div class="density-ramp" :style="{ background: densityRamp }"></div><div class="density-scale"><span>Lower</span><span>Higher</span></div>
       </div>
       <!-- Legend Component (customizable, draggable) -->
       <Legend
@@ -1055,7 +1059,7 @@ watch(() => planning.focusRequestId, () => {
 <style scoped>
 .density-legend { position: absolute; z-index: 3; bottom: 64px; right: 10px; width: 168px; padding: 8px 10px; border-radius: 8px; color: var(--color-text-primary); background: var(--color-bg-secondary); border: 1px solid var(--color-border); font-size: 12px; pointer-events: auto; }
 .density-legend strong { display: block; margin-bottom: 8px; }
-.density-ramp { height: 9px; border-radius: 3px; background: linear-gradient(90deg, #3171a1, #428fac, #65b9ac, #b8dd9b, #f6e8a5); }
+.density-ramp { height: 9px; border-radius: 3px; }
 .density-scale { display: flex; justify-content: space-between; margin-top: 4px; }
 @media (max-width: 600px) { .density-legend { right: 8px; width: 144px; } }
 .map-empty-notice { position: absolute; z-index: 3; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 32px); padding: 10px 12px 10px 16px; border-radius: 8px; color: var(--color-text-primary); background: var(--color-bg-secondary); border: 1px solid var(--color-border); box-shadow: 0 4px 16px rgba(0,0,0,.25); font-size: 13px; }

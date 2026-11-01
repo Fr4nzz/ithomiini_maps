@@ -231,7 +231,6 @@ const isFilterActive = computed(() => {
 
 .histogram-bar.in-range {
   background-color: var(--color-accent);
-  opacity: 0.7;
 }
 
 .histogram-bar.out-range {
@@ -241,6 +240,10 @@ const isFilterActive = computed(() => {
 
 .histogram-bar:hover {
   opacity: 1;
+}
+
+.histogram-bar.in-range:hover {
+  background-color: var(--color-accent-hover);
 }
 
 /* Live feedback label */

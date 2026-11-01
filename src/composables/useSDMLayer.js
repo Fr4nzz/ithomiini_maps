@@ -16,7 +16,7 @@ const SCIENTIFIC_LAYERS = new Set([
   'range-fill', 'range-outline', 'range-points', 'heatmap-layer',
   'cluster-extent-dynamic', 'cluster-extent-dynamic-outline',
   'cluster-points-layer', 'clusters', 'cluster-count',
-  'points-layer', 'points-hover', 'points-highlight',
+  'points-halo', 'points-layer', 'points-hover', 'points-highlight',
 ])
 
 function firstScientificLayer(map) {
