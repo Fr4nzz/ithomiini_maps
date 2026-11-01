@@ -617,7 +617,7 @@
 
 /* Touch: the zoom group is 44 px wide (style.css), so area-select sits clear of it. */
 @media (pointer: coarse) {
-  .bbox-controls { right: calc(10px + 46px + 10px); }
+  .bbox-controls { right: calc(10px + 10px + 46px + 8px); } /* MapLibre's own 10 px margin + the zoom group + a gap */
 }
 
 .bbox-draw-btn,

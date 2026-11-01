@@ -141,10 +141,16 @@ A33 theming debt (P3) | mostly fixed | fallbacks removed, undefined variables de
 Reviews: `atlas/review-a/{sol-r1,opus-r1}.md`. Fixed in 5e9a9db plus the bbox offset commit that follows it.
 
 - **System stays System after a reload** (`stores/theme.js`): «system» is now stored under `atlas-theme-mode` instead of deleting the key, so the legacy `app-mode` cannot bring the old choice back. Tests: store reload with legacy dark, and a boot-script case.
-- **Phone legend title row**: `.level-switch` no longer shrinks (`flex-shrink: 0`), the fold button lost its vertical negative margins; the controls wrap to a second row. Checked unfolded and with «+ N more» tapped at 390 and 360.
+- **Phone legend title row**: `.level-switch` no longer shrinks (`flex-shrink: 0`), the fold button lost its vertical negative margins; the controls wrap to a second row. Checked unfolded at 390 and 360, and with «+ N more» tapped at 390 (the 360 shot did not expand).
 - **Area-select vs zoom «+»** on `pointer: coarse`: `right: calc(10px + 46px + 10px)`, clear of the 44 px group.
 - **Focus transitions**: the `transition-property: none` reset applies only to the focused button/link, so child knobs and chevrons keep their transitions.
 - **Scale bar**: no top border (sides and bottom only). **Smart search**: the ring sits on the field wrapper (`:focus-within`), not on the inner input. **Light heatmap**: the densest stop is 70 % alpha, so basemap labels stay readable.
 - **Gallery (A19)**: the note now says what the code does: edge plus a faint 12–15 % group tint (text passes contrast).
 - **Legend «+ N more»** shot truly expanded: `waveA-r2b-{dark,light}/legend-more-open__390-en.jpg` (the list grows and scrolls). View ids `legend-unfolded` and `legend-more-open` added to `views.mjs`; the old `legend-expanded` view still taps the «Other» row, not the button.
 - Reshoot `waveA-r2-{dark,light}`: 0 text below 4.5:1 in all 19 views per theme. Tests 297, typecheck and build pass.
+
+## Review round 2
+Sol A, Opus A−. Nits fixed: area-select clears the zoom group on touch by MapLibre's 10 px margin + 8 px; the
+command palette's ring shows only when its input has focus (not the close ×); the light heatmap's top stop is
+darker than the one below (0.82 alpha), so density peaks in the middle. Ledger:
+~/.local/share/ui-overhaul-20261031/atlas/review-a/LEDGER.md.

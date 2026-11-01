@@ -177,7 +177,7 @@ function drawClusterOutline(radius) {
  */
 export const HEATMAP_RAMPS = {
   dark: ['rgba(31, 83, 129, 0)', 'rgba(49, 113, 161, 0.3)', '#428fac', '#65b9ac', '#b8dd9b', '#f6e8a5'],
-  light: ['rgba(184, 221, 155, 0)', 'rgba(184, 221, 155, 0.45)', '#65b9ac', '#428fac', '#3171a1', 'rgba(23, 63, 107, 0.7)'],
+  light: ['rgba(184, 221, 155, 0)', 'rgba(184, 221, 155, 0.45)', '#65b9ac', '#428fac', '#3171a1', 'rgba(23, 63, 107, 0.82)'],
 }
 const HEATMAP_STOPS = [0, 0.1, 0.3, 0.55, 0.8, 1]
 

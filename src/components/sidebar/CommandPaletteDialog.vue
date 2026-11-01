@@ -929,7 +929,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-input:focus-visible { outline: 0 !important; }
-.cmd-input-wrap:focus-within {
+.cmd-input-wrap:has(.cmd-input:focus-visible) {
   outline: 2px solid var(--color-focus);
   outline-offset: -3px;
 }
