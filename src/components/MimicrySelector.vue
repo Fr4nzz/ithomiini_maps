@@ -792,8 +792,9 @@ const clearSelection = () => {
 
 /* Responsive */
 @media (max-width: 640px) {
+  /* minmax(0, …): long names and photos no longer push the right column off the dialog. */
   .ring-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>

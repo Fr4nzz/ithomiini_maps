@@ -241,7 +241,7 @@ const triggerDatabaseUpdate = async () => {
   width: 100%;
   padding: 10px 12px;
   background: var(--color-bg-primary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-size: 0.85rem;

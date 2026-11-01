@@ -211,6 +211,21 @@ select, input, textarea {
   font-size: 11px !important;
 }
 
+/* Touch screens: small controls get a finger-sized target (44 px) where the layout allows. */
+@media (pointer: coarse) {
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .source-bulk-link,
+  .level-option,
+  .title-control-button {
+    min-height: 44px;
+  }
+}
+
 /* Shared Animations */
 @keyframes spin {
   from { transform: rotate(0deg); }

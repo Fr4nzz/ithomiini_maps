@@ -110,7 +110,7 @@ function selectOption(option) {
   width: 100%;
   padding: 8px 28px 8px 10px;
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-size: 0.8rem;

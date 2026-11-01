@@ -195,6 +195,16 @@ const {
 // When expanded, render every item and let .legend-content scroll instead of
 // truncating to the measured fit count. Tapping "+ N more" toggles this.
 const legendExpanded = ref(false)
+
+// On phones the open legend covered about a third of the map and its labels, so it starts folded to
+// its title bar; one tap opens it. The export preview always shows it whole.
+const foldedOnPhone = ref(true)
+const isPhoneMap = computed(() => containerBounds.value.width > 0 && containerBounds.value.width <= 600)
+const isFolded = computed(() => isPhoneMap.value && foldedOnPhone.value && !isExportMode.value)
+function toggleFold() {
+  foldedOnPhone.value = !foldedOnPhone.value
+  if (!foldedOnPhone.value) nextTick(() => scheduleMeasurement(true, 'unfold', true))
+}
 const display = useLegendDisplayData(
   base, dataStore, legendStore,
   () => (legendExpanded.value ? sortedAllItems.value.length : effectiveMaxItems.value),
@@ -216,8 +226,14 @@ const hasOverflowItems = computed(() => sortedAllItems.value.length > effectiveM
 
 const groupList = computed(() => Object.keys(itemGroupMap.value).sort())
 
-// Should show toolbar/edit UI?
-const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value) && !isResizing.value)
+// Should show toolbar/edit UI? On hover, and also while keyboard focus is inside the legend.
+const focusWithin = ref(false)
+const showEditUI = computed(() => (isHovered.value || hasOpenPopup.value || focusWithin.value) && !isResizing.value)
+// Touch screens cannot hover: Sort and the counts toggle stay in the title there.
+const noHover = typeof window !== 'undefined' && !!window.matchMedia?.('(hover: none)').matches
+function handleFocusOut(event) {
+  focusWithin.value = !!(event.relatedTarget && legendRef.value?.contains(event.relatedTarget))
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // WATCHERS (measurement triggers)
@@ -402,7 +418,7 @@ const positionStyle = computed(() => {
 
   const h = scaleLayoutSize.value?.height ??
     (isExportMode.value && previewSize.value ? previewSize.value.height : effectiveHeight.value)
-  if (h && h !== 'auto') {
+  if (h && h !== 'auto' && !isFolded.value) {
     style.height = h + 'px'
   }
 
@@ -644,6 +660,7 @@ onUnmounted(() => {
       'is-resizing': isResizing,
       'is-scaling': isScaling,
       'is-export': isExportMode,
+      'is-folded': isFolded,
       'toolbar-below': toolbarBelow,
       'toolbar-right': toolbarRight,
       'toolbar-inside': toolbarInside,
@@ -651,6 +668,8 @@ onUnmounted(() => {
     :style="positionStyle"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
+    @focusin="focusWithin = true"
+    @focusout="handleFocusOut"
     @mousedown="startDrag"
     @touchstart.prevent="startDrag"
     @keydown="handleLegendKeydown"
@@ -685,13 +704,27 @@ onUnmounted(() => {
           >{{ level.label }}</button>
         </span>
         <span v-else class="legend-title-text">{{ dataStore.legendTitle }}</span>
-        <span v-if="showEditUI || sortDropdownOpen" class="title-hover-controls">
+        <button
+          v-if="isPhoneMap && !isExportMode"
+          type="button"
+          class="legend-fold-button"
+          :aria-expanded="!isFolded"
+          :aria-label="isFolded ? 'Show legend' : 'Fold legend'"
+          @click.stop="toggleFold"
+          @touchstart.stop
+        >
+          <ChevronDown :size="16" :class="{ 'is-open': !isFolded }" aria-hidden="true" />
+        </button>
+        <span v-if="showEditUI || sortDropdownOpen || (noHover && !isFolded)" class="title-hover-controls">
           <!-- Counts toggle -->
           <button
             class="title-control-button"
             :class="{ active: legendStore.showCounts }"
             title="Toggle item counts"
+            aria-label="Toggle item counts"
+            :aria-pressed="legendStore.showCounts"
             @click.stop="toggleShowCounts"
+            @touchstart.stop
           >
             <Hash :size="13" />
           </button>
@@ -701,7 +734,9 @@ onUnmounted(() => {
               class="title-control-button"
               :class="{ active: sortDropdownOpen }"
               title="Sort options"
+              :aria-expanded="sortDropdownOpen"
               @click.stop="toggleSortDropdown"
+              @touchstart.stop
             >
               <span class="sort-label">Sort</span>
               <ChevronDown :size="10" class="sort-chevron" />

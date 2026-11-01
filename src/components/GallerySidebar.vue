@@ -463,7 +463,7 @@ function statusClass(tier) {
   min-height: 34px;
   padding: 7px 9px;
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-size: 0.78rem;
@@ -529,7 +529,7 @@ function statusClass(tier) {
   width: 100%;
   padding: 8px 10px;
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-size: 0.8rem;

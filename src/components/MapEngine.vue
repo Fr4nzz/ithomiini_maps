@@ -822,6 +822,7 @@ watch(() => planning.focusRequestId, () => {
           v-model="searchQuery"
           type="text"
           placeholder="Search location..."
+          aria-label="Search location"
           @input="onSearchInput"
           @focus="showSearchResults = searchResults.length > 0"
           @keydown.escape="clearSearch"
@@ -914,6 +915,8 @@ watch(() => planning.focusRequestId, () => {
       <div class="map-layer-dropdown">
         <button
           class="dropdown-trigger"
+          :aria-label="`Basemap: ${currentStyleName}`"
+          :aria-expanded="showMapLayerDropdown"
           @click.stop="showMapLayerDropdown = !showMapLayerDropdown"
         >
           <svg class="layer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -995,6 +998,8 @@ watch(() => planning.focusRequestId, () => {
       <div ref="themeDropdownRef" class="theme-dropdown-container">
         <button
           class="dropdown-trigger theme-trigger"
+          :aria-label="`Colour palette and light/dark: ${currentThemeName}`"
+          :aria-expanded="showThemeDropdown"
           @click.stop="showThemeDropdown = !showThemeDropdown"
         >
           <Palette class="layer-icon" />

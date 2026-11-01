@@ -147,7 +147,7 @@ button { font: inherit; cursor: pointer; }
 .icon-button:hover { color: var(--color-text-primary); background: var(--color-bg-tertiary); }
 .comparison-controls { display: grid; grid-template-columns: minmax(0, 1fr) 145px; gap: 9px; padding: 0 16px 10px; }
 .comparison-controls label { display: grid; gap: 4px; min-width: 0; color: var(--color-text-secondary); font-size: .72rem; }
-.comparison-controls input, .comparison-controls select { width: 100%; min-width: 0; padding: 7px 8px; color: var(--color-text-primary); background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: 6px; font: inherit; font-size: .77rem; }
+.comparison-controls input, .comparison-controls select { width: 100%; min-width: 0; padding: 7px 8px; color: var(--color-text-primary); background: var(--color-bg-primary); border: 1px solid var(--color-border-control); border-radius: 6px; font: inherit; font-size: .77rem; }
 .comparison-controls input::placeholder { color: var(--color-text-secondary); }
 .view-filter { display: flex; align-items: center; gap: 7px; align-self: flex-start; margin: 0 16px 10px; padding: 6px 9px; color: var(--color-text-secondary); border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-bg-primary); font-size: .74rem; }
 .view-filter:hover, .view-filter.active { color: var(--color-accent-text); border-color: var(--color-accent); }
@@ -178,7 +178,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .site-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .record-count { font-variant-numeric: tabular-nums; }
 .site-actions { display: flex; align-items: flex-start; flex: none; gap: 0; padding: 6px 8px; }
+@media (pointer: coarse) { .icon-button { min-width: 44px; min-height: 44px; } }
 @media (max-width: 600px) {
-  .site-comparison { top: 54px; right: 0; width: 100%; height: calc(100% - 108px); border-top: 1px solid var(--color-border); }
+  /* Starts below the Menu button and the pill row (App.vue), which covered its title. */
+  .site-comparison { top: 104px; right: 0; width: 100%; height: calc(100% - 158px); border-top: 1px solid var(--color-border); }
 }
 </style>

@@ -218,7 +218,7 @@ function resetRangeSettings() {
       </span>
     </label>
     <p class="filter-hint">
-      Hover over legend on map for customization options (colors, labels, position, point styles)
+      Hover over or tab into the legend on the map for customization options (colors, labels, position, point styles)
     </p>
   </div>
 </template>
@@ -418,7 +418,7 @@ function resetRangeSettings() {
   width: 100%;
   padding: 6px 10px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-size: 0.8rem;
@@ -476,7 +476,7 @@ function resetRangeSettings() {
   width: 55px;
   padding: 4px 6px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-accent-text);
   font-size: 0.8rem;

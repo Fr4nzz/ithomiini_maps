@@ -233,7 +233,7 @@ const segmentStyle = (segment) => ({
   min-height: 34px;
   padding: 4px 36px 4px 8px;
   border-radius: 6px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   background: var(--color-bg-tertiary);
   color: var(--color-text-primary);
   font-size: 0.85rem;

@@ -292,7 +292,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   width: 100%;
   padding: 6px 8px;
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-size: 0.8rem;
@@ -303,10 +303,9 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   border-color: var(--color-accent);
 }
 
-/* Calendar icon styling */
+/* Calendar icon: color-scheme (index.css) already draws it light on dark and dark on light. */
 .date-input-group input::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.5;
+  opacity: 0.8;
   cursor: pointer;
 }
 

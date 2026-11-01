@@ -787,7 +787,7 @@ onClickOutside(settingsPanelRef, (e) => {
   flex: 1;
   padding: 6px 8px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-size: 12px;
@@ -804,7 +804,7 @@ onClickOutside(settingsPanelRef, (e) => {
   flex: 1;
   padding: 6px 8px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-family: monospace;
@@ -865,7 +865,7 @@ onClickOutside(settingsPanelRef, (e) => {
   width: 70px;
   padding: 6px 8px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-size: 12px;

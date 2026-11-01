@@ -1090,7 +1090,7 @@ const exportTableCsv = () => {
         </div>
 
         <!-- Page Size -->
-        <select v-model="pageSize" class="page-size-select" @change="currentPage = 1">
+        <select v-model="pageSize" class="page-size-select" aria-label="Rows per page" @change="currentPage = 1">
           <option :value="25">25 rows</option>
           <option :value="50">50 rows</option>
           <option :value="100">100 rows</option>
@@ -1212,7 +1212,7 @@ const exportTableCsv = () => {
           <tr v-if="showColumnFilters" class="filter-row">
             <th v-for="col in activeColumns" :key="'filter-' + col.key" class="filter-cell">
               <template v-if="col.key === 'photo'">
-                <select class="column-filter-select filter-select-narrow" v-model="columnFilters.photo">
+                <select :aria-label="`Filter ${col.label}`" class="column-filter-select filter-select-narrow" v-model="columnFilters.photo">
                   <option value="">All</option>
                   <option value="has">Has</option>
                   <option value="no">None</option>
@@ -1221,21 +1221,21 @@ const exportTableCsv = () => {
 
               <template v-else-if="col.key === 'goat_chromosome'">
                 <div class="filter-range">
-                  <input type="number" class="column-filter-input range-input" placeholder="Min" v-model="columnFilters.goat_chromosome_min" @input="syncChromosomeFilter" />
+                  <input :aria-label="`${col.label}: min`" type="number" class="column-filter-input range-input" placeholder="Min" v-model="columnFilters.goat_chromosome_min" @input="syncChromosomeFilter" />
                   <span class="range-sep">–</span>
-                  <input type="number" class="column-filter-input range-input" placeholder="Max" v-model="columnFilters.goat_chromosome_max" @input="syncChromosomeFilter" />
+                  <input :aria-label="`${col.label}: max`" type="number" class="column-filter-input range-input" placeholder="Max" v-model="columnFilters.goat_chromosome_max" @input="syncChromosomeFilter" />
                 </div>
               </template>
 
               <template v-else-if="col.key === 'observation_date'">
                 <div class="filter-range">
-                  <input type="number" class="column-filter-input range-input" placeholder="From" v-model="columnFilters.date_year_min" min="2000" max="2030" @input="syncDateFilter" />
+                  <input :aria-label="`${col.label}: from`" type="number" class="column-filter-input range-input" placeholder="From" v-model="columnFilters.date_year_min" min="2000" max="2030" @input="syncDateFilter" />
                   <span class="range-sep">–</span>
-                  <input type="number" class="column-filter-input range-input" placeholder="To" v-model="columnFilters.date_year_max" min="2000" max="2030" @input="syncDateFilter" />
+                  <input :aria-label="`${col.label}: to`" type="number" class="column-filter-input range-input" placeholder="To" v-model="columnFilters.date_year_max" min="2000" max="2030" @input="syncDateFilter" />
                 </div>
               </template>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'sex'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1245,7 +1245,7 @@ const exportTableCsv = () => {
                 <option value="female">Female</option>
               </select>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'goat_genome'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1256,7 +1256,7 @@ const exportTableCsv = () => {
                 <option value="none">No data</option>
               </select>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'sequencing_status'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1265,7 +1265,7 @@ const exportTableCsv = () => {
                 <option v-for="val in uniqueValues('sequencing_status')" :key="val" :value="val">{{ val }}</option>
               </select>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'source'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1274,7 +1274,7 @@ const exportTableCsv = () => {
                 <option v-for="val in uniqueValues('source')" :key="val" :value="val">{{ val }}</option>
               </select>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'spatial_check'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1283,7 +1283,7 @@ const exportTableCsv = () => {
                 <option v-for="val in uniqueValues('spatial_check')" :key="val" :value="val">{{ val }}</option>
               </select>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'country'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1292,7 +1292,7 @@ const exportTableCsv = () => {
                 <option v-for="val in uniqueValues('country')" :key="val" :value="val">{{ val }}</option>
               </select>
 
-              <select
+              <select :aria-label="`Filter ${col.label}`"
                 v-else-if="col.key === 'mimicry_ring'"
                 class="column-filter-select"
                 v-model="columnFilters[col.key]"
@@ -1301,7 +1301,7 @@ const exportTableCsv = () => {
                 <option v-for="val in uniqueValues('mimicry_ring')" :key="val" :value="val">{{ val }}</option>
               </select>
 
-              <input
+              <input :aria-label="`Filter ${col.label}`"
                 v-else
                 type="text"
                 class="column-filter-input"
@@ -1489,11 +1489,11 @@ const exportTableCsv = () => {
           </tr>
           <tr v-if="showColumnFilters" class="filter-row">
             <th class="filter-cell">
-              <input type="text" class="column-filter-input" placeholder="Filter species..." v-model="columnFilters.scientific_name" />
+              <input type="text" class="column-filter-input" placeholder="Filter species..." aria-label="Filter species" v-model="columnFilters.scientific_name" />
             </th>
             <th class="filter-cell"></th>
             <th class="filter-cell">
-              <select class="column-filter-select" v-model="columnFilters.goat_status">
+              <select class="column-filter-select" aria-label="Filter genome status" v-model="columnFilters.goat_status">
                 <option value="">All</option>
                 <option value="direct">Direct</option>
                 <option value="estimated">Estimated</option>
@@ -1502,27 +1502,27 @@ const exportTableCsv = () => {
             </th>
             <th class="filter-cell">
               <div class="filter-range">
-                <input type="number" class="column-filter-input range-input" placeholder="Min" v-model="columnFilters.goat_chromosome_min" @input="syncChromosomeFilter" />
+                <input type="number" class="column-filter-input range-input" placeholder="Min" aria-label="Chromosomes: min" v-model="columnFilters.goat_chromosome_min" @input="syncChromosomeFilter" />
                 <span class="range-sep">–</span>
-                <input type="number" class="column-filter-input range-input" placeholder="Max" v-model="columnFilters.goat_chromosome_max" @input="syncChromosomeFilter" />
+                <input type="number" class="column-filter-input range-input" placeholder="Max" aria-label="Chromosomes: max" v-model="columnFilters.goat_chromosome_max" @input="syncChromosomeFilter" />
               </div>
             </th>
             <th class="filter-cell"></th>
             <th class="filter-cell">
-              <select class="column-filter-select" v-model="columnFilters.genome_size">
+              <select class="column-filter-select" aria-label="Filter genome size" v-model="columnFilters.genome_size">
                 <option value="">All</option>
                 <option value="has">Has data</option>
                 <option value="none">No data</option>
               </select>
             </th>
             <th class="filter-cell">
-              <select class="column-filter-select" v-model="columnFilters.assembly_level">
+              <select class="column-filter-select" aria-label="Filter assembly level" v-model="columnFilters.assembly_level">
                 <option value="">All</option>
                 <option v-for="val in uniqueAssemblyLevels" :key="val" :value="val">{{ val }}</option>
               </select>
             </th>
             <th class="filter-cell">
-              <select class="column-filter-select" v-model="columnFilters.bioproject">
+              <select class="column-filter-select" aria-label="Filter BioProject" v-model="columnFilters.bioproject">
                 <option value="">All</option>
                 <option value="has">Has BioProject</option>
                 <option value="none">None</option>
@@ -2063,7 +2063,7 @@ const exportTableCsv = () => {
 .page-size-select {
   padding: 6px 10px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-size: 0.8rem;
@@ -2318,7 +2318,7 @@ const exportTableCsv = () => {
   width: 100%;
   padding: 5px 8px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-size: 0.75rem;
@@ -2339,7 +2339,7 @@ const exportTableCsv = () => {
   width: 100%;
   padding: 5px 6px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-primary);
   font-size: 0.75rem;

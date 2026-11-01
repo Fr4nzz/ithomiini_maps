@@ -1,5 +1,5 @@
 <script setup>
-import { ref, shallowRef, onMounted, provide, watch } from 'vue'
+import { ref, shallowRef, computed, onMounted, provide, watch } from 'vue'
 import { useDataStore } from './stores/data'
 import { usePlanningStore } from './stores/planning'
 import { useMobileLayout } from './composables/useMobileLayout'
@@ -29,6 +29,13 @@ const commandPaletteRef = ref(null)
 
 // View state
 const currentView = ref('map') // 'map' or 'table'
+
+// «7,850 of 7,850 records» for the phone map, as in the sidebar's banner.
+const phoneRecordCount = computed(() => {
+  const total = store.allFeatures.length
+  const shown = store.filteredGeoJSON?.features.length ?? 0
+  return { text: `${shown.toLocaleString()} of ${total.toLocaleString()} records`, filtered: shown < total }
+})
 
 // Modal states
 const showExportPanel = ref(false)
@@ -292,6 +299,18 @@ onMounted(async () => {
           </aside>
         </div>
       </Transition>
+
+      <!-- Phones: how many records the map shows (the count and filters otherwise live only in the Menu) -->
+      <button
+        v-if="currentView === 'map' && !store.exportSettings.enabled && !showMobileSidebar && !showImageGallery"
+        type="button"
+        class="mobile-record-count"
+        :class="{ 'is-filtered': phoneRecordCount.filtered }"
+        :aria-label="`${phoneRecordCount.text}. Open the menu to change filters`"
+        @click="showMobileSidebar = true"
+      >
+        {{ phoneRecordCount.text }}
+      </button>
 
       <!-- Mobile quick actions (top bar; replaces the location search row) -->
       <div class="mobile-quick-bar" :class="{ 'mobile-quick-bar--hidden': showMobileSidebar || showImageGallery }">
@@ -569,7 +588,7 @@ html, body, #app {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 14px 8px 10px;
   border: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
   border-radius: 10px;
@@ -602,8 +621,8 @@ html, body, #app {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--color-text-primary) 14%, transparent);
   border-radius: 10px;
@@ -678,6 +697,29 @@ html, body, #app {
   transform: translateX(-100%);
 }
 
+/* Phones: record count under the pill row, left of the map controls */
+.mobile-record-count {
+  position: fixed;
+  top: 106px;
+  left: 10px;
+  z-index: 90;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border-control);
+  border-radius: 999px;
+  background: var(--color-bg-overlay);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 8px var(--color-shadow-color);
+}
+
+.mobile-record-count.is-filtered {
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
 /* Mobile quick action pills (top bar, horizontally scrollable) */
 .mobile-quick-bar {
   position: fixed;
@@ -688,6 +730,9 @@ html, body, #app {
   display: flex;
   gap: 6px;
   overflow-x: auto;
+  /* The row scrolls sideways: fade its right end so cut-off pills read as «more». */
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
   scrollbar-width: none;
   -ms-overflow-style: none;
   transition: opacity 0.2s, transform 0.2s;
@@ -713,8 +758,9 @@ html, body, #app {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  min-height: 44px;
   padding: 8px 12px;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary) 18%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, var(--color-bg-primary) 85%, transparent);
   backdrop-filter: blur(12px);

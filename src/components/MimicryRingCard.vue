@@ -190,6 +190,7 @@ const onNextSubspecies = (event) => {
 /* Ring Card */
 .ring-card {
   position: relative;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -292,7 +293,7 @@ const onNextSubspecies = (event) => {
 
 .nav-prefix {
   display: block;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted);
 }
 
@@ -319,11 +320,12 @@ const onNextSubspecies = (event) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  position: relative;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 4px;
   color: var(--color-text-secondary);
   cursor: pointer;
@@ -343,8 +345,17 @@ const onNextSubspecies = (event) => {
 }
 
 .nav-btn svg {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
+}
+
+/* 44 px to tap on touch screens, without widening the card. */
+@media (pointer: coarse) {
+  .nav-btn::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+  }
 }
 
 /* Source Badge */

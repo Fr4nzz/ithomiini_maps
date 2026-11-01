@@ -101,6 +101,7 @@
 /* Image viewer wrapper */
 .image-viewer-wrapper {
   flex: 1;
+  min-width: 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -271,6 +272,10 @@
   z-index: 5;
 }
 
+.image-counter-name {
+  display: none;
+}
+
 /* Thumbnail strip with grouped layout */
 .thumbnail-strip {
   display: flex;
@@ -376,8 +381,9 @@
 .species-count {
   margin-left: auto;
   padding: 1px 5px;
-  background: var(--species-color, #666);
-  color: #000;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--species-color, var(--color-border-control));
+  color: var(--color-text-primary);
   font-size: 0.7rem;
   font-weight: 700;
   font-style: normal;
@@ -485,8 +491,9 @@
 .subspecies-count {
   margin-left: auto;
   padding: 0 4px;
-  background: var(--subsp-color, #555);
-  color: #000;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--subsp-color, var(--color-border-control));
+  color: var(--color-text-primary);
   font-size: 0.7rem;
   font-weight: 700;
   font-style: normal;
@@ -569,8 +576,22 @@
     bottom: 160px;
   }
 
+  /* Above the zoom bar instead of beside it (they overlapped at 360 px), with the species name. */
   .image-counter {
-    bottom: 160px;
+    bottom: 220px;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100% - 24px);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .image-counter-name {
+    display: inline;
+    margin-right: 6px;
   }
 
   .thumbnail-strip {

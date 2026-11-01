@@ -224,7 +224,7 @@ onUnmounted(() => {
   flex: 1;
   padding: 8px;
   background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 6px;
   color: var(--color-text-primary);
   font-family: monospace;

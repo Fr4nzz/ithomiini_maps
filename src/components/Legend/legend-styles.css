@@ -380,3 +380,46 @@
 .resize-nw .resize-scale-hint { top: calc(100% + 8px); }
 .resize-se .resize-scale-hint,
 .resize-sw .resize-scale-hint { bottom: calc(100% + 8px); }
+
+/* Phones: folded to the title bar until opened (Legend.vue, isFolded). */
+.legend-fold-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -12px -8px -12px 4px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.legend-fold-button svg {
+  transition: transform 0.15s ease;
+  transform: rotate(180deg);
+}
+
+.legend-fold-button svg.is-open {
+  transform: none;
+}
+
+.legend-container.is-folded {
+  min-height: 0;
+  height: auto !important;
+  max-height: none !important;
+  min-width: 0;
+}
+
+.legend-container.is-folded .legend-title {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.legend-container.is-folded .legend-items,
+.legend-container.is-folded .legend-more {
+  display: none;
+}

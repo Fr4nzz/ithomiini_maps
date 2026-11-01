@@ -973,6 +973,8 @@ watch(currentIndex, () => {
 
           <!-- Image counter -->
           <div class="image-counter">
+            <!-- Phones have no sidebar beside the photo: name what it shows. -->
+            <em v-if="currentSpecimen?.scientific_name" class="image-counter-name">{{ currentSpecimen.scientific_name }}</em>
             {{ currentIndex + 1 }} / {{ specimensWithImages.length }}
           </div>
 

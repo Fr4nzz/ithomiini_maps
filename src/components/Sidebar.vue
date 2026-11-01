@@ -863,6 +863,7 @@ const updateExportHeight = (value) => {
                 ref="camidTextarea"
                 class="camid-textarea"
                 placeholder="e.g. CAM012345, CAM012346..."
+                aria-label="CAMIDs to show"
                 :value="camidInput"
                 @input="handleCamidInput"
                 @keydown="handleCamidKeydown"

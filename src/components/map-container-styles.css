@@ -164,7 +164,7 @@
   display: flex;
   align-items: center;
   background: var(--color-bg-overlay);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: 8px;
   padding: 0 12px;
   box-shadow: 0 2px 10px var(--color-shadow-color);
@@ -510,6 +510,11 @@
 
 
 /* Popup Styles */
+/* An opened popup sits above the legend (25), which used to hide its site and species list. */
+:deep(.maplibregl-popup) {
+  z-index: 26;
+}
+
 :deep(.maplibregl-popup-content) {
   background: var(--color-bg-primary) !important;
   color: var(--color-text-primary) !important;
@@ -658,9 +663,11 @@
     width: auto;
   }
 
+  /* Above the phone pill row (App.vue, z-index 100) so open menus are not hidden under it. */
   .map-layer-controls {
     top: 10px;
     left: 10px;
+    z-index: 120;
   }
 
   .dropdown-trigger {
@@ -1015,6 +1022,6 @@
 
 @media (max-width: 600px) {
   .map-wrapper.panel-docked:not(.export-mode) .map { width: 100%; }
-  .detail-panel-dock { top: 54px; width: 100%; height: calc(100% - 108px); z-index: 35; }
+  .detail-panel-dock { top: 104px; width: 100%; height: calc(100% - 158px); z-index: 35; }
   .panel-docked .bbox-controls { right: 10px; }
 }
