@@ -109,7 +109,7 @@ A15 phone mimicry | fixed | grid `minmax(0, 1fr)`; pager 24 px with a 44 px hit 
 A16 hover-only legend editing | fixed | Sort/# and the edit toolbar also show on keyboard focus, and Sort/# always on touch; **usability fix**: taps inside the legend reached no button on touch screens (blanket `touchstart.prevent`); now only real drags prevent | `legend-*__390-*.jpg`
 A17 theme plumbing (P2) | fixed | system default, remembered choice, `theme-color`, `<html>` background, `color-scheme`, basemap start | `metrics.json` env
 A18 < 12 px (P2) | partly | in files touched: legend labels, SDM badges/meta, confidence descriptions, tile counts, mimicry meta, gallery headers → 11 px or more | 3,579→3,401; rest deferred
-A19 extra hues (P2) | partly | Export for R violet, blue active/View on Map → accent; gallery species colour kept only on the group edge | neon thumbnail tints and the yellow MEDIUM badge hue deferred
+A19 extra hues (P2) | partly | Export for R violet, blue active/View on Map → accent; gallery species colour kept on the group edge plus a faint 12–15 % group tint (text passes) | neon thumbnail tints and the yellow MEDIUM badge hue deferred
 A20 selected chips (P2) | deferred | – |
 A21 host-plant confidence (P2) | partly | descriptions full opacity, 11.2 px | bar-only meaning deferred
 A22 admin form shown (P2) | deferred | – |
@@ -135,3 +135,16 @@ A33 theming debt (P3) | mostly fixed | fallbacks removed, undefined variables de
 - **Text over the map canvas and photos** (map labels, cluster counts) is excluded by the script. It was judged by eye: Carto labels, marker halos, and white text on the scrims and cluster discs.
 - **`legend-expanded` (390/360) "fails" in `shoot.mjs`** because the legend now starts folded and the script taps «+ N more» directly. It was shot separately after one tap on the fold button: `waveA-after-legend-20261101-023206/`.
 - **The 5 palettes are kept.** Each one is tested in both modes.
+
+## Review round 1
+
+Reviews: `atlas/review-a/{sol-r1,opus-r1}.md`. Fixed in 5e9a9db plus the bbox offset commit that follows it.
+
+- **System stays System after a reload** (`stores/theme.js`): «system» is now stored under `atlas-theme-mode` instead of deleting the key, so the legacy `app-mode` cannot bring the old choice back. Tests: store reload with legacy dark, and a boot-script case.
+- **Phone legend title row**: `.level-switch` no longer shrinks (`flex-shrink: 0`), the fold button lost its vertical negative margins; the controls wrap to a second row. Checked unfolded and with «+ N more» tapped at 390 and 360.
+- **Area-select vs zoom «+»** on `pointer: coarse`: `right: calc(10px + 46px + 10px)`, clear of the 44 px group.
+- **Focus transitions**: the `transition-property: none` reset applies only to the focused button/link, so child knobs and chevrons keep their transitions.
+- **Scale bar**: no top border (sides and bottom only). **Smart search**: the ring sits on the field wrapper (`:focus-within`), not on the inner input. **Light heatmap**: the densest stop is 70 % alpha, so basemap labels stay readable.
+- **Gallery (A19)**: the note now says what the code does: edge plus a faint 12–15 % group tint (text passes contrast).
+- **Legend «+ N more»** shot truly expanded: `waveA-r2b-{dark,light}/legend-more-open__390-en.jpg` (the list grows and scrolls). View ids `legend-unfolded` and `legend-more-open` added to `views.mjs`; the old `legend-expanded` view still taps the «Other» row, not the button.
+- Reshoot `waveA-r2-{dark,light}`: 0 text below 4.5:1 in all 19 views per theme. Tests 297, typecheck and build pass.
