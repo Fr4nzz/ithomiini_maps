@@ -47,7 +47,7 @@ describe('theme preference', () => {
     expect(document.querySelector('meta[name="theme-color"]').getAttribute('content')).toBe('#f8f9fa')
   })
 
-  it('remembers Light or Dark without «Remember Settings», and System clears it', async () => {
+  it('remembers Light or Dark without «Remember Settings», and System is remembered too', async () => {
     const system = fakeSystem(false)
     let { store, MODE_KEY } = await loadStore()
     store.setModePref('dark')
@@ -59,8 +59,23 @@ describe('theme preference', () => {
     expect(store.modePref).toBe('dark')
     expect(store.currentMode).toBe('dark')
     store.setModePref('system')
-    expect(localStorage.getItem(MODE_KEY)).toBeNull()
+    expect(localStorage.getItem(MODE_KEY)).toBe('system')
     expect(store.currentMode).toBe('light')
+  })
+
+  it('keeps System after a reload even when the older app-mode key says dark', async () => {
+    const system = fakeSystem(false)
+    localStorage.setItem('app-persist-enabled', 'true')
+    localStorage.setItem('app-mode', 'dark')
+    let { store } = await loadStore()
+    expect(store.currentMode).toBe('dark')
+    store.setModePref('system')
+    expect(store.currentMode).toBe('light')
+    ;({ store } = await loadStore())
+    expect(store.modePref).toBe('system')
+    expect(store.currentMode).toBe('light')
+    system.set(true)
+    expect(store.currentMode).toBe('dark')
   })
 
   it('toggles to an explicit choice', async () => {
@@ -112,6 +127,7 @@ describe('boot script in index.html', () => {
     { system: true, stored: { 'atlas-theme-mode': 'light' }, mode: 'light', palette: 'emerald' },
     { system: false, stored: { 'atlas-theme-mode': 'dark', 'app-theme': 'ocean' }, mode: 'dark', palette: 'emerald' },
     { system: false, stored: { 'app-persist-enabled': 'true', 'app-theme': '"sunset"', 'app-mode': 'dark' }, mode: 'dark', palette: 'sunset' },
+    { system: false, stored: { 'app-persist-enabled': 'true', 'app-mode': 'dark', 'atlas-theme-mode': 'system' }, mode: 'light', palette: 'emerald' },
   ]
   for (const c of cases) {
     it(`agrees with the store: system ${c.system ? 'dark' : 'light'}, stored ${JSON.stringify(c.stored)}`, async () => {

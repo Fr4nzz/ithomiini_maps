@@ -89,7 +89,13 @@ html, body, #app {
 :focus-visible {
   outline: 2px solid var(--color-focus) !important;
   outline-offset: 2px;
-  /* Buttons with `transition: all` would fade the ring in from a 3 px currentColor outline; show it at once. */
+}
+
+/* Buttons with `transition: all` would fade the ring in from a 3 px currentColor outline; show it at once.
+   Scoped to the focused control itself, so its children (switch knobs, chevrons) keep their transitions. */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
   transition-property: none !important;
 }
 
@@ -210,6 +216,7 @@ select, input, textarea {
   background: var(--color-bg-overlay) !important;
   color: var(--color-text-primary) !important;
   border-color: var(--color-text-secondary) !important;
+  border-top-width: 0 !important;
   font-size: 11px !important;
 }
 

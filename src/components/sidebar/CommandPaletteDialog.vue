@@ -903,6 +903,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-input-wrap {
+  border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -927,6 +928,11 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   font-size: 0.95rem;
 }
 
+.cmd-input:focus-visible { outline: 0 !important; }
+.cmd-input-wrap:focus-within {
+  outline: 2px solid var(--color-focus);
+  outline-offset: -3px;
+}
 .cmd-input::placeholder { color: var(--color-text-muted); }
 
 .cmd-close {

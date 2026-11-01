@@ -124,7 +124,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  min-width: 0;
+  flex-shrink: 0;
 }
 
 .level-option {
@@ -382,6 +382,7 @@
 .resize-sw .resize-scale-hint { bottom: calc(100% + 8px); }
 
 /* The level switch, fold button, counts and Sort wrap instead of overlapping on narrow legends. */
+/* The switch never shrinks below its labels, so the controls drop to a second row instead. */
 .legend-title {
   flex-wrap: wrap;
   row-gap: 4px;
@@ -395,7 +396,7 @@
   flex-shrink: 0;
   min-width: 44px;
   min-height: 44px;
-  margin: -12px -8px -12px auto;
+  margin: 0 -8px 0 auto;
   border: none;
   border-radius: 6px;
   background: transparent;

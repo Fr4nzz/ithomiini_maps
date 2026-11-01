@@ -145,7 +145,8 @@
 :deep(.maplibregl-ctrl-scale) {
   background: var(--color-bg-overlay) !important;
   border: 1px solid var(--color-text-secondary) !important;
-  border-radius: 4px !important;
+  border-top: 0 !important;
+  border-radius: 0 0 4px 4px !important;
   color: var(--color-text-primary) !important;
   font-size: 11px !important;
   padding: 2px 6px !important;
@@ -612,6 +613,11 @@
   top: 10px;
   right: 50px;
   z-index: 10;
+}
+
+/* Touch: the zoom group is 44 px wide (style.css), so area-select sits clear of it. */
+@media (pointer: coarse) {
+  .bbox-controls { right: calc(10px + 44px + 8px); }
 }
 
 .bbox-draw-btn,

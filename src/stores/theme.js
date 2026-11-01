@@ -134,8 +134,8 @@ export const useThemeStore = defineStore('theme', () => {
     if (!MODE_PREFS.includes(pref)) return
     modePref.value = pref
     try {
-      if (pref === 'system') localStorage.removeItem(MODE_KEY)
-      else localStorage.setItem(MODE_KEY, pref)
+      // «system» is stored too: a missing key would fall back to the legacy app-mode on reload.
+      localStorage.setItem(MODE_KEY, pref)
     } catch {
       // Private mode without storage: the choice lasts for the visit.
     }
