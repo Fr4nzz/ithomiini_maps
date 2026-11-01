@@ -11,8 +11,9 @@ import { useColumnResize } from '../composables/useColumnResize'
 import { rowsToCsv, downloadCsv } from '../utils/tableExport'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
-import { Sun, Moon, Palette } from 'lucide-vue-next'
+import { Palette } from 'lucide-vue-next'
 import ThemeModeSwitch from './ThemeModeSwitch.vue'
+import ThemeToggleButton from './ThemeToggleButton.vue'
 
 const store = useDataStore()
 const hostPlantStore = useHostPlantStore()
@@ -43,10 +44,6 @@ const colStyle = (ns, col) => {
   const resized = getColWidth(ns, col.key, null)
   if (resized) return { width: resized, minWidth: resized, maxWidth: resized }
   return { width: col.width }
-}
-
-const toggleThemeMode = () => {
-  themeStore.toggleMode()
 }
 
 
@@ -1050,17 +1047,7 @@ const exportTableCsv = () => {
             </Transition>
           </div>
 
-          <button
-            type="button"
-            class="table-mode-toggle"
-            :class="{ 'is-light': !themeStore.isDarkMode }"
-            @click="toggleThemeMode"
-            :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-            :aria-label="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-          >
-            <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
-            <Moon v-else class="mode-icon" />
-          </button>
+          <ThemeToggleButton class="table-mode-toggle" />
         </div>
 
         <div class="view-mode-toggle">
@@ -1980,8 +1967,7 @@ const exportTableCsv = () => {
   border-color: var(--color-border-light);
 }
 
-.table-theme-trigger .layer-icon,
-.table-mode-toggle .mode-icon {
+.table-theme-trigger .layer-icon {
   width: 16px;
   height: 16px;
   color: var(--color-accent-text);
@@ -1993,8 +1979,12 @@ const exportTableCsv = () => {
   padding: 0;
 }
 
-.table-mode-toggle.is-light .mode-icon {
-  color: var(--color-warning-text);
+.table-mode-toggle {
+  --theme-toggle-icon-size: 16px;
+}
+
+.table-mode-toggle.is-light {
+  --theme-toggle-icon: var(--color-warning-text);
 }
 
 .table-theme-trigger .chevron {

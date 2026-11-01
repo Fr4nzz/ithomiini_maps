@@ -349,17 +349,6 @@
   border-color: var(--color-accent);
 }
 
-.mode-toggle-btn .mode-icon {
-  width: 18px;
-  height: 18px;
-  color: var(--color-accent-text);
-}
-
-/* In light mode, show sun icon with appropriate color */
-.mode-toggle-btn.is-light .mode-icon {
-  color: var(--color-accent-text);
-}
-
 .dropdown-trigger {
   display: flex;
   align-items: center;

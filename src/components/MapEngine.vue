@@ -28,8 +28,9 @@ import { HEATMAP_RAMPS } from '../composables/useDataLayer'
 import SiteComparison from './SiteComparison.vue'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
-import { Sun, Moon, Palette } from 'lucide-vue-next'
+import { Palette } from 'lucide-vue-next'
 import ThemeModeSwitch from './ThemeModeSwitch.vue'
+import ThemeToggleButton from './ThemeToggleButton.vue'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
@@ -309,7 +310,6 @@ const currentThemeName = computed(() => {
 })
 
 // Toggle light/dark mode; the watcher below swaps the basemap
-const toggleThemeMode = () => themeStore.toggleMode()
 
 // Whatever changed the mode (this button, the palette menu, Smart Search, the system), the basemap
 // moves to its light or dark pair unless the visitor chose one (onStyleReady handles boundaries).
@@ -1038,16 +1038,7 @@ watch(() => planning.focusRequestId, () => {
       </div>
 
       <!-- Light/Dark Mode Toggle -->
-      <button
-        class="mode-toggle-btn"
-        :class="{ 'is-light': !themeStore.isDarkMode }"
-        @click="toggleThemeMode"
-        :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-        :aria-label="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-      >
-        <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
-        <Moon v-else class="mode-icon" />
-      </button>
+      <ThemeToggleButton class="mode-toggle-btn" />
     </div>
 
   </div>
