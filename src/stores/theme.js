@@ -1,9 +1,23 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import { themes, DEFAULT_THEME, DEFAULT_MODE, getTheme } from '../themes/presets'
+import { ref, computed, watch } from 'vue'
+import { themes, DEFAULT_THEME, getTheme } from '../themes/presets'
 import { log } from '../utils/logger'
 
-// Check if persistence is enabled
+/**
+ * Palette (emerald, ocean…) and mode (light or dark).
+ *
+ * The mode follows the system unless the visitor picks Light or Dark; that choice is remembered on the
+ * device whether or not «Remember Settings» is on. The palette is remembered only with «Remember
+ * Settings», as before. The boot script in index.html sets the same attributes before the first paint,
+ * so a reload in dark never flashes light: keep MODE_KEY and the page colours there in step with this file.
+ */
+export const MODE_KEY = 'atlas-theme-mode'
+export const MODE_PREFS = ['system', 'light', 'dark']
+
+/** A stored value; anything unknown means «follow the system». */
+export const parseModePref = (stored) => (stored === 'light' || stored === 'dark' ? stored : 'system')
+export const resolveMode = (pref, systemDark) => (pref === 'system' ? (systemDark ? 'dark' : 'light') : pref)
+
 function isPersistenceEnabled() {
   try {
     const stored = localStorage.getItem('app-persist-enabled')
@@ -13,36 +27,48 @@ function isPersistenceEnabled() {
   }
 }
 
-// Get stored theme or default (only if persistence enabled)
+// persistence.saveAllState() writes the palette JSON-encoded, applyTheme() writes it plain.
 function getStoredTheme() {
   try {
-    if (!isPersistenceEnabled()) {
-      return DEFAULT_THEME
-    }
-    return localStorage.getItem('app-theme') || DEFAULT_THEME
+    if (!isPersistenceEnabled()) return DEFAULT_THEME
+    const stored = (localStorage.getItem('app-theme') || '').replace(/"/g, '')
+    return themes[stored] ? stored : DEFAULT_THEME
   } catch {
     return DEFAULT_THEME
   }
 }
 
-// Get stored mode or default (only if persistence enabled)
-function getStoredMode() {
+function getStoredModePref() {
   try {
-    if (!isPersistenceEnabled()) {
-      return DEFAULT_MODE
-    }
-    return localStorage.getItem('app-mode') || DEFAULT_MODE
+    const stored = localStorage.getItem(MODE_KEY)
+    if (stored) return parseModePref(stored)
+    // Before the mode had its own key it lived in app-mode, kept only with «Remember Settings».
+    return isPersistenceEnabled() ? parseModePref(localStorage.getItem('app-mode')) : 'system'
   } catch {
-    return DEFAULT_MODE
+    return 'system'
   }
+}
+
+const systemQuery = typeof window !== 'undefined' && window.matchMedia
+  ? window.matchMedia('(prefers-color-scheme: dark)')
+  : null
+
+/** The page colour of a palette in a mode: the boot screen, <html> and the browser bar. */
+export const pageColour = (themeName, mode) => {
+  const theme = getTheme(themeName)
+  return mode === 'dark' ? theme.previewBgDark : theme.previewBgLight
 }
 
 export const useThemeStore = defineStore('theme', () => {
   // Current theme name (emerald, ocean, forest, sunset, lavender)
   const currentTheme = ref(getStoredTheme())
 
+  // 'system', 'light' or 'dark'
+  const modePref = ref(getStoredModePref())
+  const systemDark = ref(!!systemQuery?.matches)
+
   // Current mode (light or dark)
-  const currentMode = ref(getStoredMode())
+  const currentMode = computed(() => resolveMode(modePref.value, systemDark.value))
 
   // Available themes (for UI)
   const availableThemes = themes
@@ -54,20 +80,15 @@ export const useThemeStore = defineStore('theme', () => {
    * Apply theme and mode by setting data attributes on document
    */
   function applyTheme() {
-    const themeName = currentTheme.value
-    const mode = currentMode.value
-
-    const theme = getTheme(themeName)
-    if (!theme) {
-      log.data.warn(`Theme '${themeName}' not found, using default`)
+    if (!getTheme(currentTheme.value) || !themes[currentTheme.value]) {
+      log.data.warn(`Theme '${currentTheme.value}' not found, using default`)
       currentTheme.value = DEFAULT_THEME
     }
+    const mode = currentMode.value
 
-    // Store preferences only if persistence is enabled
     if (isPersistenceEnabled()) {
       try {
         localStorage.setItem('app-theme', currentTheme.value)
-        localStorage.setItem('app-mode', currentMode.value)
       } catch {
         // Storage unavailable
       }
@@ -76,7 +97,7 @@ export const useThemeStore = defineStore('theme', () => {
     // Apply data attributes to root - CSS handles the rest via selectors
     const root = document.documentElement
     root.setAttribute('data-theme', currentTheme.value)
-    root.setAttribute('data-mode', currentMode.value)
+    root.setAttribute('data-mode', mode)
 
     // Also set classes for potential CSS selectors
     const themeClasses = Object.keys(themes).map(t => `theme-${t}`)
@@ -85,7 +106,13 @@ export const useThemeStore = defineStore('theme', () => {
 
     // Set dark/light class
     root.classList.remove('dark', 'light')
-    root.classList.add(currentMode.value)
+    root.classList.add(mode)
+
+    // Native controls, the page behind the app and the browser bar follow the mode too.
+    const colour = pageColour(currentTheme.value, mode)
+    root.style.colorScheme = mode
+    root.style.backgroundColor = colour
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', colour)
   }
 
   /**
@@ -100,22 +127,45 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   /**
+   * Follow the system, or keep light or dark; remembered on this device.
+   * @param {'system'|'light'|'dark'} pref
+   */
+  function setModePref(pref) {
+    if (!MODE_PREFS.includes(pref)) return
+    modePref.value = pref
+    try {
+      if (pref === 'system') localStorage.removeItem(MODE_KEY)
+      else localStorage.setItem(MODE_KEY, pref)
+    } catch {
+      // Private mode without storage: the choice lasts for the visit.
+    }
+  }
+
+  /**
    * Set mode (light or dark)
    * @param {string} mode - 'light' or 'dark'
    */
   function setMode(mode) {
-    if (mode === 'light' || mode === 'dark') {
-      currentMode.value = mode
-      applyTheme()
-    }
+    if (mode === 'light' || mode === 'dark') setModePref(mode)
   }
 
   /**
    * Toggle between light and dark mode
    */
   function toggleMode() {
-    currentMode.value = currentMode.value === 'dark' ? 'light' : 'dark'
-    applyTheme()
+    setModePref(currentMode.value === 'dark' ? 'light' : 'dark')
+  }
+
+  // Synchronous, so the attributes (and the CSS variables) are on the page before anything that
+  // watches currentMode reads them.
+  watch(currentMode, applyTheme, { flush: 'sync' })
+
+  systemQuery?.addEventListener?.('change', (event) => { systemDark.value = event.matches })
+  if (typeof window !== 'undefined') {
+    // Changed in another tab
+    window.addEventListener('storage', (event) => {
+      if (event.key === MODE_KEY) modePref.value = parseModePref(event.newValue)
+    })
   }
 
   // Apply theme on initialization
@@ -124,10 +174,12 @@ export const useThemeStore = defineStore('theme', () => {
   return {
     currentTheme,
     currentMode,
+    modePref,
     isDarkMode,
     availableThemes,
     setTheme,
     setMode,
+    setModePref,
     toggleMode,
     applyTheme
   }

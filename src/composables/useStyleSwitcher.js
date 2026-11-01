@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { MAP_STYLES } from '../utils/mapStyles'
 
 export function useStyleSwitcher(map, addDataLayer, callbacks = {}) {
-  const currentStyle = ref('dark')
+  const currentStyle = ref(callbacks.initialStyle && MAP_STYLES[callbacks.initialStyle] ? callbacks.initialStyle : 'dark')
   const { recreateClusterExtentCircle, setStyleChanging, onStyleStart, onStyleReady, onStyleIdle } = callbacks
 
   // Generation counter prevents stale style.load callbacks from running

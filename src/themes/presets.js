@@ -45,7 +45,8 @@ export const themes = {
 
 // Default theme
 export const DEFAULT_THEME = 'emerald'
-export const DEFAULT_MODE = 'dark'
+// With no stored choice the mode follows the system (stores/theme.js).
+export const DEFAULT_MODE = 'system'
 
 // Get theme by name with fallback to default
 export function getTheme(name) {

@@ -215,6 +215,14 @@ const commandItems = computed(() => {
     active: false,
     run: () => themeStore.toggleMode(),
   }))
+  if (themeStore.modePref !== 'system') {
+    cmds.push(make('setting:mode-system', 'setting', 'Follow System Light/Dark', {
+      group: 'settings', typeLabel: 'Theme',
+      searchText: 'dark light mode theme appearance system automatic',
+      active: false,
+      run: () => themeStore.setModePref('system'),
+    }))
+  }
   for (const mode of VIZ_MODES) {
     cmds.push(make(`setting:viz:${mode.value}`, 'setting', `Visualization: ${mode.label}`, {
       group: 'settings', typeLabel: 'Visualization',

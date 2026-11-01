@@ -27,6 +27,26 @@
     
     <!-- Theme Color -->
     <meta name="theme-color" content="#1a1a2e" />
+    <script>
+      // Light or dark before the first paint, so a reload never flashes the wrong colour. src/stores/theme.js
+      // keeps it right afterwards: keep the storage keys and page colours (themes/presets.js) in step with it.
+      ;(function () {
+        var page = {emerald:['#f8f9fa','#1a1a2e'],ocean:['#f0f7fa','#0d1b2a'],forest:['#f5f9f0','#1a2e1a'],sunset:['#fdf8f3','#2e1a1a'],lavender:['#faf8fc','#1f1a2e']}
+        var get = function (key) { try { return localStorage.getItem(key) } catch (e) { return null } }
+        var pref = get('atlas-theme-mode')
+        if (!pref && get('app-persist-enabled') === 'true') pref = get('app-mode')
+        var dark = pref === 'dark' || (pref !== 'light' && !!window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches)
+        var palette = get('app-persist-enabled') === 'true' ? (get('app-theme') || '').replace(/"/g, '') : ''
+        if (!page[palette]) palette = 'emerald'
+        var mode = dark ? 'dark' : 'light', colour = page[palette][dark ? 1 : 0], root = document.documentElement
+        root.setAttribute('data-theme', palette)
+        root.setAttribute('data-mode', mode)
+        root.className = 'theme-' + palette + ' ' + mode
+        root.style.colorScheme = mode
+        root.style.backgroundColor = colour
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', colour)
+      })()
+    </script>
 
     <!-- Opt out of Chrome Topics/FLoC tracking (silences "browsing-topics" permissions warnings) -->
     <meta http-equiv="Permissions-Policy" content="browsing-topics=(), interest-cohort=()" />

@@ -12,6 +12,7 @@ import { rowsToCsv, downloadCsv } from '../utils/tableExport'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 import { Sun, Moon, Palette } from 'lucide-vue-next'
+import ThemeModeSwitch from './ThemeModeSwitch.vue'
 
 const store = useDataStore()
 const hostPlantStore = useHostPlantStore()
@@ -1026,6 +1027,7 @@ const exportTableCsv = () => {
 
             <Transition name="fade">
               <div v-if="showThemeDropdown" class="table-theme-menu">
+                <ThemeModeSwitch />
                 <button
                   v-for="option in themeOptions"
                   :key="option.value"
@@ -1054,6 +1056,7 @@ const exportTableCsv = () => {
             :class="{ 'is-light': !themeStore.isDarkMode }"
             @click="toggleThemeMode"
             :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+            :aria-label="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
           >
             <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
             <Moon v-else class="mode-icon" />

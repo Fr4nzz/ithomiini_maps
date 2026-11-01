@@ -34,6 +34,7 @@
 
 /* Base Styles */
 html {
+  background: var(--color-bg-primary);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -56,7 +57,7 @@ html, body, #app {
 /* Selection */
 ::selection {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
+  color: var(--color-on-accent);
 }
 
 /* Scrollbar (Webkit) */
@@ -75,7 +76,7 @@ html, body, #app {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4d4d6d;
+  background: var(--color-border-control);
 }
 
 /* Firefox Scrollbar */
@@ -84,21 +85,21 @@ html, body, #app {
   scrollbar-color: var(--color-border) var(--color-bg-primary);
 }
 
-/* Focus Styles */
+/* Focus Styles: a 2 px ring >= 3:1 on every surface, also where a component removed the outline */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-focus) !important;
   outline-offset: 2px;
 }
 
 /* Links */
 a {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-accent-text);
   text-decoration: underline;
 }
 
@@ -126,7 +127,7 @@ select, input, textarea {
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 .text-muted { color: var(--color-text-muted); }
-.text-accent { color: var(--color-accent); }
+.text-accent { color: var(--color-accent-text); }
 .text-italic { font-style: italic; }
 
 .sr-only {
@@ -167,21 +168,22 @@ select, input, textarea {
   opacity: 0;
 }
 
-/* MapLibre Overrides */
+/* MapLibre Overrides: controls on the page's surfaces. Only MapLibre's own icons get a filter (dark
+   mode lightens their dark glyphs); the map canvas and its tiles never do. */
 .maplibregl-ctrl-attrib {
-  background: rgba(26, 26, 46, 0.85) !important;
-  color: #888 !important;
-  font-size: 10px !important;
+  background: var(--color-bg-overlay) !important;
+  color: var(--color-text-secondary) !important;
+  font-size: 11px !important;
   backdrop-filter: blur(4px);
 }
 
 .maplibregl-ctrl-attrib a {
-  color: #aaa !important;
+  color: var(--color-text-primary) !important;
 }
 
 .maplibregl-ctrl-group {
-  background: rgba(26, 26, 46, 0.95) !important;
-  border: 1px solid var(--color-border) !important;
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border-control) !important;
   box-shadow: var(--shadow-md) !important;
 }
 
@@ -198,15 +200,15 @@ select, input, textarea {
   background-color: var(--color-bg-tertiary) !important;
 }
 
-.maplibregl-ctrl-group button .maplibregl-ctrl-icon {
-  filter: invert(0.8);
+[data-mode="dark"] .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(1);
 }
 
 .maplibregl-ctrl-scale {
-  background: rgba(26, 26, 46, 0.85) !important;
-  color: #aaa !important;
-  border-color: #666 !important;
-  font-size: 10px !important;
+  background: var(--color-bg-overlay) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-text-secondary) !important;
+  font-size: 11px !important;
 }
 
 /* Shared Animations */

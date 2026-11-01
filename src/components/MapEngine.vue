@@ -28,6 +28,7 @@ import SiteComparison from './SiteComparison.vue'
 import { useThemeStore } from '../stores/theme'
 import { getThemeOptions } from '../themes/presets'
 import { Sun, Moon, Palette } from 'lucide-vue-next'
+import ThemeModeSwitch from './ThemeModeSwitch.vue'
 
 const store = useDataStore()
 const legendStore = useLegendStore()
@@ -221,6 +222,8 @@ const { addDataLayer, fitBoundsToData, clearClusterExtentCircle, recreateCluster
   clusterComposition.invalidate(data, sites)
 } })
 const { currentStyle, switchStyle } = useStyleSwitcher(map, addDataLayer, {
+  // Carto Positron or Dark Matter, as the page
+  initialStyle: themeStore.isDarkMode ? 'dark' : 'light',
   recreateClusterExtentCircle,
   setStyleChanging,
   onStyleStart: () => invalidatePendingSDM(),
@@ -280,8 +283,12 @@ const showThemeDropdown = ref(false)
 const themeDropdownRef = ref(null)
 const themeOptions = getThemeOptions()
 
+// The basemap follows light/dark until the visitor picks one in the layers menu.
+const basemapChosen = ref(false)
+
 // Select a map style from dropdown
 const selectMapStyle = (styleKey) => {
+  basemapChosen.value = true
   switchStyle(styleKey)
   showMapLayerDropdown.value = false
 }
@@ -297,21 +304,16 @@ const currentThemeName = computed(() => {
   return themeStore.availableThemes[themeStore.currentTheme]?.name || 'Emerald'
 })
 
-// Toggle light/dark mode and switch basemap accordingly
-const toggleThemeMode = () => {
-  const newMode = themeStore.isDarkMode ? 'light' : 'dark'
+// Toggle light/dark mode; the watcher below swaps the basemap
+const toggleThemeMode = () => themeStore.toggleMode()
 
-  // Get the paired basemap for the new mode
-  const pairedBasemap = getBasemapPair(currentStyle.value, newMode)
-
-  // Switch theme mode
-  themeStore.toggleMode()
-
-  // If basemap has a pair, switch to it (onStyleReady callback handles boundaries)
-  if (pairedBasemap !== currentStyle.value) {
-    switchStyle(pairedBasemap)
-  }
-}
+// Whatever changed the mode (this button, the palette menu, Smart Search, the system), the basemap
+// moves to its light or dark pair unless the visitor chose one (onStyleReady handles boundaries).
+watch(() => themeStore.currentMode, (mode) => {
+  if (basemapChosen.value || !map.value) return
+  const pairedBasemap = getBasemapPair(currentStyle.value, mode)
+  if (pairedBasemap !== currentStyle.value) switchStyle(pairedBasemap)
+})
 
 // Get current style name
 const currentStyleName = computed(() => {
@@ -1004,6 +1006,7 @@ watch(() => planning.focusRequestId, () => {
 
         <Transition name="dropdown">
           <div v-if="showThemeDropdown" class="dropdown-menu theme-menu">
+            <ThemeModeSwitch />
             <button
               v-for="option in themeOptions"
               :key="option.value"
@@ -1031,6 +1034,7 @@ watch(() => planning.focusRequestId, () => {
         :class="{ 'is-light': !themeStore.isDarkMode }"
         @click="toggleThemeMode"
         :title="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+        :aria-label="themeStore.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
       >
         <Sun v-if="!themeStore.isDarkMode" class="mode-icon" />
         <Moon v-else class="mode-icon" />
