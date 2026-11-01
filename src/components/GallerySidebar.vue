@@ -849,10 +849,10 @@ function statusClass(tier) {
     width: 36px;
     height: 36px;
     padding: 0;
-    border: 1px solid var(--color-border, #3d3d5c);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
-    background: var(--color-bg-primary, #1a1a2e);
-    color: var(--color-text-secondary, #aaa);
+    background: var(--color-bg-primary);
+    color: var(--color-text-secondary);
     cursor: pointer;
     z-index: 2;
   }

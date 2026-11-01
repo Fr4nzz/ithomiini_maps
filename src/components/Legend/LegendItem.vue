@@ -194,7 +194,7 @@ function toggleVisibility() {
 }
 
 .legend-item.is-editable:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.03));
+  background: var(--color-bg-tertiary);
   margin: 0 -8px;
   padding: 4px 8px;
   border-radius: 4px;
@@ -209,7 +209,7 @@ function toggleVisibility() {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-style: italic;
 }
 
@@ -234,7 +234,7 @@ function toggleVisibility() {
 
 .legend-count {
   flex-shrink: 0;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-style: normal;
   font-variant-numeric: tabular-nums;
   opacity: 0.7;
@@ -245,7 +245,7 @@ function toggleVisibility() {
   padding: 4px;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s ease;
@@ -258,13 +258,13 @@ function toggleVisibility() {
 }
 
 .visibility-toggle:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.1));
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .legend-item.is-hidden .visibility-toggle {
   display: flex;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Export mode - cleaner appearance */

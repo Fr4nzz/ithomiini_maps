@@ -402,7 +402,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 <style scoped>
 .export-panel {
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-secondary);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   width: 420px;
@@ -419,13 +419,13 @@ const activeTab = ref(props.initialTab || 'export')
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .panel-header h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -438,14 +438,14 @@ const activeTab = ref(props.initialTab || 'export')
   background: transparent;
   border: none;
   border-radius: 6px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-close:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .btn-close svg {
@@ -458,7 +458,7 @@ const activeTab = ref(props.initialTab || 'export')
   display: flex;
   gap: 4px;
   padding: 8px 16px;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
 }
 
 .panel-tabs button {
@@ -467,7 +467,7 @@ const activeTab = ref(props.initialTab || 'export')
   background: transparent;
   border: none;
   border-radius: 6px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -475,13 +475,13 @@ const activeTab = ref(props.initialTab || 'export')
 }
 
 .panel-tabs button:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-secondary, #aaa);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .panel-tabs button.active {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
 }
 
 /* Content */
@@ -505,7 +505,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 .summary-item {
   flex: 1;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 8px;
   padding: 16px;
   text-align: center;
@@ -515,13 +515,13 @@ const activeTab = ref(props.initialTab || 'export')
   display: block;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-variant-numeric: tabular-nums;
 }
 
 .summary-label {
   font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -538,10 +538,10 @@ const activeTab = ref(props.initialTab || 'export')
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   cursor: pointer;
   transition: all 0.2s;
   text-align: left;
@@ -549,7 +549,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 .export-btn:hover:not(:disabled) {
   background: #353558;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 .export-btn:disabled {
@@ -560,7 +560,7 @@ const activeTab = ref(props.initialTab || 'export')
 .export-btn svg {
   width: 24px;
   height: 24px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   flex-shrink: 0;
 }
 
@@ -589,7 +589,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 .btn-desc {
   font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Citation Section */
@@ -602,15 +602,15 @@ const activeTab = ref(props.initialTab || 'export')
 .citation-label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .citation-box {
   position: relative;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 14px;
   padding-right: 70px;
@@ -618,7 +618,7 @@ const activeTab = ref(props.initialTab || 'export')
 
 .citation-text {
   font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   line-height: 1.6;
   margin: 0;
   word-break: break-word;
@@ -632,7 +632,7 @@ const activeTab = ref(props.initialTab || 'export')
 .citation-code {
   font-family: var(--font-family-mono, monospace);
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0;
   white-space: pre-wrap;
@@ -647,10 +647,10 @@ const activeTab = ref(props.initialTab || 'export')
   align-items: center;
   gap: 4px;
   padding: 6px 10px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -662,9 +662,9 @@ const activeTab = ref(props.initialTab || 'export')
 }
 
 .copy-btn:hover {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-color: var(--color-accent);
 }
 
 .copy-btn svg {
@@ -680,13 +680,13 @@ const activeTab = ref(props.initialTab || 'export')
   background: rgba(74, 222, 128, 0.1);
   border-radius: 8px;
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .citation-info svg {
   width: 18px;
   height: 18px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -700,7 +700,7 @@ const activeTab = ref(props.initialTab || 'export')
 .gbif-citation-section {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
 }
 
 .gbif-citation-section .citation-label {
@@ -712,20 +712,20 @@ const activeTab = ref(props.initialTab || 'export')
 .gbif-citation-section .citation-label svg {
   width: 16px;
   height: 16px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .gbif-citation-box {
   margin-top: 8px;
   padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
   border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
 }
 
 .gbif-citation-text {
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0 0 12px 0;
 }
@@ -738,7 +738,7 @@ const activeTab = ref(props.initialTab || 'export')
   background: rgba(74, 222, 128, 0.1);
   border: 1px solid rgba(74, 222, 128, 0.3);
   border-radius: 4px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -759,7 +759,7 @@ const activeTab = ref(props.initialTab || 'export')
   gap: 16px;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
 }
 
 .gbif-stats .stat {
@@ -771,12 +771,12 @@ const activeTab = ref(props.initialTab || 'export')
 .gbif-stats .stat-value {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .gbif-stats .stat-label {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Success Toast */
@@ -785,8 +785,8 @@ const activeTab = ref(props.initialTab || 'export')
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 500;

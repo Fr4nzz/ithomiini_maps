@@ -493,9 +493,9 @@ onUnmounted(() => {
   right: -2px;
   width: 6px;
   height: 6px;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   border-radius: 50%;
-  border: 1px solid var(--color-bg-primary, #1a1a2e);
+  border: 1px solid var(--color-bg-primary);
 }
 
 /* Swatch trigger (for border colors) */
@@ -504,7 +504,7 @@ onUnmounted(() => {
   align-items: center;
   padding: 0;
   background: none;
-  border: 2px solid var(--color-border, #3d3d5c);
+  border: 2px solid var(--color-border);
   border-radius: 6px;
   cursor: pointer;
   width: 36px;
@@ -513,7 +513,7 @@ onUnmounted(() => {
 }
 
 .color-swatch-trigger:hover {
-  border-color: var(--color-text-secondary, #aaa);
+  border-color: var(--color-text-secondary);
 }
 
 .swatch-preview {
@@ -525,11 +525,11 @@ onUnmounted(() => {
 
 .picker-popover {
   position: fixed;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 12px;
-  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  box-shadow: 0 4px 20px var(--color-shadow-color);
   z-index: 3000;
   width: 268px;
 }
@@ -540,13 +540,13 @@ onUnmounted(() => {
   align-items: center;
   margin-bottom: 8px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .picker-title {
   font-size: 12px;
   font-weight: 500;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -554,7 +554,7 @@ onUnmounted(() => {
 .picker-close {
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 20px;
   cursor: pointer;
   padding: 0 4px;
@@ -563,7 +563,7 @@ onUnmounted(() => {
 }
 
 .picker-close:hover {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 /* Tabs */
@@ -571,7 +571,7 @@ onUnmounted(() => {
   display: flex;
   gap: 2px;
   margin-bottom: 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 6px;
   padding: 2px;
 }
@@ -582,7 +582,7 @@ onUnmounted(() => {
   background: transparent;
   border: none;
   border-radius: 4px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 500;
   cursor: pointer;
@@ -590,12 +590,12 @@ onUnmounted(() => {
 }
 
 .picker-tab:hover {
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .picker-tab.active {
-  background: var(--color-bg-secondary, #252540);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -628,12 +628,12 @@ onUnmounted(() => {
 }
 
 .color-swatch.is-white {
-  border-color: var(--color-border, #3d3d5c);
+  border-color: var(--color-border);
 }
 
 .color-swatch.is-selected {
   border-color: #fff;
-  box-shadow: 0 0 0 1px var(--color-bg-primary, #1a1a2e);
+  box-shadow: 0 0 0 1px var(--color-bg-primary);
 }
 
 .swatch-check {
@@ -708,7 +708,7 @@ onUnmounted(() => {
 /* Footer */
 .picker-footer {
   padding-top: 8px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -726,7 +726,7 @@ onUnmounted(() => {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   flex-shrink: 0;
 }
 
@@ -734,10 +734,10 @@ onUnmounted(() => {
   flex: 1;
   min-width: 0;
   padding: 4px 6px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-family: var(--font-family-mono, monospace);
   font-size: 11px;
   text-transform: uppercase;
@@ -745,7 +745,7 @@ onUnmounted(() => {
 
 .hex-input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 .reset-button {
@@ -754,9 +754,9 @@ onUnmounted(() => {
   gap: 4px;
   padding: 4px 8px;
   background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 11px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -765,9 +765,9 @@ onUnmounted(() => {
 }
 
 .reset-button:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-  color: var(--color-text-primary, #e0e0e0);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
 }
 
 /* Transitions */

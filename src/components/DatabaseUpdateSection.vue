@@ -129,7 +129,7 @@ const triggerDatabaseUpdate = async () => {
 <style scoped>
 .filter-hint {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-style: italic;
   margin-top: 8px;
 }
@@ -140,9 +140,9 @@ const triggerDatabaseUpdate = async () => {
   align-items: center;
   gap: 8px;
   padding: 12px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border: none;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -151,7 +151,7 @@ const triggerDatabaseUpdate = async () => {
 
 .collapse-toggle:hover {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .collapse-toggle svg {
@@ -166,7 +166,7 @@ const triggerDatabaseUpdate = async () => {
 
 .update-database-section {
   padding: 0 20px 16px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
 }
 
 .update-toggle {
@@ -177,7 +177,7 @@ const triggerDatabaseUpdate = async () => {
   padding: 12px 0;
   background: none;
   border: none;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -185,13 +185,13 @@ const triggerDatabaseUpdate = async () => {
 }
 
 .update-toggle:hover {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .update-toggle svg:first-child {
   width: 18px;
   height: 18px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .update-toggle .chevron {
@@ -223,33 +223,33 @@ const triggerDatabaseUpdate = async () => {
   gap: 8px;
   cursor: pointer;
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #b0b0b0);
+  color: var(--color-text-secondary);
 }
 
 .update-checkbox input {
   width: 16px;
   height: 16px;
-  accent-color: var(--color-accent, #4ade80);
+  accent-color: var(--color-accent);
   cursor: pointer;
 }
 
 .update-checkbox:hover {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .update-password input {
   width: 100%;
   padding: 10px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
 }
 
 .update-password input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
@@ -265,7 +265,7 @@ const triggerDatabaseUpdate = async () => {
   gap: 8px;
   width: 100%;
   padding: 10px 16px;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   border: none;
   border-radius: 6px;
   color: #1a1a2e;

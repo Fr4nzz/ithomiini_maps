@@ -236,7 +236,7 @@ function resetRangeSettings() {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   margin-bottom: 10px;
 }
 
@@ -254,10 +254,10 @@ function resetRangeSettings() {
 .viz-mode-toggle button {
   flex: 1;
   padding: 8px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -266,27 +266,27 @@ function resetRangeSettings() {
 
 .viz-mode-toggle button:hover {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .viz-mode-toggle button.active {
-  background: var(--color-accent, #4ade80);
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg-primary);
 }
 
 .slider-value {
   min-width: 45px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
 .filter-hint {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-style: italic;
   margin-top: 6px;
 }
@@ -297,7 +297,7 @@ function resetRangeSettings() {
   align-items: center;
   gap: 10px;
   padding: 12px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 6px;
   cursor: pointer;
   user-select: none;
@@ -312,12 +312,12 @@ function resetRangeSettings() {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: var(--color-accent, #4ade80);
+  accent-color: var(--color-accent);
 }
 
 .toggle-row span {
   font-size: 0.9rem;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -362,7 +362,7 @@ function resetRangeSettings() {
 
 .toggle-badge-inline.active {
   background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   border-color: rgba(74, 222, 128, 0.3);
 }
 
@@ -377,7 +377,7 @@ function resetRangeSettings() {
   flex-direction: column;
   gap: 14px;
   padding: 12px;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
   border-radius: 6px;
 }
 
@@ -389,13 +389,13 @@ function resetRangeSettings() {
 
 .setting-row label {
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
 .count-mode-hint {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-style: italic;
   margin-top: 4px;
   margin-bottom: 0;
@@ -404,7 +404,7 @@ function resetRangeSettings() {
 .unit-label {
   font-weight: 400;
   font-size: 0.65rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .cluster-points-toggle,
@@ -417,17 +417,17 @@ function resetRangeSettings() {
 .style-select {
   width: 100%;
   padding: 6px 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   cursor: pointer;
 }
 
 .style-select:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 /* Slider Group */
@@ -442,7 +442,7 @@ function resetRangeSettings() {
   height: 4px;
   -webkit-appearance: none;
   appearance: none;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 2px;
   outline: none;
 }
@@ -453,7 +453,7 @@ function resetRangeSettings() {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   cursor: pointer;
   transition: transform 0.15s;
 }
@@ -467,7 +467,7 @@ function resetRangeSettings() {
   height: 16px;
   border: none;
   border-radius: 50%;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   cursor: pointer;
 }
 
@@ -475,10 +475,10 @@ function resetRangeSettings() {
 .setting-input {
   width: 55px;
   padding: 4px 6px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.8rem;
   font-weight: 600;
   text-align: center;
@@ -494,7 +494,7 @@ function resetRangeSettings() {
 
 .setting-input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15);
 }
 
@@ -504,17 +504,17 @@ function resetRangeSettings() {
   padding: 6px 12px;
   margin-top: 4px;
   background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .btn-reset-heatmap:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
-  border-color: var(--color-text-muted, #666);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
 }
 </style>

@@ -194,7 +194,7 @@ const onNextSubspecies = (event) => {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border: 2px solid transparent;
   border-radius: 10px;
   cursor: pointer;
@@ -207,7 +207,7 @@ const onNextSubspecies = (event) => {
 }
 
 .ring-card.selected {
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
   background: rgba(74, 222, 128, 0.1);
 }
 
@@ -248,9 +248,9 @@ const onNextSubspecies = (event) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
   border-radius: 6px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .ring-photo-placeholder svg {
@@ -287,20 +287,20 @@ const onNextSubspecies = (event) => {
   text-align: center;
   font-size: 0.65rem;
   line-height: 1.3;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .nav-prefix {
   display: block;
   font-size: 0.6rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .species-name {
   display: block;
   font-weight: 600;
   font-style: italic;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -309,7 +309,7 @@ const onNextSubspecies = (event) => {
 .subsp-name {
   display: block;
   font-style: italic;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -322,19 +322,19 @@ const onNextSubspecies = (event) => {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
   padding: 0;
 }
 
 .nav-btn:hover:not(.disabled) {
-  background: var(--color-accent, #4ade80);
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg-primary);
 }
 
 .nav-btn.disabled {
@@ -379,13 +379,13 @@ const onNextSubspecies = (event) => {
   display: block;
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   margin-bottom: 4px;
 }
 
 .ring-count {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .ring-count.unavailable-text {
@@ -400,7 +400,7 @@ const onNextSubspecies = (event) => {
   right: 8px;
   width: 20px;
   height: 20px;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -419,6 +419,6 @@ const onNextSubspecies = (event) => {
 .select-indicator svg {
   width: 12px;
   height: 12px;
-  color: var(--color-bg-primary, #1a1a2e);
+  color: var(--color-bg-primary);
 }
 </style>

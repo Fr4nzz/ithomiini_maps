@@ -159,24 +159,24 @@ function handleBlur() {
 }
 
 .legend-editable-label:hover .label-text {
-  background-color: var(--color-bg-tertiary, rgba(255,255,255,0.05));
+  background-color: var(--color-bg-tertiary);
 }
 
 .label-input {
   flex: 1;
   min-width: 0;
   padding: 2px 4px;
-  border: 1px solid var(--color-accent, #4ade80);
+  border: 1px solid var(--color-accent);
   border-radius: 3px;
-  background: var(--color-bg-primary, #1a1a2e);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-family: inherit;
   font-style: italic;
   outline: none;
 }
 
 .label-input:focus {
-  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
+  box-shadow: 0 0 0 2px var(--color-accent-subtle);
 }
 
 .edit-button {
@@ -184,7 +184,7 @@ function handleBlur() {
   padding: 2px;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 3px;
   transition: all 0.15s ease;
@@ -197,7 +197,7 @@ function handleBlur() {
 }
 
 .edit-button:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.1));
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 </style>

@@ -171,7 +171,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 
 <style scoped>
 .date-filter {
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 8px;
   padding: 14px;
   margin-bottom: 16px;
@@ -191,13 +191,13 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   gap: 8px;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .header-title svg {
   width: 16px;
   height: 16px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .date-coverage {
@@ -208,15 +208,15 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 }
 
 .coverage-stat {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .coverage-stat.muted {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .coverage-divider {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Date range info */
@@ -225,15 +225,15 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   align-items: center;
   gap: 6px;
   padding: 8px 10px;
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-secondary);
   border-radius: 6px;
   font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   margin-bottom: 12px;
 }
 
 .date-range-info strong {
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
@@ -247,10 +247,10 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 
 .range-btn {
   padding: 5px 10px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -258,13 +258,13 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 
 .range-btn:hover {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .range-btn.active {
   background: rgba(74, 222, 128, 0.15);
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* Custom dates */
@@ -282,7 +282,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 .date-input-group label {
   display: block;
   font-size: 0.65rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   margin-bottom: 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -291,16 +291,16 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 .date-input-group input {
   width: 100%;
   padding: 6px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
 }
 
 .date-input-group input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 /* Calendar icon styling */
@@ -311,7 +311,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 }
 
 .date-separator {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   padding-bottom: 6px;
 }
 
@@ -331,7 +331,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   align-items: center;
   gap: 6px;
   font-size: 0.75rem;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .filter-badge svg {
@@ -344,7 +344,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   background: transparent;
   border: 1px solid rgba(74, 222, 128, 0.3);
   border-radius: 4px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -360,7 +360,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   align-items: flex-start;
   gap: 8px;
   font-size: 0.7rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   line-height: 1.4;
   margin: 0;
 }

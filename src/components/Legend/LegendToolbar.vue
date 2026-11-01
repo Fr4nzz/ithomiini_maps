@@ -521,8 +521,8 @@ onClickOutside(settingsPanelRef, (e) => {
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  border: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-overlay, rgba(26, 26, 46, 0.95));
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-overlay);
   border-radius: 8px; /* Fully rounded — separate floating element */
   position: absolute;
   bottom: calc(100% + 2px); /* Float above legend with small gap so green border is visible */
@@ -532,7 +532,7 @@ onClickOutside(settingsPanelRef, (e) => {
   min-width: calc(100% + 2px);
   width: max-content;
   cursor: grab;
-  box-shadow: 0 -2px 10px var(--color-shadow-color, rgba(0, 0, 0, 0.3));
+  box-shadow: 0 -2px 10px var(--color-shadow-color);
   backdrop-filter: blur(4px);
 }
 
@@ -545,15 +545,15 @@ onClickOutside(settingsPanelRef, (e) => {
   align-items: center;
   justify-content: center;
   padding: 4px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: grab;
   border-radius: 4px;
   transition: all 0.15s ease;
 }
 
 .drag-handle:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-  color: var(--color-text-secondary, #aaa);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .drag-handle:active {
@@ -571,8 +571,8 @@ onClickOutside(settingsPanelRef, (e) => {
   flex-direction: column;
   gap: 1px;
   padding: 3px 6px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -585,7 +585,7 @@ onClickOutside(settingsPanelRef, (e) => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   white-space: nowrap;
   line-height: 1;
 }
@@ -597,7 +597,7 @@ onClickOutside(settingsPanelRef, (e) => {
   padding: 3px;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 3px;
   transition: all 0.15s ease;
@@ -605,8 +605,8 @@ onClickOutside(settingsPanelRef, (e) => {
 }
 
 .swap-button:hover:not(.disabled) {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-  color: var(--color-accent, #4ade80);
+  background: var(--color-bg-tertiary);
+  color: var(--color-accent);
 }
 
 .swap-button.disabled {
@@ -621,35 +621,35 @@ onClickOutside(settingsPanelRef, (e) => {
   padding: 6px;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s ease;
 }
 
 .toolbar-button:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .toolbar-button.active {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
 }
 
 .reset-button:hover {
-  color: var(--color-warning, #f59e0b);
+  color: var(--color-warning);
 }
 
 /* Settings Panel - Now a floating popup that can overflow */
 .settings-panel {
   position: fixed;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 12px;
   z-index: 1000;
-  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
+  box-shadow: 0 4px 20px var(--color-shadow-color);
   min-width: 280px;
   max-width: calc(100vw - 20px);
   max-height: calc(100vh - 20px);
@@ -662,10 +662,10 @@ onClickOutside(settingsPanelRef, (e) => {
   align-items: center;
   margin-bottom: 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
   font-size: 12px;
   font-weight: 500;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -673,7 +673,7 @@ onClickOutside(settingsPanelRef, (e) => {
 .close-button {
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 18px;
   cursor: pointer;
   padding: 0 4px;
@@ -681,7 +681,7 @@ onClickOutside(settingsPanelRef, (e) => {
 }
 
 .close-button:hover {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .settings-row {
@@ -696,7 +696,7 @@ onClickOutside(settingsPanelRef, (e) => {
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .settings-control {
@@ -708,7 +708,7 @@ onClickOutside(settingsPanelRef, (e) => {
 .settings-control input[type="range"] {
   flex: 1;
   height: 4px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 2px;
   appearance: none;
   cursor: pointer;
@@ -718,7 +718,7 @@ onClickOutside(settingsPanelRef, (e) => {
   appearance: none;
   width: 14px;
   height: 14px;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -727,13 +727,13 @@ onClickOutside(settingsPanelRef, (e) => {
   min-width: 40px;
   text-align: right;
   font-size: 12px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-family: var(--font-family-mono, monospace);
 }
 
 .settings-actions {
   padding-top: 8px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
 }
 
 .action-button {
@@ -744,24 +744,24 @@ onClickOutside(settingsPanelRef, (e) => {
   width: 100%;
   padding: 8px;
   background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .action-button:hover {
-  background: var(--color-bg-tertiary, rgba(255,255,255,0.05));
-  border-color: var(--color-warning, #f59e0b);
-  color: var(--color-warning, #f59e0b);
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
 }
 
 /* Settings divider */
 .settings-divider {
   height: 1px;
-  background: var(--color-border, #3d3d5c);
+  background: var(--color-border);
   margin: 12px 0;
 }
 
@@ -774,7 +774,7 @@ onClickOutside(settingsPanelRef, (e) => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   margin-bottom: 12px;
 }
 
@@ -786,10 +786,10 @@ onClickOutside(settingsPanelRef, (e) => {
 .prefix-format-select {
   flex: 1;
   padding: 6px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 12px;
   cursor: pointer;
   appearance: auto;
@@ -797,16 +797,16 @@ onClickOutside(settingsPanelRef, (e) => {
 
 .prefix-format-select:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 .color-input {
   flex: 1;
   padding: 6px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-family: monospace;
   font-size: 12px;
   text-transform: uppercase;
@@ -814,7 +814,7 @@ onClickOutside(settingsPanelRef, (e) => {
 
 .color-input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 /* Scrollbar for settings panel */
@@ -827,17 +827,17 @@ onClickOutside(settingsPanelRef, (e) => {
 }
 
 .settings-panel::-webkit-scrollbar-thumb {
-  background: var(--color-border, #3d3d5c);
+  background: var(--color-border);
   border-radius: 3px;
 }
 
 /* Wrap toggle button */
 .wrap-toggle-button {
   padding: 6px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -845,14 +845,14 @@ onClickOutside(settingsPanelRef, (e) => {
 }
 
 .wrap-toggle-button:hover {
-  border-color: var(--color-text-secondary, #aaa);
-  color: var(--color-text-secondary, #aaa);
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .wrap-toggle-button.active {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* Manual count input (Max Items) */
@@ -864,10 +864,10 @@ onClickOutside(settingsPanelRef, (e) => {
 .manual-count-input {
   width: 70px;
   padding: 6px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 12px;
   text-align: center;
   -moz-appearance: textfield;
@@ -881,7 +881,7 @@ onClickOutside(settingsPanelRef, (e) => {
 
 .manual-count-input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 /* Transitions */

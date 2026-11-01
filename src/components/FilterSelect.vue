@@ -219,12 +219,12 @@ const segmentStyle = (segment) => ({
   gap: 4px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   margin-bottom: 6px;
 }
 
 .option-count {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-weight: 400;
 }
 
@@ -233,9 +233,9 @@ const segmentStyle = (segment) => ({
   min-height: 34px;
   padding: 4px 36px 4px 8px;
   border-radius: 6px;
-  border: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
 }
 
@@ -244,11 +244,11 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect--active .multiselect__tags) {
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 :deep(.multiselect__placeholder) {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   padding: 0;
   margin: 0;
   font-size: 0.85rem;
@@ -256,7 +256,7 @@ const segmentStyle = (segment) => ({
 
 :deep(.multiselect__single) {
   background: transparent;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   padding: 0;
   margin: 0;
   font-size: 0.85rem;
@@ -264,14 +264,14 @@ const segmentStyle = (segment) => ({
 
 :deep(.multiselect__input) {
   background: transparent;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   padding: 0;
   margin: 0;
   font-size: 0.85rem;
 }
 
 :deep(.multiselect__input::placeholder) {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 :deep(.multiselect__select) {
@@ -280,13 +280,13 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect__select:before) {
-  border-color: var(--color-text-muted, #666) transparent transparent;
+  border-color: var(--color-text-muted) transparent transparent;
 }
 
 /* Dropdown content */
 :deep(.multiselect__content-wrapper) {
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   max-height: 280px !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -300,18 +300,18 @@ const segmentStyle = (segment) => ({
   padding: 10px 12px;
   min-height: auto;
   font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   background: transparent;
 }
 
 :deep(.multiselect__option--highlight) {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 :deep(.multiselect__option--selected) {
   background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-weight: 500;
 }
 
@@ -325,14 +325,14 @@ const segmentStyle = (segment) => ({
 :deep(.multiselect__option--group.multiselect__option--disabled) {
   padding: 8px 12px 4px;
   background: transparent !important;
-  color: var(--color-text-secondary, #9ca3af) !important;
+  color: var(--color-text-secondary) !important;
   cursor: default;
 }
 
 /* Multi-select tags */
 :deep(.multiselect__tag) {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
   border-radius: 4px;
   padding: 2px 24px 2px 8px;
   margin-right: 4px;
@@ -347,7 +347,7 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect__tag-icon:after) {
-  color: var(--color-bg-primary, #1a1a2e);
+  color: var(--color-bg-primary);
 }
 
 :deep(.multiselect__tag-icon:hover) {
@@ -368,14 +368,14 @@ const segmentStyle = (segment) => ({
 }
 
 .option-meta {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
   font-weight: 400;
   line-height: 1.25;
 }
 
 .option-match-meta {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.25;
@@ -397,8 +397,8 @@ const segmentStyle = (segment) => ({
 }
 
 .custom-filter-tag {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
   position: relative;
   overflow: hidden;
   border: 0;
@@ -512,7 +512,7 @@ const segmentStyle = (segment) => ({
   line-height: 1.1;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .option-badge-high {
@@ -531,7 +531,7 @@ const segmentStyle = (segment) => ({
 .no-options {
   display: block;
   padding: 10px 12px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   font-style: italic;
 }

@@ -223,14 +223,14 @@ const openGallery = () => {
 <style scoped>
 .point-popup {
   position: relative;
-  background: var(--color-bg-primary, #1a1a2e);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
   border-radius: 10px;
   padding: 12px;
   min-width: 380px;
   max-width: 480px;
-  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
-  border: 1px solid var(--color-border, #3d3d5c);
+  box-shadow: 0 4px 20px var(--color-shadow-color);
+  border: 1px solid var(--color-border);
 }
 
 .popup-actions {
@@ -250,15 +250,15 @@ const openGallery = () => {
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s;
 }
 
 .popup-action-btn:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
-  color: var(--color-text-primary, #fff);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .popup-action-btn svg {
@@ -288,9 +288,9 @@ const openGallery = () => {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: var(--color-accent, #4ade80);
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  color: var(--color-accent);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -303,7 +303,7 @@ const openGallery = () => {
 
 .plant-marker-card span {
   max-width: 110px;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.7rem;
   text-align: center;
 }
@@ -320,7 +320,7 @@ const openGallery = () => {
   left: 6px;
   right: 6px;
   background: rgba(0, 0, 0, 0.7);
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.65rem;
   padding: 3px 6px;
   border-radius: 3px;
@@ -365,8 +365,8 @@ const openGallery = () => {
 }
 
 .count-badge {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -377,7 +377,7 @@ const openGallery = () => {
 
 .section-label {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -386,25 +386,25 @@ const openGallery = () => {
 .taxonomy-select {
   width: 100%;
   padding: 6px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
 }
 
 .single-individual-id {
-  color: var(--color-info, #14b8a6);
+  color: var(--color-info);
   font-family: monospace;
 }
 
 .occurrence-select {
   width: 100%;
   padding: 6px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-info, #14b8a6);
+  color: var(--color-info);
   font-family: monospace;
   font-size: 0.78rem;
   cursor: pointer;
@@ -419,7 +419,7 @@ const openGallery = () => {
   flex-direction: column;
   gap: 5px;
   padding-top: 8px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
 }
 
 .detail-row {
@@ -430,13 +430,13 @@ const openGallery = () => {
 }
 
 .detail-label {
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   flex-shrink: 0;
   min-width: 55px;
 }
 
 .detail-value {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   word-break: break-word;
 }
 
@@ -455,20 +455,20 @@ const openGallery = () => {
 
 .divider {
   height: 1px;
-  background: var(--color-border, #3d3d5c);
+  background: var(--color-border);
   margin: 4px 0;
 }
 
 .location-summary {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.05));
-  border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-subtle);
   border-radius: 6px;
   padding: 8px;
 }
 
 .summary-title {
   font-size: 0.7rem;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -484,7 +484,7 @@ const openGallery = () => {
   gap: 16px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-top: 1px solid var(--color-accent-subtle);
 }
 
 .stat {
@@ -496,12 +496,12 @@ const openGallery = () => {
 .stat-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .stat-label {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
 }
 
 .observation-link {
@@ -510,10 +510,10 @@ const openGallery = () => {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
-  border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.3));
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-subtle);
   border-radius: 5px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -521,9 +521,9 @@ const openGallery = () => {
 }
 
 .observation-link:hover {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
-  border-color: var(--color-accent, rgba(74, 222, 128, 0.5));
-  color: var(--color-accent-hover, #86efac);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent-hover);
 }
 
 .observation-link svg {
@@ -534,7 +534,7 @@ const openGallery = () => {
 
 .plant-caveat {
   margin: 0;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.68rem;
   font-style: italic;
   line-height: 1.35;

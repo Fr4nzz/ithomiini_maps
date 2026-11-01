@@ -137,7 +137,7 @@ defineExpose({ open, close, toggleOpen })
   padding: 2px 4px;
   background: transparent;
   border: none;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 12px;
   cursor: pointer;
   border-radius: 3px;
@@ -147,7 +147,7 @@ defineExpose({ open, close, toggleOpen })
 }
 
 .dropdown-trigger:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.05));
+  background: var(--color-bg-tertiary);
 }
 
 .trigger-text {
@@ -158,7 +158,7 @@ defineExpose({ open, close, toggleOpen })
 
 .trigger-chevron {
   flex-shrink: 0;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   transition: transform 0.15s ease;
 }
 
@@ -171,8 +171,8 @@ defineExpose({ open, close, toggleOpen })
 /* Panel is teleported to body, so no scoped */
 .legend-dropdown-panel {
   position: fixed;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 3000;
@@ -187,7 +187,7 @@ defineExpose({ open, close, toggleOpen })
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   padding: 6px 10px 2px;
   user-select: none;
 }
@@ -199,7 +199,7 @@ defineExpose({ open, close, toggleOpen })
   background: transparent;
   border: none;
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 12px;
   cursor: pointer;
   text-align: left;
@@ -207,18 +207,18 @@ defineExpose({ open, close, toggleOpen })
 }
 
 .legend-dropdown-panel .dropdown-option:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.08));
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .legend-dropdown-panel .dropdown-option.selected {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   background: rgba(74, 222, 128, 0.1);
 }
 
 .legend-dropdown-panel .dropdown-divider {
   height: 1px;
-  background: var(--color-border, #3d3d5c);
+  background: var(--color-border);
   margin: 4px 6px;
 }
 

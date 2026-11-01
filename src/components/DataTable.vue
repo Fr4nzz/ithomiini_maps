@@ -1894,7 +1894,7 @@ const exportTableCsv = () => {
   flex-direction: column;
   height: 100%;
   min-width: 0;
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-secondary);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -1907,8 +1907,8 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 8px 16px;
   padding: 12px 16px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header-left {
@@ -1919,16 +1919,16 @@ const exportTableCsv = () => {
 
 .record-count {
   font-size: 0.9rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .record-count strong {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .page-info {
   font-size: 0.8rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .header-right {
@@ -1953,10 +1953,10 @@ const exportTableCsv = () => {
   gap: 8px;
   min-height: 32px;
   padding: 6px 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-weight: 500;
 }
@@ -1969,15 +1969,15 @@ const exportTableCsv = () => {
 
 .table-theme-trigger:hover,
 .table-mode-toggle:hover {
-  background: var(--color-bg-secondary, #353558);
-  border-color: var(--color-border-light, #4d4d6c);
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border-light);
 }
 
 .table-theme-trigger .layer-icon,
 .table-mode-toggle .mode-icon {
   width: 16px;
   height: 16px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .table-mode-toggle {
@@ -1993,7 +1993,7 @@ const exportTableCsv = () => {
 .table-theme-trigger .chevron {
   width: 13px;
   height: 13px;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   transition: transform 0.2s;
 }
 
@@ -2012,9 +2012,9 @@ const exportTableCsv = () => {
   min-width: 160px;
   padding: 4px;
   background: var(--color-bg-overlay, var(--color-bg-primary, #1a1a2e));
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  box-shadow: 0 8px 24px var(--color-shadow-color, rgba(0, 0, 0, 0.25));
+  box-shadow: 0 8px 24px var(--color-shadow-color);
   z-index: 20;
 }
 
@@ -2027,7 +2027,7 @@ const exportTableCsv = () => {
   background: transparent;
   border: none;
   border-radius: 5px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   text-align: left;
   cursor: pointer;
@@ -2035,15 +2035,15 @@ const exportTableCsv = () => {
 
 .table-theme-menu button:hover,
 .table-theme-menu button.active {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
 }
 
 .theme-swatch {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   position: relative;
   flex-shrink: 0;
 }
@@ -2059,10 +2059,10 @@ const exportTableCsv = () => {
 
 .page-size-select {
   padding: 6px 10px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   cursor: pointer;
 }
@@ -2070,28 +2070,28 @@ const exportTableCsv = () => {
 /* View Mode Toggle */
 .view-mode-toggle {
   display: flex;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   overflow: hidden;
 }
 
 .view-mode-toggle button {
   padding: 6px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border: none;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .view-mode-toggle button:not(:last-child) {
-  border-right: 1px solid var(--color-border, #3d3d5c);
+  border-right: 1px solid var(--color-border);
 }
 
 .view-mode-toggle button:hover {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .view-mode-toggle button.active {
@@ -2109,10 +2109,10 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -2121,7 +2121,7 @@ const exportTableCsv = () => {
 .btn-columns:hover,
 .btn-columns.active {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .btn-columns svg {
@@ -2135,10 +2135,10 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -2146,7 +2146,7 @@ const exportTableCsv = () => {
 
 .column-filter-toggle:hover {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .column-filter-toggle.active {
@@ -2173,8 +2173,8 @@ const exportTableCsv = () => {
   right: 0;
   margin-top: 4px;
   padding: 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 100;
@@ -2189,16 +2189,16 @@ const exportTableCsv = () => {
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   transition: background 0.2s;
 }
 
 .column-toggle:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
 }
 
 .column-toggle input {
-  accent-color: var(--color-accent, #4ade80);
+  accent-color: var(--color-accent);
 }
 
 .column-toggle.locked {
@@ -2235,12 +2235,12 @@ const exportTableCsv = () => {
 .data-table th {
   position: sticky;
   top: 0;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
   padding: 10px 12px;
   text-align: left;
   font-weight: 600;
-  color: var(--color-text-secondary, #aaa);
-  border-bottom: 2px solid var(--color-border, #3d3d5c);
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid var(--color-border);
   white-space: nowrap;
   z-index: 10;
 }
@@ -2251,7 +2251,7 @@ const exportTableCsv = () => {
 }
 
 .data-table th.sortable:hover {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .data-table th.no-sort {
@@ -2259,7 +2259,7 @@ const exportTableCsv = () => {
 }
 
 .data-table th.sorted {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 /* Drag-to-resize handle on the trailing edge of each header cell. */
@@ -2275,7 +2275,7 @@ const exportTableCsv = () => {
   z-index: 11;
 }
 .col-resize-handle:hover {
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   opacity: 0.5;
 }
 
@@ -2302,7 +2302,7 @@ const exportTableCsv = () => {
 
 /* Filter Row */
 .filter-row {
-  background: var(--color-bg-secondary, #1e1e3a);
+  background: var(--color-bg-secondary);
 }
 
 .filter-cell {
@@ -2314,10 +2314,10 @@ const exportTableCsv = () => {
 .column-filter-input {
   width: 100%;
   padding: 5px 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.75rem;
   outline: none;
   transition: border-color 0.2s;
@@ -2329,17 +2329,17 @@ const exportTableCsv = () => {
 }
 
 .column-filter-input::placeholder {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.7rem;
 }
 
 .column-filter-select {
   width: 100%;
   padding: 5px 6px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.75rem;
   outline: none;
   cursor: pointer;
@@ -2377,7 +2377,7 @@ const exportTableCsv = () => {
 }
 
 .range-sep {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.8rem;
   flex-shrink: 0;
 }
@@ -2395,8 +2395,8 @@ const exportTableCsv = () => {
 
 .data-table td {
   padding: 8px 12px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
-  color: var(--color-text-primary, #e0e0e0);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
   vertical-align: middle;
 }
 
@@ -2419,16 +2419,16 @@ const exportTableCsv = () => {
 .cell-id {
   font-family: monospace;
   font-size: 0.8rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
 }
 
 .cell-species em {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .cell-subspecies {
   font-style: italic;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .cell-sex {
@@ -2459,7 +2459,7 @@ const exportTableCsv = () => {
 .cell-coord {
   font-family: monospace;
   font-size: 0.8rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
 }
 
 /* Photo Cell */
@@ -2479,7 +2479,7 @@ const exportTableCsv = () => {
   height: 50px;
   border-radius: 6px;
   overflow: hidden;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   cursor: pointer;
 }
 
@@ -2490,7 +2490,7 @@ const exportTableCsv = () => {
 }
 
 .photo-wrapper.other-individual {
-  border: 2px dashed var(--color-text-muted, #666);
+  border: 2px dashed var(--color-text-muted);
 }
 
 .other-indicator {
@@ -2510,7 +2510,7 @@ const exportTableCsv = () => {
 }
 
 .no-photo {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Badges */
@@ -2572,7 +2572,7 @@ const exportTableCsv = () => {
 .original-value {
   display: block;
   font-size: 0.7rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-style: normal;
   margin-top: 2px;
   opacity: 0.75;
@@ -2584,7 +2584,7 @@ const exportTableCsv = () => {
 }
 
 .text-muted {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .cell-chr {
@@ -2594,12 +2594,12 @@ const exportTableCsv = () => {
 
 .chr-value {
   font-size: 0.85rem;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .chr-est {
   font-size: 0.6rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-style: italic;
   margin-left: 2px;
 }
@@ -2674,10 +2674,10 @@ const exportTableCsv = () => {
   height: 24px;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 5px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-secondary, #aaa);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
   flex: 0 0 auto;
@@ -2685,8 +2685,8 @@ const exportTableCsv = () => {
 
 .row-expand-btn:hover,
 .row-expand-btn.active {
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .row-expand-btn svg {
@@ -2723,7 +2723,7 @@ const exportTableCsv = () => {
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.74rem;
   line-height: 1.2;
   max-width: 280px;
@@ -2792,7 +2792,7 @@ const exportTableCsv = () => {
 }
 
 .accepted-host-name {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   display: block;
   font-size: 0.84rem;
   font-weight: 600;
@@ -2880,7 +2880,7 @@ const exportTableCsv = () => {
   padding: 3px 8px;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: capitalize;
@@ -2936,13 +2936,13 @@ const exportTableCsv = () => {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
 }
 
 .cell-long-text {
   max-width: 360px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.78rem;
   line-height: 1.35;
 }
@@ -2970,7 +2970,7 @@ const exportTableCsv = () => {
   padding: 3px 7px;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -3026,7 +3026,7 @@ const exportTableCsv = () => {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .empty-content svg {
@@ -3042,8 +3042,8 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 4px;
   padding: 12px 16px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-primary);
+  border-top: 1px solid var(--color-border);
 }
 
 .page-btn {
@@ -3053,10 +3053,10 @@ const exportTableCsv = () => {
   min-width: 32px;
   height: 32px;
   padding: 0 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -3064,7 +3064,7 @@ const exportTableCsv = () => {
 
 .page-btn:hover:not(:disabled) {
   background: #353558;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .page-btn:disabled {
@@ -3073,9 +3073,9 @@ const exportTableCsv = () => {
 }
 
 .page-btn.active {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-color: var(--color-accent);
 }
 
 .page-btn svg {
@@ -3085,7 +3085,7 @@ const exportTableCsv = () => {
 
 .page-ellipsis {
   padding: 0 8px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Transitions */

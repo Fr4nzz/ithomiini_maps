@@ -886,8 +886,8 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   min-width: 0;
   display: flex;
   flex-direction: column;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -898,13 +898,13 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   align-items: center;
   gap: 10px;
   padding: 14px 16px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .cmd-search-icon {
   width: 18px;
   height: 18px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
@@ -913,11 +913,11 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   background: transparent;
   border: 0;
   outline: 0;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.95rem;
 }
 
-.cmd-input::placeholder { color: var(--color-text-muted, #666); }
+.cmd-input::placeholder { color: var(--color-text-muted); }
 
 .cmd-close {
   display: flex;
@@ -928,14 +928,14 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
 .cmd-close:hover {
   background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .cmd-close svg { width: 16px; height: 16px; }
@@ -948,11 +948,11 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-hint {
   padding: 20px 16px;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
 }
 
-.cmd-hint--empty { color: var(--color-text-secondary, #aaa); }
+.cmd-hint--empty { color: var(--color-text-secondary); }
 
 .cmd-group-heading {
   padding: 10px 16px 4px;
@@ -960,11 +960,11 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .cmd-group-heading--suggest {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .cmd-group-heading--any {
@@ -975,7 +975,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   font-weight: 500;
   text-transform: none;
   letter-spacing: 0;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.72rem;
 }
 
@@ -987,7 +987,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 10px 16px;
   border: 0;
   background: transparent;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.88rem;
   text-align: left;
   cursor: pointer;
@@ -1002,7 +1002,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-item :deep(strong) {
   font-weight: 700;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .cmd-item-label {
@@ -1017,14 +1017,14 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-species {
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-style: italic;
   font-size: 0.85rem;
 }
 
 .cmd-item-type {
   font-size: 0.72rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
@@ -1035,7 +1035,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   text-align: center;
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.1);
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.72rem;
   font-weight: 700;
   flex-shrink: 0;
@@ -1048,8 +1048,8 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   flex-shrink: 0;
   max-height: 70vh;
   padding: 14px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
@@ -1060,7 +1060,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   margin-bottom: 10px;
 }
 
@@ -1085,10 +1085,10 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   align-items: center;
   gap: 6px 8px;
   padding: 6px 10px;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.78rem;
   cursor: pointer;
   transition: all 0.15s;
@@ -1121,12 +1121,12 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-zero-detail {
   font-size: 0.74rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   line-height: 1.4;
 }
 
 .cmd-zero-detail strong {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .cmd-zero-fix {
@@ -1135,7 +1135,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   border: 1px solid rgba(74, 222, 128, 0.4);
   border-radius: 6px;
   background: rgba(74, 222, 128, 0.15);
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
@@ -1157,7 +1157,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   padding: 0 4px;
 }
 
@@ -1168,7 +1168,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1179,7 +1179,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 .cmd-combinator-btn--or {
   border-color: rgba(74, 222, 128, 0.4);
   background: rgba(74, 222, 128, 0.12);
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .cmd-combinator-btn:hover {
@@ -1194,7 +1194,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 .cmd-chip-type {
   font-size: 0.68rem;
   text-transform: uppercase;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   letter-spacing: 0.05em;
   font-weight: 600;
 }
@@ -1208,7 +1208,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 .cmd-chip-x {
   width: 12px;
   height: 12px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 

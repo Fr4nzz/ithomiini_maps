@@ -188,10 +188,10 @@ onClickOutside(dropdownRef, () => {
 <style scoped>
 .abbreviation-dropdown {
   position: fixed;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  box-shadow: 0 8px 32px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
+  box-shadow: 0 8px 32px var(--color-shadow-color);
   z-index: 3000;
   min-width: 220px;
   max-width: 280px;
@@ -200,8 +200,8 @@ onClickOutside(dropdownRef, () => {
 
 .dropdown-header {
   padding: 10px 12px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-tertiary, #2d2d4a);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
 }
 
 .header-title {
@@ -209,7 +209,7 @@ onClickOutside(dropdownRef, () => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .dropdown-options {
@@ -232,11 +232,11 @@ onClickOutside(dropdownRef, () => {
 }
 
 .option-button:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.05));
+  background: var(--color-bg-tertiary);
 }
 
 .option-button.is-active {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
+  background: var(--color-accent-subtle);
 }
 
 .option-label {
@@ -244,7 +244,7 @@ onClickOutside(dropdownRef, () => {
   font-size: 13px;
   font-weight: 500;
   font-style: italic;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -252,22 +252,22 @@ onClickOutside(dropdownRef, () => {
 
 .option-description {
   font-size: 10px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   white-space: nowrap;
 }
 
 .check-icon {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   flex-shrink: 0;
 }
 
 .apply-all-button {
   font-size: 9px;
   padding: 2px 6px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 3px;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
   opacity: 0;
@@ -279,9 +279,9 @@ onClickOutside(dropdownRef, () => {
 }
 
 .apply-all-button:hover {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* Custom input mode */
@@ -294,15 +294,15 @@ onClickOutside(dropdownRef, () => {
   padding: 8px 10px;
   font-size: 13px;
   font-style: italic;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-accent, #4ade80);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-accent);
   border-radius: 4px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   outline: none;
 }
 
 .custom-input:focus {
-  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
+  box-shadow: 0 0 0 2px var(--color-accent-subtle);
 }
 
 .custom-actions {
@@ -323,18 +323,18 @@ onClickOutside(dropdownRef, () => {
 
 .custom-cancel {
   background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  color: var(--color-text-secondary, #aaa);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .custom-cancel:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.05));
+  background: var(--color-bg-tertiary);
 }
 
 .custom-submit {
-  background: var(--color-accent, #4ade80);
-  border: 1px solid var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  color: var(--color-bg-primary);
   font-weight: 500;
 }
 

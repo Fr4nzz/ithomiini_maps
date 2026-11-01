@@ -42,14 +42,14 @@ const mapsUrl = ([longitude, latitude]) =>
 </template>
 
 <style scoped>
-.locality-map-link { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; width: 32px; height: 32px; border: 1px solid transparent; border-radius: 4px; color: var(--color-accent, #4ade80); cursor: pointer; list-style: none; }
+.locality-map-link { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; width: 32px; height: 32px; border: 1px solid transparent; border-radius: 4px; color: var(--color-accent); cursor: pointer; list-style: none; }
 .locality-map-link::-webkit-details-marker { display: none; }
-.locality-map-link:hover { border-color: var(--color-accent, #4ade80); background: var(--color-accent-subtle, rgba(74, 222, 128, .15)); }
-.locality-map-link:focus-visible, .locality-map-options a:focus-visible { outline: 2px solid var(--color-accent, #4ade80); outline-offset: 2px; }
+.locality-map-link:hover { border-color: var(--color-accent); background: var(--color-accent-subtle); }
+.locality-map-link:focus-visible, .locality-map-options a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .locality-map-choices { flex: none; width: 32px; }
 .locality-map-choices[open] { width: 155px; }
 .locality-map-choices summary { margin-left: auto; }
-.locality-map-options { box-sizing: border-box; width: 100%; max-height: 180px; overflow-y: auto; padding: 4px; border: 1px solid var(--color-border, #3d3d5c); border-radius: 5px; background: var(--color-bg-primary, #1a1a2e); box-shadow: 0 4px 12px var(--color-shadow-color, rgba(0, 0, 0, .5)); }
-.locality-map-options a { display: block; padding: 5px 7px; border-radius: 3px; color: var(--color-text-primary, #e0e0e0); font-size: .72rem; white-space: nowrap; font-variant-numeric: tabular-nums; text-decoration: none; }
-.locality-map-options a:hover { background: var(--color-bg-tertiary, #2d2d4a); }
+.locality-map-options { box-sizing: border-box; width: 100%; max-height: 180px; overflow-y: auto; padding: 4px; border: 1px solid var(--color-border); border-radius: 5px; background: var(--color-bg-primary); box-shadow: 0 4px 12px var(--color-shadow-color); }
+.locality-map-options a { display: block; padding: 5px 7px; border-radius: 3px; color: var(--color-text-primary); font-size: .72rem; white-space: nowrap; font-variant-numeric: tabular-nums; text-decoration: none; }
+.locality-map-options a:hover { background: var(--color-bg-tertiary); }
 </style>

@@ -1169,7 +1169,7 @@ const updateExportHeight = (value) => {
                           <polyline
                             :points="env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - v * 40}`).join(' ')"
                             fill="none"
-                            stroke="var(--color-accent, #4ade80)"
+                            stroke="var(--color-accent)"
                             stroke-width="1.5"
                           />
                           <polygon
@@ -1177,7 +1177,7 @@ const updateExportHeight = (value) => {
                               ...env.response_mean.map((v, i) => `${i * 200 / (env.response_mean.length - 1)},${40 - (v + (env.response_std?.[i] || 0)) * 40}`),
                               ...env.response_mean.map((v, i) => `${(env.response_mean.length - 1 - i) * 200 / (env.response_mean.length - 1)},${40 - (env.response_mean[env.response_mean.length - 1 - i] - (env.response_std?.[env.response_mean.length - 1 - i] || 0)) * 40}`),
                             ].join(' ')"
-                            fill="var(--color-accent, #4ade80)"
+                            fill="var(--color-accent)"
                             fill-opacity="0.15"
                           />
                         </svg>

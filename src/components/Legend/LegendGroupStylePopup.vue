@@ -121,12 +121,12 @@ onUnmounted(() => {
 <style scoped>
 .group-style-popup {
   position: fixed;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 0;
   min-width: 240px;
-  box-shadow: 0 8px 32px var(--color-shadow-color, rgba(0, 0, 0, 0.4));
+  box-shadow: 0 8px 32px var(--color-shadow-color);
   z-index: 2000;
 }
 
@@ -135,20 +135,20 @@ onUnmounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .popup-title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-style: italic;
 }
 
 .close-button {
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 18px;
   cursor: pointer;
   padding: 0 4px;
@@ -157,7 +157,7 @@ onUnmounted(() => {
 }
 
 .close-button:hover {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
 }
 
 .popup-body {
@@ -178,7 +178,7 @@ onUnmounted(() => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Shape options */
@@ -193,10 +193,10 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 18px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -204,13 +204,13 @@ onUnmounted(() => {
 
 .shape-button:hover {
   background: rgba(255,255,255,0.05);
-  border-color: var(--color-text-secondary, #aaa);
+  border-color: var(--color-text-secondary);
 }
 
 .shape-button.active {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
-  border-color: var(--color-accent, #4ade80);
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* Color picker row */
@@ -223,10 +223,10 @@ onUnmounted(() => {
 .color-input {
   flex: 1;
   padding: 8px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-family: monospace;
   font-size: 12px;
   text-transform: uppercase;
@@ -234,6 +234,6 @@ onUnmounted(() => {
 
 .color-input:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 </style>

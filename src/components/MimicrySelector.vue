@@ -394,7 +394,7 @@ const clearSelection = () => {
 
 <style scoped>
 .mimicry-selector {
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-secondary);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   width: 700px;
@@ -411,7 +411,7 @@ const clearSelection = () => {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .selector-header h3 {
@@ -420,14 +420,14 @@ const clearSelection = () => {
   gap: 10px;
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .selector-header h3 svg {
   width: 22px;
   height: 22px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .selector-header h3 .header-icon {
@@ -444,14 +444,14 @@ const clearSelection = () => {
   background: transparent;
   border: none;
   border-radius: 6px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-close:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .btn-close svg {
@@ -471,10 +471,10 @@ const clearSelection = () => {
   gap: 10px;
   width: 100%;
   padding: 10px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -485,13 +485,13 @@ const clearSelection = () => {
 }
 
 .dropdown-trigger.active {
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 .dropdown-trigger svg {
   width: 18px;
   height: 18px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
@@ -521,8 +521,8 @@ const clearSelection = () => {
   left: 0;
   right: 0;
   margin-top: 4px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 100;
@@ -531,26 +531,26 @@ const clearSelection = () => {
 
 .dropdown-search {
   padding: 10px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .dropdown-search input {
   width: 100%;
   padding: 8px 12px;
-  background: var(--color-bg-primary, #1a1a2e);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
   outline: none;
 }
 
 .dropdown-search input:focus {
-  border-color: var(--color-accent, #4ade80);
+  border-color: var(--color-accent);
 }
 
 .dropdown-search input::placeholder {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .dropdown-options {
@@ -566,7 +566,7 @@ const clearSelection = () => {
   padding: 10px 14px;
   background: transparent;
   border: none;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
   cursor: pointer;
   transition: background 0.15s;
@@ -587,20 +587,20 @@ const clearSelection = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--color-border, #3d3d5c);
+  border: 2px solid var(--color-border);
   border-radius: 4px;
   flex-shrink: 0;
 }
 
 .dropdown-option.selected .option-check {
-  background: var(--color-accent, #4ade80);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .option-check svg {
   width: 12px;
   height: 12px;
-  color: var(--color-bg-primary, #1a1a2e);
+  color: var(--color-bg-primary);
 }
 
 .option-name {
@@ -609,16 +609,16 @@ const clearSelection = () => {
 
 .option-count {
   font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   padding: 2px 8px;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
   border-radius: 10px;
 }
 
 .dropdown-empty {
   padding: 20px;
   text-align: center;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
 }
 
@@ -636,7 +636,7 @@ const clearSelection = () => {
 
 .selection-label {
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .selection-tag {
@@ -644,10 +644,10 @@ const clearSelection = () => {
   align-items: center;
   gap: 8px;
   padding: 4px 10px;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   border: none;
   border-radius: 4px;
-  color: var(--color-bg-primary, #1a1a2e);
+  color: var(--color-bg-primary);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -679,7 +679,7 @@ const clearSelection = () => {
   gap: 8px;
   margin-bottom: 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .section-title {
@@ -687,19 +687,19 @@ const clearSelection = () => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .section-count {
   font-size: 0.7rem;
   padding: 2px 6px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 10px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .unavailable-section .section-title {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Ring Grid */
@@ -720,7 +720,7 @@ const clearSelection = () => {
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 .empty-state svg {
@@ -737,13 +737,13 @@ const clearSelection = () => {
 /* Footer */
 .selector-footer {
   padding: 16px 20px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
-  background: var(--color-bg-primary, #1a1a2e);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-primary);
 }
 
 .footer-note {
   font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   margin: 0 0 12px 0;
   font-style: italic;
 }
@@ -766,13 +766,13 @@ const clearSelection = () => {
 
 .btn-clear {
   background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
-  color: var(--color-text-secondary, #aaa);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .btn-clear:hover:not(:disabled) {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .btn-clear:disabled {
@@ -781,9 +781,9 @@ const clearSelection = () => {
 }
 
 .btn-apply {
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   border: none;
-  color: var(--color-bg-primary, #1a1a2e);
+  color: var(--color-bg-primary);
 }
 
 .btn-apply:hover {

@@ -207,7 +207,7 @@ const isFilterActive = computed(() => {
 
 .time-slider-empty p {
   font-size: 0.75rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-style: italic;
   margin: 0;
 }
@@ -230,12 +230,12 @@ const isFilterActive = computed(() => {
 }
 
 .histogram-bar.in-range {
-  background-color: var(--color-accent, #4ade80);
+  background-color: var(--color-accent);
   opacity: 0.7;
 }
 
 .histogram-bar.out-range {
-  background-color: var(--color-text-muted, #666);
+  background-color: var(--color-text-muted);
   opacity: 0.25;
 }
 
@@ -252,17 +252,17 @@ const isFilterActive = computed(() => {
   padding: 4px 0;
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
   transition: color 0.15s;
 }
 
 .drag-feedback.active {
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .drag-separator {
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
 }
 
 /* Dual range slider */
@@ -291,13 +291,13 @@ const isFilterActive = computed(() => {
 
 .range-min::-webkit-slider-runnable-track {
   height: 4px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 2px;
 }
 
 .range-min::-moz-range-track {
   height: 4px;
-  background: var(--color-bg-tertiary, #2d2d4a);
+  background: var(--color-bg-tertiary);
   border-radius: 2px;
 }
 
@@ -322,7 +322,7 @@ const isFilterActive = computed(() => {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   cursor: pointer;
   pointer-events: all;
   margin-top: -6px;
@@ -339,7 +339,7 @@ const isFilterActive = computed(() => {
   height: 16px;
   border: none;
   border-radius: 50%;
-  background: var(--color-accent, #4ade80);
+  background: var(--color-accent);
   cursor: pointer;
   pointer-events: all;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -351,17 +351,17 @@ const isFilterActive = computed(() => {
   padding: 6px 12px;
   margin-top: 8px;
   background: transparent;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .btn-reset-range:hover {
-  background: var(--color-bg-tertiary, #2d2d4a);
-  color: var(--color-text-primary, #e0e0e0);
-  border-color: var(--color-text-muted, #666);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
 }
 </style>

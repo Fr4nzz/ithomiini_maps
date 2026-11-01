@@ -119,7 +119,7 @@ const shapeIcon = computed(() => {
 })
 
 // Shape color (border color or default)
-const shapeColor = computed(() => props.borderColor || 'var(--color-text-muted, #888)')
+const shapeColor = computed(() => props.borderColor || 'var(--color-text-muted)')
 
 // Should show clickable indicator (when legend is hovered)
 // Allow in export mode too so legend behaves consistently
@@ -374,9 +374,9 @@ function handlePrefixApplyToAll(format) {
 </template>
 
 <style scoped>
-.collapse-button { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; min-width: 18px; min-height: 20px; padding: 0; border: 0; border-radius: 3px; background: transparent; color: var(--color-text-muted, #888); cursor: pointer; }
-.collapse-button:hover { color: var(--color-text-primary, #fff); background: var(--color-bg-tertiary, #333); }
-.collapse-button:focus-visible { outline: 2px solid var(--color-primary, #80aaff); outline-offset: 2px; }
+.collapse-button { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; min-width: 18px; min-height: 20px; padding: 0; border: 0; border-radius: 3px; background: transparent; color: var(--color-text-muted); cursor: pointer; }
+.collapse-button:hover { color: var(--color-text-primary); background: var(--color-bg-tertiary); }
+.collapse-button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 .collapsed-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .legend-group-header {
   display: flex;
@@ -389,7 +389,7 @@ function handlePrefixApplyToAll(format) {
 }
 
 .legend-group-header:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.05));
+  background: var(--color-bg-tertiary);
 }
 
 /* Hidden headers mode */
@@ -428,7 +428,7 @@ function handlePrefixApplyToAll(format) {
 }
 
 .style-indicator-button:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
+  background: var(--color-bg-tertiary);
   transform: scale(1.1);
 }
 
@@ -452,7 +452,7 @@ function handlePrefixApplyToAll(format) {
 .abbreviation {
   font-size: 11px;
   font-weight: 500;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-style: italic;
   padding: 1px 3px;
   border-radius: 3px;
@@ -464,8 +464,8 @@ function handlePrefixApplyToAll(format) {
 }
 
 .abbreviation.is-editable:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
-  color: var(--color-text-secondary, #aaa);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .abbrev-eye-toggle {
@@ -475,7 +475,7 @@ function handlePrefixApplyToAll(format) {
   padding: 2px;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 3px;
   opacity: 0.7;
@@ -484,8 +484,8 @@ function handlePrefixApplyToAll(format) {
 
 .abbrev-eye-toggle:hover {
   opacity: 1;
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
-  color: var(--color-text-secondary, #aaa);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 /* Species name container */
@@ -499,7 +499,7 @@ function handlePrefixApplyToAll(format) {
 .species-name {
   font-size: 12px;
   font-weight: 600;
-  color: var(--color-text-primary, #fff);
+  color: var(--color-text-primary);
   font-style: italic;
   white-space: nowrap;
   overflow: hidden;
@@ -514,7 +514,7 @@ function handlePrefixApplyToAll(format) {
 }
 
 .species-name.is-greyed {
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-weight: 400;
 }
 
@@ -523,12 +523,12 @@ function handlePrefixApplyToAll(format) {
 }
 
 .species-name.is-editable:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
+  background: var(--color-bg-tertiary);
 }
 
 .subspecies-count {
   font-size: 11px;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
@@ -548,17 +548,17 @@ function handlePrefixApplyToAll(format) {
 }
 
 .hide-headers-button {
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
 }
 
 .show-headers-button {
-  color: var(--color-warning, #f59e0b);
+  color: var(--color-warning);
 }
 
 .hide-headers-button:hover,
 .show-headers-button:hover {
   opacity: 1;
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
+  background: var(--color-bg-tertiary);
 }
 
 /* Export mode - cleaner, more compact */

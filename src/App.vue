@@ -362,7 +362,7 @@ html, body, #app {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--color-bg-primary, #1a1a2e);
+  background: var(--color-bg-primary);
 }
 
 .view-container {
@@ -378,8 +378,8 @@ html, body, #app {
   align-items: center;
   gap: 4px;
   padding: 8px 12px;
-  background: var(--color-bg-secondary, #252540);
-  border-bottom: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .view-toggle-bar button {
@@ -387,10 +387,10 @@ html, body, #app {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: var(--color-bg-tertiary, #2d2d4a);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -399,13 +399,13 @@ html, body, #app {
 
 .view-toggle-bar button:hover {
   background: #353558;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .view-toggle-bar button.active {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-color: var(--color-accent);
 }
 
 .view-toggle-bar button svg {
@@ -644,7 +644,7 @@ html, body, #app {
   width: min(85vw, 400px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-secondary);
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
 }
 
@@ -704,9 +704,9 @@ html, body, #app {
 }
 
 .mobile-pill--active {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-color: var(--color-accent);
 }
 
 .mobile-pill {
@@ -739,9 +739,9 @@ html, body, #app {
 }
 
 .mobile-pill--primary {
-  background: var(--color-accent, #4ade80);
-  color: var(--color-bg-primary, #1a1a2e);
-  border-color: var(--color-accent, #4ade80);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-color: var(--color-accent);
 }
 
 .mobile-pill--close {

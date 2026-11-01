@@ -698,18 +698,18 @@ const bioprojects = computed(() => {
 <style scoped>
 .point-popup {
   position: relative;
-  background: var(--color-bg-primary, #1a1a2e);
-  color: var(--color-text-primary, #e0e0e0);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
   border-radius: 10px;
   padding: 12px;
   min-width: 380px;
   max-width: 480px;
-  box-shadow: 0 4px 20px var(--color-shadow-color, rgba(0, 0, 0, 0.5));
-  border: 1px solid var(--color-border, #3d3d5c);
+  box-shadow: 0 4px 20px var(--color-shadow-color);
+  border: 1px solid var(--color-border);
 }
 .point-popup.cluster-popup { box-sizing: border-box; width: 480px; max-width: min(480px, calc(100vw - 24px)); }
 
-:global(.enhanced-popup .point-popup.cluster-popup) { max-height: min(75vh, 650px); overflow-y: auto; overscroll-behavior: contain; scrollbar-color: var(--color-border-light, #5d5d7c) transparent; }
+:global(.enhanced-popup .point-popup.cluster-popup) { max-height: min(75vh, 650px); overflow-y: auto; overscroll-behavior: contain; scrollbar-color: var(--color-border-light) transparent; }
 
 .popup-actions {
   position: absolute;
@@ -728,15 +728,15 @@ const bioprojects = computed(() => {
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s;
 }
 
 .popup-action-btn:hover {
-  background: var(--color-bg-tertiary, rgba(255, 255, 255, 0.1));
-  color: var(--color-text-primary, #fff);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .popup-action-btn svg {
@@ -762,10 +762,10 @@ const bioprojects = computed(() => {
   position: relative;
   width: 150px;
   height: 150px;
-  background: var(--color-bg-secondary, #252540);
+  background: var(--color-bg-secondary);
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--color-border, #3d3d5c);
+  border: 1px solid var(--color-border);
 }
 
 .photo-container img {
@@ -781,7 +781,7 @@ const bioprojects = computed(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   gap: 8px;
 }
 
@@ -801,7 +801,7 @@ const bioprojects = computed(() => {
   left: 6px;
   right: 6px;
   background: rgba(0, 0, 0, 0.7);
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   font-size: 0.65rem;
   padding: 3px 6px;
   border-radius: 3px;
@@ -849,8 +849,8 @@ const bioprojects = computed(() => {
 }
 
 .count-badge {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
-  color: var(--color-accent, #4ade80);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 2px 6px;
@@ -861,7 +861,7 @@ const bioprojects = computed(() => {
 
 .section-label {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -875,10 +875,10 @@ const bioprojects = computed(() => {
 .individual-select {
   width: 100%;
   padding: 6px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-family: monospace;
   cursor: pointer;
@@ -886,21 +886,21 @@ const bioprojects = computed(() => {
 }
 
 .individual-select:hover {
-  border-color: var(--color-border-light, #5d5d7c);
+  border-color: var(--color-border-light);
 }
 
 .individual-select:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-subtle);
 }
 
 .single-individual-id {
   padding: 6px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-info, #14b8a6);
+  color: var(--color-info);
   font-size: 0.8rem;
   font-family: monospace;
 }
@@ -911,7 +911,7 @@ const bioprojects = computed(() => {
   flex-direction: column;
   gap: 5px;
   padding-top: 8px;
-  border-top: 1px solid var(--color-border, #3d3d5c);
+  border-top: 1px solid var(--color-border);
 }
 
 .detail-row {
@@ -922,13 +922,13 @@ const bioprojects = computed(() => {
 }
 
 .detail-label {
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   flex-shrink: 0;
   min-width: 55px;
 }
 
 .detail-value {
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   word-break: break-word;
 }
 
@@ -962,10 +962,10 @@ const bioprojects = computed(() => {
 .taxonomy-select {
   width: 100%;
   padding: 6px 8px;
-  background: var(--color-bg-secondary, #252540);
-  border: 1px solid var(--color-border, #3d3d5c);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
   font-style: italic;
   cursor: pointer;
@@ -973,31 +973,31 @@ const bioprojects = computed(() => {
 }
 
 .taxonomy-select:hover {
-  border-color: var(--color-border-light, #5d5d7c);
+  border-color: var(--color-border-light);
 }
 
 .taxonomy-select:focus {
   outline: none;
-  border-color: var(--color-accent, #4ade80);
-  box-shadow: 0 0 0 2px var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-subtle);
 }
 
 .divider {
   height: 1px;
-  background: var(--color-border, #3d3d5c);
+  background: var(--color-border);
   margin: 4px 0;
 }
 
 .location-summary {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.05));
-  border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-subtle);
   border-radius: 6px;
   padding: 8px;
 }
 
 .summary-title {
   font-size: 0.7rem;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -1007,14 +1007,14 @@ const bioprojects = computed(() => {
   font-style: italic;
 }
 
-.cluster-sites { margin: 7px 0; border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15)); }
-.cluster-site { display: flex; align-items: center; gap: 6px; padding: 3px 0; border-bottom: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15)); }
-.cluster-site-label { display: flex; align-items: baseline; gap: 5px; flex: 1; min-width: 0; color: var(--color-text-primary, #e0e0e0); font-size: .72rem; line-height: 1.2; }
-.cluster-site-label > button { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 0; border: 0; background: transparent; color: var(--color-text-primary, #e0e0e0); font: inherit; text-align: left; cursor: pointer; }
-.cluster-site-label small { flex: none; color: var(--color-text-secondary, #aaa); font-size: .68rem; font-variant-numeric: tabular-nums; }
-.cluster-site-label > button:hover { color: var(--color-accent, #4ade80); text-decoration: underline; }
-.cluster-site-label > button:focus-visible, .cluster-sites-toggle:focus-visible { outline: 2px solid var(--color-accent, #4ade80); outline-offset: 2px; }
-.cluster-sites-toggle { margin-top: 6px; padding: 2px 0; border: 0; background: transparent; color: var(--color-accent, #4ade80); font: inherit; font-size: .7rem; cursor: pointer; }
+.cluster-sites { margin: 7px 0; border-top: 1px solid var(--color-accent-subtle); }
+.cluster-site { display: flex; align-items: center; gap: 6px; padding: 3px 0; border-bottom: 1px solid var(--color-accent-subtle); }
+.cluster-site-label { display: flex; align-items: baseline; gap: 5px; flex: 1; min-width: 0; color: var(--color-text-primary); font-size: .72rem; line-height: 1.2; }
+.cluster-site-label > button { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 0; border: 0; background: transparent; color: var(--color-text-primary); font: inherit; text-align: left; cursor: pointer; }
+.cluster-site-label small { flex: none; color: var(--color-text-secondary); font-size: .68rem; font-variant-numeric: tabular-nums; }
+.cluster-site-label > button:hover { color: var(--color-accent); text-decoration: underline; }
+.cluster-site-label > button:focus-visible, .cluster-sites-toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.cluster-sites-toggle { margin-top: 6px; padding: 2px 0; border: 0; background: transparent; color: var(--color-accent); font: inherit; font-size: .7rem; cursor: pointer; }
 
 .coords {
   font-family: monospace;
@@ -1027,25 +1027,25 @@ const bioprojects = computed(() => {
 .summary-header { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-right: 60px; }
 .summary-place { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .summary-name { font-size: 0.95rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.summary-meta { font-size: 0.72rem; color: var(--color-text-secondary, #aaa); }
+.summary-meta { font-size: 0.72rem; color: var(--color-text-secondary); }
 .summary-stats { margin-top: 0; padding-top: 0; border-top: 0; align-items: baseline; flex-wrap: wrap; }
 .summary-stats .sex-stats { margin: 0 0 0 auto; padding: 0; border: 0; }
 .species-summary { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow-y: auto; }
-.species-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 64px 28px 14px; align-items: center; gap: 8px; width: 100%; padding: 5px 4px; border: 0; border-radius: 4px; background: transparent; color: var(--color-text-primary, #e0e0e0); font: inherit; text-align: left; cursor: pointer; }
+.species-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 64px 28px 14px; align-items: center; gap: 8px; width: 100%; padding: 5px 4px; border: 0; border-radius: 4px; background: transparent; color: var(--color-text-primary); font: inherit; text-align: left; cursor: pointer; }
 .no-dots .species-row { grid-template-columns: minmax(0, 1fr) 64px 28px 14px; }
-.species-row:hover, .species-row:focus-visible { background: var(--color-bg-tertiary, #2d2d4a); outline: none; }
-.species-row:hover .species-row-chevron { color: var(--color-accent, #4ade80); }
+.species-row:hover, .species-row:focus-visible { background: var(--color-bg-tertiary); outline: none; }
+.species-row:hover .species-row-chevron { color: var(--color-accent); }
 .species-dots { display: flex; gap: 2px; }
 .species-dot { width: 7px; height: 7px; border-radius: 50%; }
 .species-row-name { font-size: 0.78rem; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.species-row-bar { height: 4px; border-radius: 2px; background: var(--color-bg-tertiary, #2d2d4a); overflow: hidden; }
-.species-row-bar > span { display: block; height: 100%; background: var(--color-accent, #4ade80); opacity: 0.7; }
-.species-row-count { font-size: 0.75rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--color-text-secondary, #aaa); }
-.species-row-chevron { color: var(--color-text-muted, #666); }
+.species-row-bar { height: 4px; border-radius: 2px; background: var(--color-bg-tertiary); overflow: hidden; }
+.species-row-bar > span { display: block; height: 100%; background: var(--color-accent); opacity: 0.7; }
+.species-row-count { font-size: 0.75rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--color-text-secondary); }
+.species-row-chevron { color: var(--color-text-muted); }
 .popup-crumbs { display: flex; align-items: center; gap: 6px; min-width: 0; margin: -2px 60px 8px 0; font-size: 0.72rem; }
-.crumb-place { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-text-secondary, #aaa); }
-.crumb-place::before { content: '·'; margin-right: 6px; color: var(--color-text-muted, #666); }
-.popup-back { display: inline-flex; flex-shrink: 0; align-items: center; gap: 2px; padding: 2px 4px 2px 0; border: 0; background: transparent; color: var(--color-accent, #4ade80); font: inherit; cursor: pointer; }
+.crumb-place { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-text-secondary); }
+.crumb-place::before { content: '·'; margin-right: 6px; color: var(--color-text-muted); }
+.popup-back { display: inline-flex; flex-shrink: 0; align-items: center; gap: 2px; padding: 2px 4px 2px 0; border: 0; background: transparent; color: var(--color-accent); font: inherit; cursor: pointer; }
 .popup-back:hover { text-decoration: underline; }
 
 .location-stats {
@@ -1053,7 +1053,7 @@ const bioprojects = computed(() => {
   gap: 16px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-top: 1px solid var(--color-accent-subtle);
 }
 
 .stat {
@@ -1065,12 +1065,12 @@ const bioprojects = computed(() => {
 .stat-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
 }
 
 .stat-label {
   font-size: 0.7rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
 }
 
 /* Observation URL Link */
@@ -1080,10 +1080,10 @@ const bioprojects = computed(() => {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.1));
-  border: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.3));
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-subtle);
   border-radius: 5px;
-  color: var(--color-accent, #4ade80);
+  color: var(--color-accent);
   font-size: 0.75rem;
   text-decoration: none;
   transition: all 0.2s;
@@ -1091,9 +1091,9 @@ const bioprojects = computed(() => {
 }
 
 .observation-link:hover {
-  background: var(--color-accent-subtle, rgba(74, 222, 128, 0.2));
-  border-color: var(--color-accent, rgba(74, 222, 128, 0.5));
-  color: var(--color-accent-hover, #86efac);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent-hover);
 }
 
 .observation-link svg {
@@ -1108,7 +1108,7 @@ const bioprojects = computed(() => {
   gap: 12px;
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px solid var(--color-accent-subtle, rgba(74, 222, 128, 0.15));
+  border-top: 1px solid var(--color-accent-subtle);
 }
 
 .sex-count {
@@ -1128,7 +1128,7 @@ const bioprojects = computed(() => {
 }
 
 .sex-count.unknown {
-  color: var(--color-text-muted, #9ca3af); /* Gray for unknown */
+  color: var(--color-text-muted); /* Gray for unknown */
 }
 
 /* GoaT genome line (expands to details) */
@@ -1177,7 +1177,7 @@ const bioprojects = computed(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1236,7 +1236,7 @@ const bioprojects = computed(() => {
 
 .goat-label {
   font-size: 0.6rem;
-  color: var(--color-text-muted, #888);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
@@ -1244,12 +1244,12 @@ const bioprojects = computed(() => {
 .goat-value {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-text-primary, #e0e0e0);
+  color: var(--color-text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .goat-value.estimated {
-  color: var(--color-text-secondary, #aaa);
+  color: var(--color-text-secondary);
 }
 
 .est-badge {
@@ -1279,7 +1279,7 @@ const bioprojects = computed(() => {
   padding-top: 6px;
   border-top: 1px solid rgba(59, 130, 246, 0.15);
   font-size: 0.55rem;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
