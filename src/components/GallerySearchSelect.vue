@@ -74,6 +74,7 @@ function selectOption(option) {
       :value="search"
       :placeholder="selectedOption?.label || placeholder"
       class="gallery-search-input"
+      :aria-label="placeholder"
       @focus="open"
       @input="search = $event.target.value; isOpen = true"
       @blur="closeSoon"

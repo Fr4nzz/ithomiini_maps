@@ -702,7 +702,8 @@ html, body, #app {
   position: fixed;
   top: 106px;
   left: 10px;
-  z-index: 90;
+  /* Under the Field sites and detail panels (25, 35), which open over it. */
+  z-index: 20;
   min-height: 32px;
   padding: 4px 12px;
   border: 1px solid var(--color-border-control);

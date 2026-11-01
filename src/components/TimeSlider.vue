@@ -169,6 +169,7 @@ const isFilterActive = computed(() => {
       <input
         type="range"
         class="range-input range-min"
+        aria-label="From"
         :min="monthRange.min"
         :max="monthRange.max"
         :value="dragMin"
@@ -178,6 +179,7 @@ const isFilterActive = computed(() => {
       <input
         type="range"
         class="range-input range-max"
+        aria-label="To"
         :min="monthRange.min"
         :max="monthRange.max"
         :value="dragMax"

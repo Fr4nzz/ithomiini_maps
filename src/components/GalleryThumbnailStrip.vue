@@ -81,7 +81,7 @@ defineExpose({
 
 <template>
   <div class="thumbnail-strip">
-    <button class="scroll-arrow scroll-arrow-left" @click="scrollThumbnails(-1)">
+    <button class="scroll-arrow scroll-arrow-left" aria-label="Scroll thumbnails left" @click="scrollThumbnails(-1)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="m15 18-6-6 6-6"/>
       </svg>
@@ -210,7 +210,7 @@ defineExpose({
       </template>
     </div>
 
-    <button class="scroll-arrow scroll-arrow-right" @click="scrollThumbnails(1)">
+    <button class="scroll-arrow scroll-arrow-right" aria-label="Scroll thumbnails right" @click="scrollThumbnails(1)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="m9 18 6-6-6-6"/>
       </svg>

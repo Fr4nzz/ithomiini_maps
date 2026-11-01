@@ -1836,6 +1836,7 @@ const exportTableCsv = () => {
     <div class="pagination" v-if="totalPages > 1">
       <button 
         class="page-btn"
+        aria-label="First page"
         :disabled="currentPage === 1"
         @click="currentPage = 1"
       >
@@ -1847,6 +1848,7 @@ const exportTableCsv = () => {
       
       <button 
         class="page-btn"
+        aria-label="Previous page"
         :disabled="currentPage === 1"
         @click="currentPage--"
       >
@@ -1869,6 +1871,7 @@ const exportTableCsv = () => {
       
       <button 
         class="page-btn"
+        aria-label="Next page"
         :disabled="currentPage === totalPages"
         @click="currentPage++"
       >
@@ -1879,6 +1882,7 @@ const exportTableCsv = () => {
       
       <button 
         class="page-btn"
+        aria-label="Last page"
         :disabled="currentPage === totalPages"
         @click="currentPage = totalPages"
       >

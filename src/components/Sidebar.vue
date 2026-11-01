@@ -781,7 +781,7 @@ const updateExportHeight = (value) => {
           <template v-for="level in TAXONOMY_LEVELS" :key="level.key">
             <div v-if="level.key === 'sex' && enabledTaxonomyLevels.has(level.key)" class="filter-stack-item">
               <label class="filter-stack-label">Sex</label>
-              <select class="sex-select" v-model="store.filters.sex">
+              <select class="sex-select" aria-label="Sex" v-model="store.filters.sex">
                 <option value="all">All (♂ + ♀)</option>
                 <option value="male">♂ Male only</option>
                 <option value="female">♀ Female only</option>
@@ -1060,6 +1060,7 @@ const updateExportHeight = (value) => {
                 <input
                   type="number"
                   class="chr-input"
+                  aria-label="Chromosome number: min"
                   placeholder="Min"
                   v-model="goatChromosomeMinInput"
                   @change="store.filters.goatChromosomeMin = goatChromosomeMinInput ? Number(goatChromosomeMinInput) : null"
@@ -1070,6 +1071,7 @@ const updateExportHeight = (value) => {
                 <input
                   type="number"
                   class="chr-input"
+                  aria-label="Chromosome number: max"
                   placeholder="Max"
                   v-model="goatChromosomeMaxInput"
                   @change="store.filters.goatChromosomeMax = goatChromosomeMaxInput ? Number(goatChromosomeMaxInput) : null"

@@ -739,6 +739,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
                 v-model="query"
                 type="text"
                 class="cmd-input"
+                aria-label="Smart Search"
                 placeholder="Search species, genera, subspecies, countries, mimicry rings..."
                 autocomplete="off"
                 spellcheck="false"
