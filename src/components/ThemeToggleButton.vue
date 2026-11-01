@@ -15,6 +15,8 @@ const title = () => `Theme: ${themeStore.isDarkMode ? 'dark' : 'light'} (${theme
 function toggle() {
   themeStore.toggleMode()
   flipped.value = false
+  // The flag is cleared when the turn ends (or at once under reduced motion), so an OS swap later does not replay it.
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
   nextTick(() => { flipped.value = true })
 }
 </script>
@@ -29,6 +31,7 @@ function toggle() {
     :aria-pressed="themeStore.isDarkMode"
     data-theme-toggle
     @click="toggle"
+    @animationend="flipped = false"
   >
     <Moon v-if="themeStore.isDarkMode" class="mode-icon" aria-hidden="true" />
     <Sun v-else class="mode-icon" aria-hidden="true" />

@@ -24,7 +24,8 @@ const themeStore = useThemeStore()
 .mode-system {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  white-space: nowrap;
   gap: 6px;
   width: 100%;
   min-height: 32px;
