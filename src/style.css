@@ -224,6 +224,16 @@ select, input, textarea {
   .title-control-button {
     min-height: 44px;
   }
+
+  .maplibregl-ctrl-group button,
+  .dropdown-trigger,
+  .mode-toggle-btn,
+  .bbox-draw-btn,
+  .label-button,
+  .locality-map-link {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 /* Shared Animations */

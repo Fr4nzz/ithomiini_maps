@@ -322,23 +322,23 @@ function resetRangeSettings() {
 }
 
 .scatter-toggle {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-info-fill) 10%, transparent) 0%, color-mix(in srgb, var(--color-info-fill) 5%, transparent) 100%);
-  border: 1px solid color-mix(in srgb, var(--color-info-fill) 20%, transparent);
+  background: linear-gradient(135deg, rgb(var(--color-info-fill-rgb) / 0.1) 0%, rgb(var(--color-info-fill-rgb) / 0.05) 100%);
+  border: 1px solid rgb(var(--color-info-fill-rgb) / 0.2);
 }
 
 .scatter-toggle:hover {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-info-fill) 15%, transparent) 0%, color-mix(in srgb, var(--color-info-fill) 8%, transparent) 100%);
-  border-color: color-mix(in srgb, var(--color-info-fill) 30%, transparent);
+  background: linear-gradient(135deg, rgb(var(--color-info-fill-rgb) / 0.15) 0%, rgb(var(--color-info-fill-rgb) / 0.08) 100%);
+  border-color: rgb(var(--color-info-fill-rgb) / 0.3);
 }
 
 .legend-toggle {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 10%, transparent) 0%, color-mix(in srgb, var(--color-accent) 5%, transparent) 100%);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
+  background: linear-gradient(135deg, rgb(var(--color-accent-rgb) / 0.1) 0%, rgb(var(--color-accent-rgb) / 0.05) 100%);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.2);
 }
 
 .legend-toggle:hover {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, color-mix(in srgb, var(--color-accent) 8%, transparent) 100%);
-  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: linear-gradient(135deg, rgb(var(--color-accent-rgb) / 0.15) 0%, rgb(var(--color-accent-rgb) / 0.08) 100%);
+  border-color: rgb(var(--color-accent-rgb) / 0.3);
 }
 
 /* Toggle Badges */
@@ -350,25 +350,25 @@ function resetRangeSettings() {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  background: color-mix(in srgb, var(--color-text-muted) 20%, transparent);
+  background: rgb(var(--color-text-muted-rgb) / 0.2);
   color: var(--color-text-muted);
   border: 1px solid transparent;
 }
 
 .toggle-badge-inline:hover {
-  background: color-mix(in srgb, var(--color-text-muted) 30%, transparent);
-  border-color: color-mix(in srgb, var(--color-text-muted) 40%, transparent);
+  background: rgb(var(--color-text-muted-rgb) / 0.3);
+  border-color: rgb(var(--color-text-muted-rgb) / 0.4);
 }
 
 .toggle-badge-inline.active {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   color: var(--color-accent-text);
-  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  border-color: rgb(var(--color-accent-rgb) / 0.3);
 }
 
 .toggle-badge-inline.active:hover {
-  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
-  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.25);
+  border-color: rgb(var(--color-accent-rgb) / 0.5);
 }
 
 /* Settings Panel & Rows */
@@ -410,8 +410,8 @@ function resetRangeSettings() {
 .cluster-points-toggle,
 .range-points-toggle {
   margin-top: 8px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 8%, transparent) 0%, color-mix(in srgb, var(--color-accent) 3%, transparent) 100%);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: linear-gradient(135deg, rgb(var(--color-accent-rgb) / 0.08) 0%, rgb(var(--color-accent-rgb) / 0.03) 100%);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .style-select {
@@ -495,7 +495,7 @@ function resetRangeSettings() {
 .setting-input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
+  box-shadow: 0 0 0 2px rgb(var(--color-accent-rgb) / 0.15);
 }
 
 /* Reset Heatmap Button */

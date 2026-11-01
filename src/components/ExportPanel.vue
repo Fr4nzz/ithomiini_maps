@@ -669,7 +669,7 @@ const activeTab = ref(props.initialTab || 'export')
   display: flex;
   gap: 10px;
   padding: 12px;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
   border-radius: 8px;
   font-size: 0.8rem;
   color: var(--color-text-secondary);
@@ -727,8 +727,8 @@ const activeTab = ref(props.initialTab || 'export')
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.3);
   border-radius: 4px;
   color: var(--color-accent-text);
   font-size: 0.75rem;
@@ -737,8 +737,8 @@ const activeTab = ref(props.initialTab || 'export')
 }
 
 .gbif-link:hover {
-  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
-  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.2);
+  border-color: rgb(var(--color-accent-rgb) / 0.5);
 }
 
 .gbif-link svg {

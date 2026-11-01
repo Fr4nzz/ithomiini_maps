@@ -131,7 +131,7 @@ function selectOption(option) {
 .gallery-search-input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
+  box-shadow: 0 0 0 2px rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .select-caret {
@@ -177,7 +177,7 @@ function selectOption(option) {
 
 .gallery-search-option:hover,
 .gallery-search-option.selected {
-  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.12);
 }
 
 .option-label {

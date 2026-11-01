@@ -1133,8 +1133,8 @@ const bioprojects = computed(() => {
 /* GoaT genome line (expands to details) */
 .goat-section {
   margin-top: 8px;
-  background: color-mix(in srgb, var(--color-info-fill) 6%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-info-fill) 20%, transparent);
+  background: rgb(var(--color-info-fill-rgb) / 0.06);
+  border: 1px solid rgb(var(--color-info-fill-rgb) / 0.2);
   border-radius: 8px;
   padding: 6px 10px;
 }
@@ -1210,7 +1210,7 @@ const bioprojects = computed(() => {
 }
 
 .goat-header-link:hover {
-  background: color-mix(in srgb, var(--color-info-fill) 15%, transparent);
+  background: rgb(var(--color-info-fill-rgb) / 0.15);
   color: var(--color-info-text);
 }
 
@@ -1276,7 +1276,7 @@ const bioprojects = computed(() => {
 .goat-citation {
   margin-top: 8px;
   padding-top: 6px;
-  border-top: 1px solid color-mix(in srgb, var(--color-info-fill) 15%, transparent);
+  border-top: 1px solid rgb(var(--color-info-fill-rgb) / 0.15);
   font-size: 0.55rem;
   color: var(--color-text-muted);
   font-style: italic;

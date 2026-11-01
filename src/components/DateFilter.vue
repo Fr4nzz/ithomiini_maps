@@ -262,7 +262,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 }
 
 .range-btn.active {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   border-color: var(--color-accent);
   color: var(--color-accent-text);
 }
@@ -320,7 +320,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
   align-items: center;
   justify-content: space-between;
   padding: 8px 10px;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
   border-radius: 6px;
   margin-bottom: 10px;
 }
@@ -341,7 +341,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 .btn-clear {
   padding: 4px 10px;
   background: transparent;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.3);
   border-radius: 4px;
   color: var(--color-accent-text);
   font-size: 0.7rem;
@@ -350,7 +350,7 @@ watch(() => [store.filters.dateStart, store.filters.dateEnd], ([start, end]) => 
 }
 
 .btn-clear:hover {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
 }
 
 /* Filter note */

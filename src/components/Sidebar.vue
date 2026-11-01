@@ -1009,7 +1009,7 @@ const updateExportHeight = (value) => {
               <span v-if="otherFilterActiveCount('goat') > 0" class="filter-tile-count">
                 {{ otherFilterActiveCount('goat') }}
               </span>
-              <span v-if="store.goatLoading" class="active-badge" style="background: color-mix(in srgb, var(--color-info-fill) 15%, transparent); color: var(--color-info-text); margin-left: 6px;">
+              <span v-if="store.goatLoading" class="active-badge" style="background: rgb(var(--color-info-fill-rgb) / 0.15); color: var(--color-info-text); margin-left: 6px;">
                 Loading...
               </span>
             </button>

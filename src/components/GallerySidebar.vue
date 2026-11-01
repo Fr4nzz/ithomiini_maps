@@ -441,15 +441,15 @@ function statusClass(tier) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  border: 1px solid rgb(var(--color-text-primary-rgb) / 0.08);
   border-radius: 5px;
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
   color: var(--color-text-secondary);
   cursor: pointer;
 }
 
 .order-move-btn:not(:disabled):hover {
-  background: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.1);
   color: var(--color-text-primary);
 }
 
@@ -508,7 +508,7 @@ function statusClass(tier) {
 }
 
 .count-badge {
-  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.2);
   color: var(--color-accent-text);
   font-size: 0.7rem;
   font-weight: 700;
@@ -545,7 +545,7 @@ function statusClass(tier) {
 .sidebar-select:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
+  box-shadow: 0 0 0 2px rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .sidebar-select.individual-select {
@@ -612,8 +612,8 @@ function statusClass(tier) {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.3);
   border-radius: 5px;
   color: var(--color-accent-text);
   font-size: 0.75rem;
@@ -623,8 +623,8 @@ function statusClass(tier) {
 }
 
 .observation-link:hover {
-  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
-  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.2);
+  border-color: rgb(var(--color-accent-rgb) / 0.5);
   color: var(--color-accent-text);
 }
 
@@ -642,7 +642,7 @@ function statusClass(tier) {
   width: 100%;
   margin-top: 8px;
   padding: 8px 10px;
-  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.12);
   border: 1px solid var(--color-accent);
   border-radius: 5px;
   color: var(--color-accent-text);
@@ -653,7 +653,7 @@ function statusClass(tier) {
 }
 
 .view-on-map-btn:hover {
-  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.22);
   border-color: var(--color-accent);
   color: var(--color-accent-text);
 }
@@ -674,8 +674,8 @@ function statusClass(tier) {
 }
 
 .search-summary {
-  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.05);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.15);
   border-radius: 6px;
   padding: 10px;
 }
@@ -713,7 +713,7 @@ function statusClass(tier) {
 .stat-row.total-row {
   margin-top: 4px;
   padding-top: 6px;
-  border-top: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border-top: 1px solid rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .stat-row.total-row .stat-value {
@@ -768,7 +768,7 @@ function statusClass(tier) {
 }
 
 .proxy-option:hover {
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
 }
 
 .proxy-option input[type="radio"] {

@@ -310,13 +310,13 @@ const segmentStyle = (segment) => ({
 }
 
 :deep(.multiselect__option--selected) {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   color: var(--color-accent-text);
   font-weight: 500;
 }
 
 :deep(.multiselect__option--selected.multiselect__option--highlight) {
-  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.25);
 }
 
 /* Species headers in grouped lists are labels, not choices. */
@@ -511,7 +511,7 @@ const segmentStyle = (segment) => ({
   font-size: 0.66rem;
   line-height: 1.1;
   font-weight: 600;
-  background: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.08);
   color: var(--color-text-secondary);
 }
 

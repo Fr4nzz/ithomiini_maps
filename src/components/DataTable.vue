@@ -2098,7 +2098,7 @@ const exportTableCsv = () => {
 }
 
 .view-mode-toggle button.active {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   color: var(--color-accent-text);
 }
 
@@ -2153,7 +2153,7 @@ const exportTableCsv = () => {
 }
 
 .column-filter-toggle.active {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   border-color: var(--color-accent);
   color: var(--color-accent-text);
 }
@@ -2402,7 +2402,7 @@ const exportTableCsv = () => {
 }
 
 .data-table tbody tr:hover {
-  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.05);
 }
 
 /* Cell Types */
@@ -2534,7 +2534,7 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 6px;
   padding: 3px 8px;
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
   border-radius: 4px;
   font-size: 0.75rem;
 }
@@ -2553,7 +2553,7 @@ const exportTableCsv = () => {
   align-items: center;
   gap: 6px;
   padding: 3px 8px;
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
   border-radius: 4px;
   font-size: 0.75rem;
   color: var(--curated-color);
@@ -2625,12 +2625,12 @@ const exportTableCsv = () => {
 }
 
 .genome-text.direct, .genome-link.direct {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   color: var(--color-accent-text);
 }
 
 .genome-text.estimated, .genome-link:not(.direct) {
-  background: color-mix(in srgb, var(--color-info-fill) 12%, transparent);
+  background: rgb(var(--color-info-fill-rgb) / 0.12);
   color: var(--color-info-text);
 }
 
@@ -2726,8 +2726,8 @@ const exportTableCsv = () => {
   min-height: 24px;
   padding: 3px 7px;
   border-radius: 5px;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 8%, transparent);
-  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+  border: 1px solid rgb(var(--color-text-primary-rgb) / 0.08);
+  background: rgb(var(--color-text-primary-rgb) / 0.06);
   color: var(--color-text-primary);
   font-size: 0.74rem;
   line-height: 1.2;
@@ -2814,8 +2814,8 @@ const exportTableCsv = () => {
 
 .host-chip.species,
 .host-chip.high {
-  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
-  border-color: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.14);
+  border-color: rgb(var(--color-accent-rgb) / 0.28);
   color: #86efac;
 }
 
@@ -2884,7 +2884,7 @@ const exportTableCsv = () => {
   min-width: 34px;
   padding: 3px 8px;
   border-radius: 5px;
-  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.06);
   color: var(--color-text-secondary);
   font-size: 0.72rem;
   font-weight: 700;
@@ -2894,21 +2894,21 @@ const exportTableCsv = () => {
 .confidence-pill.species,
 .confidence-pill.high,
 .confidence-pill.direct {
-  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.16);
   color: var(--color-accent-text);
 }
 
 .confidence-pill.genus,
 .confidence-pill.medium,
 .confidence-pill.literature {
-  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  background: rgb(var(--color-warning-rgb) / 0.15);
   color: var(--color-warning-text);
 }
 
 .confidence-pill.family,
 .confidence-pill.low,
 .confidence-pill.needs-check {
-  background: color-mix(in srgb, var(--color-danger) 15%, transparent);
+  background: rgb(var(--color-danger-rgb) / 0.15);
   color: var(--color-danger-text);
 }
 
@@ -2974,14 +2974,14 @@ const exportTableCsv = () => {
   align-items: center;
   padding: 3px 7px;
   border-radius: 5px;
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
   color: var(--color-text-muted);
   font-size: 0.72rem;
   font-weight: 700;
 }
 
 .mapped-badge.mapped {
-  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.14);
   color: var(--color-accent-text);
 }
 

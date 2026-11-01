@@ -213,7 +213,7 @@ defineExpose({ open, close, toggleOpen })
 
 .legend-dropdown-panel .dropdown-option.selected {
   color: var(--color-accent-text);
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
 }
 
 .legend-dropdown-panel .dropdown-divider {

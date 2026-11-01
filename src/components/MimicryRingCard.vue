@@ -209,7 +209,7 @@ const onNextSubspecies = (event) => {
 
 .ring-card.selected {
   border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
 }
 
 .ring-card.unavailable {

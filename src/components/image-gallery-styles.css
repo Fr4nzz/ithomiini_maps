@@ -63,7 +63,7 @@
   width: 56px;
   height: 56px;
   margin-bottom: 20px;
-  border: 3px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+  border: 3px solid rgb(var(--color-text-primary-rgb) / 0.12);
   border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -138,7 +138,7 @@
 .image-loading .spinner {
   width: 50px;
   height: 50px;
-  border: 3px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border: 3px solid rgb(var(--color-text-primary-rgb) / 0.1);
   border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -310,11 +310,11 @@
 }
 
 .scroll-arrow-left {
-  border-right: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border-right: 1px solid rgb(var(--color-text-primary-rgb) / 0.1);
 }
 
 .scroll-arrow-right {
-  border-left: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border-left: 1px solid rgb(var(--color-text-primary-rgb) / 0.1);
 }
 
 .thumbnail-scroll {
@@ -344,9 +344,9 @@
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.06);
   border: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border-bottom: 1px solid rgb(var(--color-text-primary-rgb) / 0.1);
   /* The species colour marks the group's edge; the name stays readable in both modes. */
   color: var(--color-text-primary);
   font-size: 0.7rem;
@@ -406,7 +406,7 @@
 }
 
 .preview-container:hover {
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
 }
 
 .preview-thumb {
@@ -421,7 +421,7 @@
 }
 
 .preview-thumb:hover {
-  border-color: color-mix(in srgb, var(--color-text-primary) 50%, transparent);
+  border-color: rgb(var(--color-text-primary-rgb) / 0.5);
 }
 
 .expand-badge {
@@ -464,7 +464,7 @@
   padding: 2px 6px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  border-bottom: 1px solid rgb(var(--color-text-primary-rgb) / 0.05);
   color: var(--color-text-secondary);
   font-size: 0.7rem;
   font-style: italic;
@@ -524,13 +524,13 @@
 }
 
 .thumbnail:hover {
-  border-color: color-mix(in srgb, var(--color-text-primary) 40%, transparent);
+  border-color: rgb(var(--color-text-primary-rgb) / 0.4);
   transform: scale(1.05);
 }
 
 .thumbnail.active {
   border-color: var(--color-accent);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent) 50%, transparent);
+  box-shadow: 0 0 8px rgb(var(--color-accent-rgb) / 0.5);
 }
 
 .thumbnail img {
@@ -549,20 +549,20 @@
 .thumbnail-scroll::-webkit-scrollbar-track,
 .species-content::-webkit-scrollbar-track,
 .thumbnails-container::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
 }
 
 .thumbnail-scroll::-webkit-scrollbar-thumb,
 .species-content::-webkit-scrollbar-thumb,
 .thumbnails-container::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--color-text-primary) 20%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.2);
   border-radius: 2px;
 }
 
 .thumbnail-scroll::-webkit-scrollbar-thumb:hover,
 .species-content::-webkit-scrollbar-thumb:hover,
 .thumbnails-container::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--color-text-primary) 35%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.35);
 }
 
 /* Responsive */
@@ -628,7 +628,7 @@
   gap: 0.15rem;
   color: var(--color-accent-text);
   border-style: dashed;
-  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.12);
   font-weight: 700;
 }
 
@@ -663,9 +663,9 @@
     left: 14px;
     z-index: 40;
     padding: 8px 14px;
-    border: 1px solid color-mix(in srgb, var(--color-text-primary) 14%, transparent);
+    border: 1px solid rgb(var(--color-text-primary-rgb) / 0.14);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--color-bg-primary) 85%, transparent);
+    background: rgb(var(--color-bg-primary-rgb) / 0.85);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: var(--color-text-primary);
@@ -704,8 +704,8 @@
     gap: 2px;
     padding: 3px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--color-bg-primary) 85%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-text-primary) 14%, transparent);
+    background: rgb(var(--color-bg-primary-rgb) / 0.85);
+    border: 1px solid rgb(var(--color-text-primary-rgb) / 0.14);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }

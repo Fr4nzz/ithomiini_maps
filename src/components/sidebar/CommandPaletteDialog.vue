@@ -942,7 +942,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-close:hover {
-  background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.06);
   color: var(--color-text-primary);
 }
 
@@ -1004,7 +1004,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-item--active,
 .cmd-item:focus-visible {
-  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.12);
   outline: 0;
 }
 
@@ -1042,7 +1042,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   min-width: 32px;
   text-align: center;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
   color: var(--color-accent-text);
   font-size: 0.72rem;
   font-weight: 700;
@@ -1078,7 +1078,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   gap: 2px;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+  border-bottom: 1px solid rgb(var(--color-text-primary-rgb) / 0.06);
 }
 
 .cmd-chips {
@@ -1095,7 +1095,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 6px 10px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.03);
   color: var(--color-text-primary);
   font-size: 0.78rem;
   cursor: pointer;
@@ -1115,7 +1115,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   padding: 10px 12px;
   border: 1px solid var(--color-warning-text);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+  background: rgb(var(--color-warning-rgb) / 0.08);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1140,9 +1140,9 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 .cmd-zero-fix {
   margin-top: 2px;
   padding: 6px 10px;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.4);
   border-radius: 6px;
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   color: var(--color-accent-text);
   font-size: 0.74rem;
   font-weight: 600;
@@ -1151,7 +1151,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-zero-fix:hover {
-  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.25);
 }
 
 .cmd-level-group {
@@ -1173,9 +1173,9 @@ defineExpose({ open: () => { dialogOpen.value = true } })
   align-self: center;
   margin: 2px 0;
   padding: 2px 10px;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+  border: 1px solid rgb(var(--color-text-primary-rgb) / 0.12);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-text-primary) 4%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.04);
   color: var(--color-text-secondary);
   font-size: 0.62rem;
   font-weight: 700;
@@ -1185,8 +1185,8 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 }
 
 .cmd-combinator-btn--or {
-  border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
-  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  border-color: rgb(var(--color-accent-rgb) / 0.4);
+  background: rgb(var(--color-accent-rgb) / 0.12);
   color: var(--color-accent-text);
 }
 
@@ -1196,7 +1196,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-chip:hover {
   border-color: var(--color-danger-text);
-  background: color-mix(in srgb, var(--color-danger) 8%, transparent);
+  background: rgb(var(--color-danger-rgb) / 0.08);
 }
 
 .cmd-chip-type {

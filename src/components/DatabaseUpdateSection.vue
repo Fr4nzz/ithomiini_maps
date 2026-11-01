@@ -250,7 +250,7 @@ const triggerDatabaseUpdate = async () => {
 .update-password input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 15%, transparent);
+  box-shadow: 0 0 0 2px rgb(var(--color-accent-rgb) / 0.15);
 }
 
 .update-password input:disabled {
@@ -302,13 +302,13 @@ const triggerDatabaseUpdate = async () => {
 }
 
 .update-message.success {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.3);
   color: var(--color-accent-text);
 }
 
 .update-message.error {
-  background: color-mix(in srgb, var(--color-danger-fill) 12%, transparent);
+  background: rgb(var(--color-danger-fill-rgb) / 0.12);
   border: 1px solid var(--color-danger-text);
   color: var(--color-danger-text);
 }

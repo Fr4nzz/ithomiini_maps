@@ -574,11 +574,11 @@ const clearSelection = () => {
 }
 
 .dropdown-option:hover {
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
 }
 
 .dropdown-option.selected {
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
 }
 
 .option-check {
@@ -630,7 +630,7 @@ const clearSelection = () => {
   gap: 8px;
   margin: 12px 20px 0;
   padding: 10px 14px;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.1);
   border-radius: 8px;
 }
 

@@ -462,7 +462,7 @@ html, body, #app {
   width: 60px;
   height: 60px;
   margin: 0 auto 24px;
-  border: 3px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border: 3px solid rgb(var(--color-text-primary-rgb) / 0.1);
   border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -590,9 +590,9 @@ html, body, #app {
   gap: 6px;
   min-height: 44px;
   padding: 8px 14px 8px 10px;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+  border: 1px solid rgb(var(--color-text-primary-rgb) / 0.12);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--color-bg-primary) 88%, transparent);
+  background: rgb(var(--color-bg-primary-rgb) / 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: var(--color-text-primary);
@@ -624,9 +624,9 @@ html, body, #app {
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 14%, transparent);
+  border: 1px solid rgb(var(--color-text-primary-rgb) / 0.14);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
+  background: rgb(var(--color-bg-primary-rgb) / 0.7);
   color: var(--color-text-primary);
   cursor: pointer;
 }
@@ -760,9 +760,9 @@ html, body, #app {
   gap: 5px;
   min-height: 44px;
   padding: 8px 12px;
-  border: 1px solid color-mix(in srgb, var(--color-text-primary) 18%, transparent);
+  border: 1px solid rgb(var(--color-text-primary-rgb) / 0.18);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-bg-primary) 85%, transparent);
+  background: rgb(var(--color-bg-primary-rgb) / 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: var(--color-text-primary);

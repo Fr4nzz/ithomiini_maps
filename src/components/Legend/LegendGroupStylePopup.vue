@@ -203,7 +203,7 @@ onUnmounted(() => {
 }
 
 .shape-button:hover {
-  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.05);
   border-color: var(--color-text-secondary);
 }
 

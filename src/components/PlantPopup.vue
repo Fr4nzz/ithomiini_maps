@@ -347,7 +347,7 @@ const openGallery = () => {
 }
 
 .open-gallery-btn:hover {
-  background: color-mix(in srgb, var(--color-info-fill) 85%, black);
+  background: #1e40af;
   transform: translateY(-1px);
 }
 

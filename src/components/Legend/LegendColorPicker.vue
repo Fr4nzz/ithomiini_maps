@@ -642,7 +642,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--color-text-primary) 50%, transparent);
+  background: rgb(var(--color-text-primary-rgb) / 0.5);
   border-radius: 50%;
   width: 5px;
   height: 5px;

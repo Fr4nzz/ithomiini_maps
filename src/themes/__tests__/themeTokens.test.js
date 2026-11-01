@@ -96,6 +96,17 @@ describe('theme tokens', () => {
     }
   }
 
+  it('keeps every -rgb channel token equal to its colour (used as rgb(var(--x-rgb) / a) for tints)', () => {
+    for (const mode of ['light', 'dark']) {
+      for (const p of palettes) {
+        const t = tokens(p, mode)
+        for (const [name, channels] of Object.entries(t).filter(([k]) => k.endsWith('-rgb'))) {
+          expect(channels.split(' ').map(Number)).toEqual(parse(t[name.slice(0, -4)], t).slice(0, 3))
+        }
+      }
+    }
+  })
+
   it('lets white text on the scrim read over the brightest photo', () => {
     for (const mode of ['light', 'dark']) {
       const t = shared[mode]

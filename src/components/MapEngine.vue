@@ -1064,5 +1064,5 @@ watch(() => planning.focusRequestId, () => {
 @media (max-width: 600px) { .density-legend { right: 8px; width: 144px; } }
 .map-empty-notice { position: absolute; z-index: 3; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 32px); padding: 10px 12px 10px 16px; border-radius: 8px; color: var(--color-text-primary); background: var(--color-bg-secondary); border: 1px solid var(--color-border); box-shadow: 0 4px 16px rgba(0,0,0,.25); font-size: 13px; }
 .map-empty-notice button { flex: none; padding: 6px 10px; border-radius: 6px; color: var(--color-accent-text); background: transparent; border: 1px solid var(--color-accent); font: inherit; cursor: pointer; }
-.map-empty-notice button:hover { background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+.map-empty-notice button:hover { background: rgb(var(--color-accent-rgb) / 0.12); }
 </style>

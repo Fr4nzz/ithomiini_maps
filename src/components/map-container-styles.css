@@ -638,7 +638,7 @@
 }
 
 .bbox-draw-btn.drawing {
-  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: rgb(var(--color-accent-rgb) / 0.15);
   border-color: var(--color-accent);
   color: var(--color-accent-text);
 }
