@@ -89,6 +89,8 @@ html, body, #app {
 :focus-visible {
   outline: 2px solid var(--color-focus) !important;
   outline-offset: 2px;
+  /* Buttons with `transition: all` would fade the ring in from a 3 px currentColor outline; show it at once. */
+  transition-property: none !important;
 }
 
 /* Links */
@@ -221,8 +223,17 @@ select, input, textarea {
 
   .source-bulk-link,
   .level-option,
-  .title-control-button {
+  .title-control-button,
+  .filter-section-toggle {
     min-height: 44px;
+  }
+
+  .title-control-button {
+    min-width: 32px;
+  }
+
+  input[type="range"] {
+    min-height: 24px;
   }
 
   .maplibregl-ctrl-group button,

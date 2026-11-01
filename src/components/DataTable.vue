@@ -2364,6 +2364,7 @@ const exportTableCsv = () => {
 }
 
 .range-input {
+  min-width: 44px;
   flex: 1;
   min-width: 0;
   padding: 5px 4px !important;

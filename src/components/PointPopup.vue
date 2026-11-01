@@ -1009,7 +1009,7 @@ const bioprojects = computed(() => {
 .cluster-sites { margin: 7px 0; border-top: 1px solid var(--color-accent-subtle); }
 .cluster-site { display: flex; align-items: center; gap: 6px; padding: 3px 0; border-bottom: 1px solid var(--color-accent-subtle); }
 .cluster-site-label { display: flex; align-items: baseline; gap: 5px; flex: 1; min-width: 0; color: var(--color-text-primary); font-size: .72rem; line-height: 1.2; }
-.cluster-site-label > button { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 0; border: 0; background: transparent; color: var(--color-text-primary); font: inherit; text-align: left; cursor: pointer; }
+.cluster-site-label > button { flex: 1; min-width: 0; min-height: 24px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 3px 0; border: 0; background: transparent; color: var(--color-text-primary); font: inherit; text-align: left; cursor: pointer; }
 .cluster-site-label small { flex: none; color: var(--color-text-secondary); font-size: .68rem; font-variant-numeric: tabular-nums; }
 .cluster-site-label > button:hover { color: var(--color-accent-text); text-decoration: underline; }
 .cluster-site-label > button:focus-visible, .cluster-sites-toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }

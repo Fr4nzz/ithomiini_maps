@@ -918,6 +918,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-input {
   flex: 1;
+  min-height: 32px;
   background: transparent;
   border: 0;
   outline: 0;
@@ -1032,7 +1033,7 @@ defineExpose({ open: () => { dialogOpen.value = true } })
 
 .cmd-item-type {
   font-size: 0.72rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
