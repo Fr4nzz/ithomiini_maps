@@ -410,7 +410,6 @@
   min-height: 0;
   height: auto !important;
   max-height: none !important;
-  min-width: 0;
 }
 
 .legend-container.is-folded .legend-title {

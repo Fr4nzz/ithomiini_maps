@@ -728,6 +728,7 @@ function statusClass(tier) {
 
 .collapse-toggle {
   width: 100%;
+  min-height: 24px;
   display: flex;
   align-items: center;
   gap: 6px;

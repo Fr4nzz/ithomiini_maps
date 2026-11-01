@@ -2364,9 +2364,8 @@ const exportTableCsv = () => {
 }
 
 .range-input {
-  min-width: 44px;
   flex: 1;
-  min-width: 0;
+  min-width: 44px;
   padding: 5px 4px !important;
   text-align: center;
   -moz-appearance: textfield;
@@ -2521,13 +2520,13 @@ const exportTableCsv = () => {
   padding: 2px 8px;
   background: rgba(168, 85, 247, 0.15);
   color: #d8b4fe;
-}
-
-:global([data-mode="light"]) .mimicry-badge {
-  color: #7e22ce;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+[data-mode="light"] .mimicry-badge {
+  color: #7e22ce;
 }
 
 .status-badge {
@@ -2773,23 +2772,23 @@ const exportTableCsv = () => {
   color: inherit;
 }
 
-:global([data-mode="light"]) .host-chip-names.has-accepted-name .reported-name {
+[data-mode="light"] .host-chip-names.has-accepted-name .reported-name {
   color: #52606d;
 }
 
-:global([data-mode="light"]) .host-chip.species .accepted-name,
-:global([data-mode="light"]) .host-chip.high .accepted-name {
+[data-mode="light"] .host-chip.species .accepted-name,
+[data-mode="light"] .host-chip.high .accepted-name {
   color: #15803d;
 }
 
-:global([data-mode="light"]) .host-chip.genus .accepted-name,
-:global([data-mode="light"]) .host-chip.medium .accepted-name {
+[data-mode="light"] .host-chip.genus .accepted-name,
+[data-mode="light"] .host-chip.medium .accepted-name {
   color: #a16207;
 }
 
-:global([data-mode="light"]) .host-chip.family .accepted-name,
-:global([data-mode="light"]) .host-chip.low .accepted-name,
-:global([data-mode="light"]) .host-chip.needs-check .accepted-name {
+[data-mode="light"] .host-chip.family .accepted-name,
+[data-mode="light"] .host-chip.low .accepted-name,
+[data-mode="light"] .host-chip.needs-check .accepted-name {
   color: #be123c;
 }
 
@@ -2805,11 +2804,11 @@ const exportTableCsv = () => {
   margin-top: 2px;
 }
 
-:global([data-mode="light"]) .cell-host.has-accepted-host .reported-host-name {
+[data-mode="light"] .cell-host.has-accepted-host .reported-host-name {
   color: #52606d;
 }
 
-:global([data-mode="light"]) .accepted-host-name {
+[data-mode="light"] .accepted-host-name {
   color: #111827;
 }
 
@@ -2836,23 +2835,23 @@ const exportTableCsv = () => {
 }
 
 
-:global([data-mode="light"]) .host-chip.species,
-:global([data-mode="light"]) .host-chip.high {
+[data-mode="light"] .host-chip.species,
+[data-mode="light"] .host-chip.high {
   background: rgba(34, 197, 94, 0.14);
   border-color: rgba(22, 163, 74, 0.34);
   color: #15803d;
 }
 
-:global([data-mode="light"]) .host-chip.genus,
-:global([data-mode="light"]) .host-chip.medium {
+[data-mode="light"] .host-chip.genus,
+[data-mode="light"] .host-chip.medium {
   background: rgba(245, 158, 11, 0.15);
   border-color: rgba(217, 119, 6, 0.38);
   color: #92400e;
 }
 
-:global([data-mode="light"]) .host-chip.family,
-:global([data-mode="light"]) .host-chip.low,
-:global([data-mode="light"]) .host-chip.needs-check {
+[data-mode="light"] .host-chip.family,
+[data-mode="light"] .host-chip.low,
+[data-mode="light"] .host-chip.needs-check {
   background: rgba(244, 63, 94, 0.13);
   border-color: rgba(225, 29, 72, 0.34);
   color: #be123c;
@@ -2873,7 +2872,7 @@ const exportTableCsv = () => {
   font-variant-numeric: tabular-nums;
 }
 
-:global([data-mode="light"]) .chip-count {
+[data-mode="light"] .chip-count {
   background: rgba(15, 23, 42, 0.16);
   color: inherit;
 }
