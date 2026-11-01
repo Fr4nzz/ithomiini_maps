@@ -1,0 +1,838 @@
+{
+ "generated": "2026-11-01",
+ "app": "Wings Atlas (ithomiini_maps) @ c8feb9f",
+ "shots": "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before",
+ "auto_groups": "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/auto-findings.json",
+ "findings": [
+  {
+   "id": "A01",
+   "severity": "P1",
+   "principle": "P1 text contrast",
+   "title": "Muted text token fails 4.5:1 in every palette (labels, placeholders, subtitle, OFF, hints)",
+   "views": [
+    "all 36"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "dark #666666 on #1a1a2e / #252540 / #2d2d4a = 2.97 / 2.58 / 2.31 (≈2,500 text nodes, 34 views); light #868e96 on #ffffff / #f8f9fa / #f1f3f5 = 3.32 / 3.15 / 2.99 (≈2,500 nodes). Token ratios for all 10 palette×mode sets: 2.31–4.59, none ≥ 4.5 on all three surfaces.",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/sidebar-taxonomy__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/sidebar-taxonomy__1440-en.jpg"
+   ],
+   "source": "src/index.css (--color-text-muted in all 10 blocks), used 148× via var(--color-text-muted)",
+   "note": ""
+  },
+  {
+   "id": "A02",
+   "severity": "P1",
+   "principle": "P1 text contrast",
+   "title": "Legend counts, «Other · N species», «+ N more» and SORT are near-invisible",
+   "views": [
+    "map and every map mode (29–30 views)"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "dark #484850 on #1a1a2e 1.87, #4f4f55 2.10; light #b6bbc0 on #ffffff 1.93, #aab0b5 2.19",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/map__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/map__1440-en.jpg"
+   ],
+   "source": "src/components/Legend/legend-styles.css (.legend-count, .more-count, .sort-label)",
+   "note": ""
+  },
+  {
+   "id": "A03",
+   "severity": "P1",
+   "principle": "P1 text contrast",
+   "title": "Light theme: accent green #16a34a fails as text and under white text (active Map/Table, Export, Apply Filter, badges, active chips, links)",
+   "views": [
+    "31–33 views"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "light"
+   ],
+   "measured": "white #f8f9fa on #16a34a 3.13 (306 nodes); #16a34a on #e9fbf0 3.07, on #c9f5d9 2.76, on #ffffff 3.29 (links, Reset filters). Other light palettes: accent 3.3–4.99.",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/map__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/export-data__1440-en.jpg"
+   ],
+   "source": "src/index.css (--color-accent light blocks; --primary 142 71% 35%)",
+   "note": ""
+  },
+  {
+   "id": "A04",
+   "severity": "P1",
+   "principle": "P1 text contrast",
+   "title": "Light table: sex symbols and blue active states fail",
+   "views": [
+    "table",
+    "table-column-filters",
+    "table-columns",
+    "field-sites (All)"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "light"
+   ],
+   "measured": "♂ #60a5fa on #e2ecfe 2.14 (78), ♀ #f472b6 on #fce4f0 2.20 (69), «Records»/«Filters» active #60a5fa on #dce7f9 2.04, «All» 2.02",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/table__1440-en.jpg"
+   ],
+   "source": "src/components/DataTable.vue (.sex-badge, toolbar .active), SiteComparison.vue",
+   "note": ""
+  },
+  {
+   "id": "A05",
+   "severity": "P1",
+   "principle": "P6 key info / P11",
+   "title": "The legend covers what the user opened: the point popup (desktop) and a third of the map, its labels and clusters (phones)",
+   "views": [
+    "point-popup",
+    "map",
+    "clusters",
+    "heatmap",
+    "ranges",
+    "bbox-draw",
+    "legend-expanded"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual: legend (z-order above the popup) hides the popup's site and species list at 1440; on 390 it fills the lower-left ≈⅓ and cuts labels («…Vicente +15»)",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/point-popup__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/map__390-en.jpg"
+   ],
+   "source": "src/components/Legend/Legend.vue, useLegendPosition.js, PointPopup.vue, map-container-styles.css (z-index)",
+   "note": ""
+  },
+  {
+   "id": "A06",
+   "severity": "P1",
+   "principle": "P12 dark theme",
+   "title": "Light theme is incomplete: phone Menu button and quick pills, the whole gallery, the loading screen, the Update Database header and the phone close button stay dark navy",
+   "views": [
+    "map (phones)",
+    "gallery",
+    "gallery-hostplants",
+    "gallery-mobile-sidebar",
+    "loading",
+    "sidebar-bottom",
+    "mobile-menu",
+    "table-columns"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "light"
+   ],
+   "measured": "measured in light: gallery surfaces #1c2432 / #1e1e1e (stat-label #888888 on #1c2432 4.40); pills rgba(26,26,46,.7); menu button rgba(26,26,46,.88); loading linear-gradient(#1a1a2e,#252540); active «Columns» navy with dim label",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/gallery__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/map__390-en.jpg"
+   ],
+   "source": "src/App.vue:434, :576, :610; src/components/image-gallery-styles.css, GallerySidebar.vue, GalleryThumbnailStrip.vue; DatabaseUpdateSection.vue; DataTable.vue (.btn-columns.active)",
+   "note": ""
+  },
+  {
+   "id": "A07",
+   "severity": "P1",
+   "principle": "P2 non-text contrast",
+   "title": "Light theme: zoom, compass and fullscreen icons are pale grey on white and look disabled",
+   "views": [
+    "all map views"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "light"
+   ],
+   "measured": "visual (icons are background images): style.css forces filter: invert(0.8) on every MapLibre control icon, tuned for the dark theme",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/map__390-en.jpg"
+   ],
+   "source": "src/style.css:202, src/components/map-container-styles.css:124–163",
+   "note": ""
+  },
+  {
+   "id": "A08",
+   "severity": "P1",
+   "principle": "P3 focus",
+   "title": "No focus indicator on search inputs, and focus rings that vanish on active buttons",
+   "views": [
+    "all views with filters, table, smart search"
+   ],
+   "widths": [
+    1440
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "Tab pass at 1440 (30 stops per view, 36 views): 80 of 843 stops show no change (61 are vue-multiselect search inputs, 14 plain inputs, the range thumbs); 82 rings < 3:1 (ring is 3 px currentColor: on the active Map button #1a1a2e on #1a1a2e = 1.0, light #f8f9fa on #f8f9fa = 1.0; setting inputs 2.89; GoaT inputs 1.93)",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/sidebar-taxonomy__1440-en.jpg"
+   ],
+   "source": "src/components/FilterSelect.vue (vue-multiselect), sidebar-styles.css (:focus outline: none ×29 in src), index.css",
+   "note": ""
+  },
+  {
+   "id": "A09",
+   "severity": "P1",
+   "principle": "P2 non-text contrast",
+   "title": "Text-field and select boundaries are too faint to find",
+   "views": [
+    "29 views (CAMID, location search, field-sites search, setting inputs, gallery search)"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "light #dee2e6 on #ffffff 1.30, on #f8f9fa 1.24; location search has no border on white (1.0); dark #3d3d5c on #1a1a2e 1.64",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/sidebar-other-filters__1440-en.jpg"
+   ],
+   "source": "src/index.css (--color-border), sidebar-styles.css, MapEngine.vue (.location-search), FilterSelect.vue",
+   "note": ""
+  },
+  {
+   "id": "A10",
+   "severity": "P1",
+   "principle": "P3 / names",
+   "title": "Controls without an accessible name",
+   "views": [
+    "29 views"
+   ],
+   "widths": [
+    390,
+    360,
+    1440
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "phone map toolbar: layers and palette buttons are icon-only with no aria-label; CAMID textarea and «Search location…» have only a placeholder; table column-filter selects unlabeled (30 at 1440 with filters open); gallery: 9–17 unnamed controls",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/map__390-en.jpg"
+   ],
+   "source": "src/components/MapEngine.vue (.dropdown-trigger), Sidebar.vue (.camid-textarea), DataTable.vue, ImageGallery.vue",
+   "note": ""
+  },
+  {
+   "id": "A11",
+   "severity": "P1",
+   "principle": "P11 mobile",
+   "title": "Tap targets far below 44 px on phones",
+   "views": [
+    "all 34 phone views"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "1,258 targets < 44 px at 390 (258 < 24 px). Worst: mimicry pager arrows (122 < 24 in one view, ≈16 px), legend SPECIES/SUBSP. 55×22, «+ All GBIF» 63×21, checkboxes 18×18, field-sites row icons ≈24, legend toolbar ≈30",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/mimicry__390-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/field-sites__390-en.jpg"
+   ],
+   "source": "src/components/Legend/Legend.vue, MimicryRingCard.vue, Sidebar.vue, SiteComparison.vue",
+   "note": ""
+  },
+  {
+   "id": "A12",
+   "severity": "P1",
+   "principle": "P11 mobile",
+   "title": "Phone: the floating Menu + pill rows cover the top of panels and menus",
+   "views": [
+    "field-sites",
+    "map-layers-menu",
+    "map-theme-menu",
+    "preview-export"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual: Field sites title, the first basemap items and the export size bar sit under the pills",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/field-sites__390-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/map-layers-menu__390-en.jpg"
+   ],
+   "source": "src/App.vue (.mobile-quick-bar), SiteComparison.vue, MapEngine.vue (dropdown top offset)",
+   "note": ""
+  },
+  {
+   "id": "A13",
+   "severity": "P1",
+   "principle": "P6 key info",
+   "title": "Phone map shows no record count or active filters",
+   "views": [
+    "map",
+    "clusters",
+    "heatmap",
+    "ranges"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual: «7,850 of 7,850 records» and filter state live only inside the Menu sheet",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/map__390-en.jpg"
+   ],
+   "source": "src/App.vue (mobile layout), Sidebar.vue (.record-count)",
+   "note": ""
+  },
+  {
+   "id": "A14",
+   "severity": "P1",
+   "principle": "P11 mobile / P6",
+   "title": "Phone gallery: photo runs off the right edge and has no species name; counter overlaps the zoom bar",
+   "views": [
+    "gallery",
+    "gallery-hostplants"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/gallery__390-en.jpg"
+   ],
+   "source": "src/components/ImageGallery.vue, image-gallery-styles.css",
+   "note": ""
+  },
+  {
+   "id": "A15",
+   "severity": "P1",
+   "principle": "P11 mobile",
+   "title": "Phone mimicry dialog cuts off its right card column; pager arrows ≈16 px and faint",
+   "views": [
+    "mimicry"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual + 122 targets < 24 px",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/mimicry__390-en.jpg"
+   ],
+   "source": "src/components/MimicrySelector.vue, MimicryRingCard.vue",
+   "note": ""
+  },
+  {
+   "id": "A16",
+   "severity": "P1",
+   "principle": "P11 / P3",
+   "title": "Legend editing needs hover: Sort, # counts and the colour/group toolbar appear only while the pointer is over the legend",
+   "views": [
+    "map",
+    "legend-sort",
+    "preview-export"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "the audit had to hover .legend-title before Sort existed; the sidebar hint says «Hover over legend on map…», which a phone cannot do",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/legend-sort__1440-en.jpg"
+   ],
+   "source": "src/components/Legend/Legend.vue (showEditUI), LegendGroupHeader.vue, SidebarMapSettings.vue",
+   "note": ""
+  },
+  {
+   "id": "A17",
+   "severity": "P2",
+   "principle": "P12 dark theme",
+   "title": "Theme plumbing: dark is forced as default, light is forgotten on reload, and the boot colour and native controls ignore the mode",
+   "views": [
+    "all"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "DEFAULT_MODE dark, no prefers-color-scheme; mode and palette persist only when «Remember Settings» is ON (off by default); meta theme-color fixed #1a1a2e; <html> background unset (#ffffff behind the dark app); color-scheme «normal», so native selects, scrollbars and date pickers stay light; the basemap always starts «Dark» (useStyleSwitcher ref('dark')) even when the mode is light",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/loading__1440-en.jpg"
+   ],
+   "source": "src/stores/theme.js, src/themes/presets.js, index.html, src/composables/useStyleSwitcher.js",
+   "note": ""
+  },
+  {
+   "id": "A18",
+   "severity": "P2",
+   "principle": "P1 / P7",
+   "title": "Text below 12 px across the sidebar, legend, badges and mimicry cards",
+   "views": [
+    "34 views"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "124 element groups < 12 px: filter-tile counts 9.92 px (#aaaaaa on #3e3e58 4.45; #4ade80 on #305c53 4.35), host-plant descriptions 9.92 px (light #c2e4d0 on #16a34a 2.41), source badges 9.6 px (white on #3a7ae5 4.15), SORT 10 px, attribution 10 px, mimicry meta ≈9.6 px",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/sidebar-hostplants__1440-en.jpg"
+   ],
+   "source": "src/components/sidebar-styles.css, Legend/legend-styles.css, MimicryRingCard.vue, PointPopup.vue",
+   "note": ""
+  },
+  {
+   "id": "A19",
+   "severity": "P2",
+   "principle": "P9 colour meaning",
+   "title": "Extra hues with no stated meaning",
+   "views": [
+    "export-data",
+    "preview-export",
+    "gallery",
+    "sdm",
+    "table",
+    "smart-search"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "violet border on «Export for R»; blue «View on Map», blue SDM opacity slider, blue «Records»/«Filters» active state; neon per-species frame colours on gallery thumbnails; yellow MEDIUM badge (faint on light)",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/export-data__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/gallery__1440-en.jpg"
+   ],
+   "source": "ExportPanel.vue, Sidebar.vue (.btn-export-r), GallerySidebar.vue, GalleryThumbnailStrip.vue, DataTable.vue",
+   "note": ""
+  },
+  {
+   "id": "A20",
+   "severity": "P2",
+   "principle": "P8 states",
+   "title": "Selected chips and tiles differ from unselected only by a green tint (no check, no edge ≥ 3:1)",
+   "views": [
+    "sidebar (taxonomy, other filters, data source, visualization)"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "light active chip #16a34a on #e9fbf0 (fill vs #ffffff ≈1.1); dark active tile #4ade80 text on #305c53",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/sidebar-taxonomy__1440-en.jpg"
+   ],
+   "source": "src/components/sidebar-styles.css (.filter-tile.active, .source-tile)",
+   "note": ""
+  },
+  {
+   "id": "A21",
+   "severity": "P2",
+   "principle": "P9 / P8",
+   "title": "Host-plant confidence cards carry meaning in a green/amber/red bar only, with 9.9 px descriptions",
+   "views": [
+    "sidebar-hostplants",
+    "clusters",
+    "heatmap",
+    "ranges",
+    "sdm (scrolled)"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "light descriptions #c2e4d0 on #16a34a 2.41, #71777d on #f1f3f5 4.06",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/sidebar-hostplants__390-en.jpg"
+   ],
+   "source": "src/components/Sidebar.vue (host plant filters), sidebar-styles.css (.confidence-*)",
+   "note": ""
+  },
+  {
+   "id": "A22",
+   "severity": "P2",
+   "principle": "P5 / P4",
+   "title": "Admin «Update Database» form (password + green «Start Update») is shown to every visitor, a second primary button beside Export",
+   "views": [
+    "sidebar-bottom"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/sidebar-bottom__1440-en.jpg"
+   ],
+   "source": "src/components/DatabaseUpdateSection.vue, config.js (features.databaseUpdate)",
+   "note": ""
+  },
+  {
+   "id": "A23",
+   "severity": "P2",
+   "principle": "P5 redundancy",
+   "title": "Facts and controls shown twice",
+   "views": [
+    "table",
+    "field-sites",
+    "gallery",
+    "location-search",
+    "heatmap",
+    "ranges"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "palette menu + mode toggle in both the map toolbar and the table toolbar; Field sites has a «Busiest / By records» toggle and a Sort select; gallery «Search summary» repeats the species/individual counts already in the badges; «Tena, Napo, Ecuador» listed twice; the species legend stays on in heatmap and hex-range modes where its colours do not apply",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/heatmap__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/field-sites__1440-en.jpg"
+   ],
+   "source": "DataTable.vue, MapEngine.vue, SiteComparison.vue, GallerySidebar.vue, useLocationSearch.js, Legend.vue",
+   "note": ""
+  },
+  {
+   "id": "A24",
+   "severity": "P2",
+   "principle": "P8 states",
+   "title": "Modes and loads without a caption",
+   "views": [
+    "bbox-draw",
+    "gallery-hostplants",
+    "map-empty"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "bbox mode only tints its button (no «drag on the map»); host-plant gallery spinner has no caption and photo-less thumbnails are empty dark boxes; the empty-map notice does not say which filter emptied it",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/bbox-draw__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/gallery-hostplants__1440-en.jpg"
+   ],
+   "source": "useBoundingBoxSelection.js, ImageGallery.vue, GalleryThumbnailStrip.vue, MapEngine.vue (.map-empty-notice)",
+   "note": ""
+  },
+  {
+   "id": "A25",
+   "severity": "P2",
+   "principle": "P2 / P12 maps",
+   "title": "Light map: grey markers on the pale Positron basemap; navy cluster discs; heatmap yellow on white; hex density has no colour key",
+   "views": [
+    "map",
+    "clusters",
+    "heatmap",
+    "ranges"
+   ],
+   "widths": [
+    1440,
+    390
+   ],
+   "themes": [
+    "light"
+   ],
+   "measured": "visual (WebGL layers are not in the DOM; marker vs tile ratio not measured)",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/map__1440-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/light/ranges__1440-en.jpg"
+   ],
+   "source": "src/composables/useDataLayer.js, useClusterComposition.js, utils/heatmap.js, utils/rangePolygons.js",
+   "note": ""
+  },
+  {
+   "id": "A26",
+   "severity": "P2",
+   "principle": "P11 mobile",
+   "title": "Phone pill row overflows (Mimicry, Export cut) with no scroll hint; legend «#» overlaps «SUBSP.»; legend names truncated",
+   "views": [
+    "map",
+    "legend-expanded"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/map__360-en.jpg",
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/legend-expanded__390-en.jpg"
+   ],
+   "source": "src/App.vue (.mobile-quick-bar), Legend.vue",
+   "note": ""
+  },
+  {
+   "id": "A27",
+   "severity": "P2",
+   "principle": "P7 density",
+   "title": "Phone table: header and four toolbar rows use ≈370 of 844 px; the table is wider than the screen with no scroll hint",
+   "views": [
+    "table",
+    "table-column-filters",
+    "table-columns"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "visual",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/table__390-en.jpg"
+   ],
+   "source": "src/components/DataTable.vue",
+   "note": ""
+  },
+  {
+   "id": "A28",
+   "severity": "P2",
+   "principle": "P3 focus",
+   "title": "Focus rings on setting inputs are translucent glows below 3:1",
+   "views": [
+    "clusters",
+    "sidebar-other-filters",
+    "preview-export"
+   ],
+   "widths": [
+    1440
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "rgba(74,222,128,.15) 2 px glow 2.89; GoaT inputs rgba(59,130,246,.15) 1.93; aspect select transparent ring 1.0",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/clusters__1440-en.jpg"
+   ],
+   "source": "src/components/sidebar-styles.css, SidebarMapSettings.vue",
+   "note": ""
+  },
+  {
+   "id": "A29",
+   "severity": "P3",
+   "principle": "P8 states",
+   "title": "Disabled labels below the app's 3:1 bar, with no reason given",
+   "views": [
+    "mimicry",
+    "loading",
+    "gallery"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "«Clear Selection» #a1a5a9 on #f8f9fa 2.37 (light), 2.83 (dark); disabled Gallery 2.55; gallery Reset 2.71; order arrows 2.01",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/mimicry__1440-en.jpg"
+   ],
+   "source": "MimicrySelector.vue, sidebar-styles.css, GallerySidebar.vue",
+   "note": ""
+  },
+  {
+   "id": "A30",
+   "severity": "P3",
+   "principle": "P11 mobile",
+   "title": "Phone hints that assume a mouse or keyboard",
+   "views": [
+    "sidebar-bottom",
+    "smart-search-empty"
+   ],
+   "widths": [
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "«Hover over legend on map…», «Use ↑↓ to navigate, Enter to apply»",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/smart-search-empty__390-en.jpg"
+   ],
+   "source": "SidebarMapSettings.vue, CommandPaletteDialog.vue",
+   "note": ""
+  },
+  {
+   "id": "A31",
+   "severity": "P3",
+   "principle": "P7",
+   "title": "Clipped placeholders and labels",
+   "views": [
+    "smart-search",
+    "table-column-filters",
+    "mobile-menu"
+   ],
+   "widths": [
+    1440,
+    390,
+    360
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "28 clipped-text groups, e.g. «Filter specie», smart-search placeholder cut at 390",
+   "screenshots": [
+    "/home/franz/.local/share/ui-overhaul-20261031/atlas/audit-before/dark/table-column-filters__1440-en.jpg"
+   ],
+   "source": "DataTable.vue, CommandPaletteDialog.vue",
+   "note": ""
+  },
+  {
+   "id": "A32",
+   "severity": "P3",
+   "principle": "P10 motion",
+   "title": "Reduced motion barely respected",
+   "views": [
+    "all"
+   ],
+   "widths": [
+    1440
+   ],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "prefers-reduced-motion in 2 rules only; 6 spin animations (loading only, acceptable); slide/fade transitions on panels everywhere",
+   "screenshots": [],
+   "source": "src/**/*.css, *.vue",
+   "note": ""
+  },
+  {
+   "id": "A33",
+   "severity": "P3",
+   "principle": "P12",
+   "title": "Theming debt that will slow the dark/light work",
+   "views": [
+    "all"
+   ],
+   "widths": [],
+   "themes": [
+    "dark",
+    "light"
+   ],
+   "measured": "245 distinct hard-coded hex values and 432 rgba() in component CSS; 971 var(--x, #hex) fallbacks with dark defaults; undefined variables used (--accent-color, --color-bg-hover, --error-color, --text-muted); unused ThemeSelector.vue (277 lines)",
+   "screenshots": [],
+   "source": "src/components/*.css, *.vue",
+   "note": ""
+  }
+ ]
+}
