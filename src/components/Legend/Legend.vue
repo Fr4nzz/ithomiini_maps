@@ -671,7 +671,7 @@ onUnmounted(() => {
     @focusin="focusWithin = true"
     @focusout="handleFocusOut"
     @mousedown="startDrag"
-    @touchstart.prevent="startDrag"
+    @touchstart="startDrag"
     @keydown="handleLegendKeydown"
   >
     <!-- Toolbar (hidden by default, shown on hover) -->
@@ -711,7 +711,6 @@ onUnmounted(() => {
           :aria-expanded="!isFolded"
           :aria-label="isFolded ? 'Show legend' : 'Fold legend'"
           @click.stop="toggleFold"
-          @touchstart.stop
         >
           <ChevronDown :size="16" :class="{ 'is-open': !isFolded }" aria-hidden="true" />
         </button>
@@ -724,7 +723,6 @@ onUnmounted(() => {
             aria-label="Toggle item counts"
             :aria-pressed="legendStore.showCounts"
             @click.stop="toggleShowCounts"
-            @touchstart.stop
           >
             <Hash :size="13" />
           </button>
@@ -736,7 +734,6 @@ onUnmounted(() => {
               title="Sort options"
               :aria-expanded="sortDropdownOpen"
               @click.stop="toggleSortDropdown"
-              @touchstart.stop
             >
               <span class="sort-label">Sort</span>
               <ChevronDown :size="10" class="sort-chevron" />
