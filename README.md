@@ -227,6 +227,6 @@ Additional output fields:
   - Sanger Institute - Sequencing data
   - GBIF - Global biodiversity data
 
-## License
+## License and citation
 
-MIT License - See LICENSE file for details
+This tool is released under the MIT licence (see [LICENSE](LICENSE)). If you use this tool, please cite the repository (see [CITATION.cff](CITATION.cff)); a paper describing the tools is in preparation.
